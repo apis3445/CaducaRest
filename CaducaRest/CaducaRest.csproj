@@ -11,11 +11,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.4" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20181007234129_InitialCreate.cs" />
+    <Compile Remove="Migrations\20181007234129_InitialCreate.Designer.cs" />
     <Compile Remove="Models\EmptyClass.cs" />
   </ItemGroup>
 </Project>

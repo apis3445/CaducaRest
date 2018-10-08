@@ -12,6 +12,6 @@ namespace CaducaRest.Models
         public CaducaContext(DbContextOptions<CaducaContext> options) : base(options)
         {
         }
-        public virtual DbSet<Categoria> Aviso { get; set; }
+        public virtual DbSet<Categoria> Categoria { get; set; }
     }
 }

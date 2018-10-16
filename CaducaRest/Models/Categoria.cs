@@ -14,7 +14,7 @@ namespace CaducaRest.Models
     public class Categoria
     {
         /// <summary>
-        /// Id de la categoria
+        /// Id de la categoria.
         /// </summary>
         /// <value>El Id se incrementa automáticamente</value>
         [Key]

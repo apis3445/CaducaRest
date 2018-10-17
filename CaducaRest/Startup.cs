@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CaducaRest.Models;
@@ -33,6 +34,11 @@ namespace CaducaRest
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Api Caduca REST", Version = "v1" });
+                var basePath = AppContext.BaseDirectory;
+                var assemblyName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
+                var fileName = System.IO.Path.GetFileName(assemblyName + ".xml");
+                var xmlPath = Path.Combine(basePath, fileName);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 

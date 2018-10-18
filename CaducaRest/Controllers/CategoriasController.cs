@@ -59,11 +59,11 @@ namespace CaducaRest.Controllers
         }
 
         /// <summary>
-        /// Puts the categoria.
+        /// Modifica una categoría
         /// </summary>
-        /// <returns>The categoria.</returns>
-        /// <param name="id">Identifier.</param>
-        /// <param name="categoria">Categoria.</param>
+        /// <returns>No Content si se modifico correctamente</returns>
+        /// <param name="id">Id de la categoría a Modificar</param>
+        /// <param name="categoria">Datos de la Categoria.</param>
         // PUT: api/Categorias/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategoria([FromRoute] int id, [FromBody] Categoria categoria)

@@ -1,9 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using CaducaRest.Models.Entity_Configurations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CaducaRest.Models
 {
@@ -11,6 +7,11 @@ namespace CaducaRest.Models
     {
         public CaducaContext(DbContextOptions<CaducaContext> options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
         }
         public virtual DbSet<Categoria> Categoria { get; set; }
     }

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CaducaRest.Models;
+using CaducaRest.DAO;
+using System.Collections.Generic;
 
 namespace CaducaRest.Controllers
 {
@@ -17,21 +16,26 @@ namespace CaducaRest.Controllers
     public class CategoriasController : ControllerBase
     {
         private readonly CaducaContext _context;
+        private CategoriaDAO categoriaDAO;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context">Contexto para la base de datos</param>
         public CategoriasController(CaducaContext context)
         {
             _context = context;
+            categoriaDAO = new CategoriaDAO(_context);
         }
 
         /// <summary>
         /// Obtiene todas las categorías registradas
         /// </summary>
         /// <returns>Todas las categorías</returns>
-        // GET: api/Categorias
         [HttpGet]
-        public IEnumerable<Categoria> GetCategoria()
-        {
-            return _context.Categoria;
+        public List<Categoria> GetCategoria()
+        {           
+            return categoriaDAO.ObtenerTodo();
         }
 
         /// <summary>
@@ -43,12 +47,8 @@ namespace CaducaRest.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoria([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            var categoria = await _context.Categoria.FindAsync(id);
+            var categoria = await categoriaDAO.ObtenerPorIdAsync(id);
 
             if (categoria == null)
             {
@@ -104,17 +104,15 @@ namespace CaducaRest.Controllers
         /// </summary>
         /// <returns>Los datos de la categoría agregada</returns>
         /// <param name="categoria">Datos de la categoría</param>
-        // POST: api/Categorias
+
         [HttpPost]
         public async Task<IActionResult> PostCategoria([FromBody] Categoria categoria)
         {
-            if (!ModelState.IsValid)
+            if (!await categoriaDAO.AgregarAsync(categoria))
             {
-                return BadRequest(ModelState);
+                return StatusCode(categoriaDAO.customError.StatusCode, 
+                                  categoriaDAO.customError.Message);
             }
-
-            _context.Categoria.Add(categoria);
-            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCategoria", new { id = categoria.Id }, categoria);
         }

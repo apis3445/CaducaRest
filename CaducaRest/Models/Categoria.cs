@@ -25,15 +25,15 @@ namespace CaducaRest.Models
         /// Obtiene o establece la clave de la categoría
         /// </summary>
         /// <value>La clave de la categoria</value>
-        [Required(ErrorMessage = "Por favor teclea el campo Clave")]
-        [Range(1,999)]
+        [Required(ErrorMessage = "Required")]
+        [Range(1,999, ErrorMessage = "Range")]
         public int Clave { get; set; }
 
         /// <summary>
         /// Obtiene o establece el nombre de la categoría
         /// </summary>
         /// <value>El nombre de la categoría</value>
-        [Required(ErrorMessage = "Por favor teclea el campo Nombre")]
+        [Required(ErrorMessage = "Required")]
         [Column(TypeName = "VARCHAR(80)")]
         public string Nombre { get; set; }
     }

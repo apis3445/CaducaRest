@@ -15,6 +15,9 @@ namespace CaducaRest.DAO
     public class CategoriaDAO
     {
         private readonly CaducaContext contexto;
+        /// <summary>
+        /// Mensaje de error personalizado
+        /// </summary>
         public CustomError customError;
 
         /// <summary>
@@ -58,7 +61,7 @@ namespace CaducaRest.DAO
                 registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == categoria.Nombre);
                 if (registroRepetido != null)
                 {
-                    customError = new CustomError(400, 
+                    customError = new CustomError(400,
                                             "Ya existe una categoría con este nombre, " +
                                             "por favor teclea un nombre diferente", "Nombre");
                     return false;
@@ -66,7 +69,7 @@ namespace CaducaRest.DAO
                 registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave);
                 if (registroRepetido != null)
                 {
-                    customError = new CustomError(400, 
+                    customError = new CustomError(400,
                                             "Ya existe una categoría con esta clave, " +
                                             "por favor teclea una clave diferente", "Nombre");
                     return false;
@@ -80,6 +83,74 @@ namespace CaducaRest.DAO
                 Console.WriteLine(ex.Message);
             }
             return true;
+        }
+
+        /// <summary>
+        /// Modidica una categoria
+        /// </summary>
+        /// <param name="categoria">Datos de la categoria</param>
+        /// <returns></returns>
+        public async Task<bool> ModificarAsync(Categoria categoria)
+        {
+            Categoria registroRepetido;
+            try
+            {
+                //Se busca si existe una categoria con el mismo nombre pero diferente Id
+                registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == categoria.Nombre
+                                                && c.Id != categoria.Id);
+                if (registroRepetido != null)
+                {
+                    customError = new CustomError(400,
+                                            "Ya existe una categoría con este nombre, " +
+                                            "por favor teclea un nombre diferente", "Nombre");
+                    return false;
+                }
+                registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave
+                                                && c.Id != categoria.Id);
+                if (registroRepetido != null)
+                {
+                    customError = new CustomError(400,
+                                            "Ya existe una categoría con esta clave, " +
+                                            "por favor teclea una clave diferente", "Nombre");
+                    return false;
+                }
+                contexto.Entry(categoria).State = EntityState.Modified;
+                await contexto.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ExisteCategoria(categoria.Id))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Permite borrar una categoría por Id
+        /// </summary>
+        /// <param name="id">Id de la categoría</param>
+        /// <returns></returns>
+        public async Task<bool> BorraAsync(int id)
+        {
+            var categoria = await ObtenerPorIdAsync(id);
+            if (categoria == null)
+            {
+                customError = new CustomError(404,
+                                            "La categoría que deseas borrar ya no existe, " +
+                                            "probablemente fue borrada por otro usuario", "Id");
+                return false;
+            }
+
+            contexto.Categoria.Remove(categoria);
+            await contexto.SaveChangesAsync();
+            return true;
+        }
+
+        private bool ExisteCategoria(int id)
+        {
+            return contexto.Categoria.Any(e => e.Id == id);
         }
     }
 }

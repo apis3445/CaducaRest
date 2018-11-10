@@ -64,7 +64,6 @@ namespace CaducaRest.Controllers
         /// <returns>No Content si se modifico correctamente</returns>
         /// <param name="id">Id de la categoría a Modificar</param>
         /// <param name="categoria">Datos de la Categoria.</param>
-        // PUT: api/Categorias/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategoria([FromRoute] int id, [FromBody] Categoria categoria)
         {
@@ -78,22 +77,10 @@ namespace CaducaRest.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(categoria).State = EntityState.Modified;
-
-            try
+            if (!await categoriaDAO.ModificarAsync(categoria))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoriaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(categoriaDAO.customError.StatusCode,
+                                  categoriaDAO.customError.Message);
             }
 
             return NoContent();
@@ -130,22 +117,12 @@ namespace CaducaRest.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var categoria = await _context.Categoria.FindAsync(id);
-            if (categoria == null)
+            if (!await categoriaDAO.BorraAsync(id))
             {
-                return NotFound();
+                return StatusCode(categoriaDAO.customError.StatusCode,
+                                  categoriaDAO.customError.Message);
             }
-
-            _context.Categoria.Remove(categoria);
-            await _context.SaveChangesAsync();
-
-            return Ok(categoria);
-        }
-
-        private bool CategoriaExists(int id)
-        {
-            return _context.Categoria.Any(e => e.Id == id);
+            return Ok();
         }
     }
 }

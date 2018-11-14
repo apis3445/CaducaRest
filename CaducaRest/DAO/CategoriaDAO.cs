@@ -1,5 +1,6 @@
 ﻿using CaducaRest.Core;
 using CaducaRest.Models;
+using CaducaRest.Resources;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace CaducaRest.DAO
     public class CategoriaDAO
     {
         private readonly CaducaContext contexto;
+        private readonly LocService _localizer;
         /// <summary>
         /// Mensaje de error personalizado
         /// </summary>
@@ -24,9 +26,10 @@ namespace CaducaRest.DAO
         /// Clase para acceso a la base de datos
         /// </summary>
         /// <param name="context"></param>
-        public CategoriaDAO(CaducaContext context)
+        public CategoriaDAO(CaducaContext context, LocService locService)
         {
             this.contexto = context;
+            this._localizer = locService;
         }
 
         /// <summary>
@@ -61,9 +64,7 @@ namespace CaducaRest.DAO
                 registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == categoria.Nombre);
                 if (registroRepetido != null)
                 {
-                    customError = new CustomError(400,
-                                            "Ya existe una categoría con este nombre, " +
-                                            "por favor teclea un nombre diferente", "Nombre");
+                    customError = new CustomError(400, String.Format(this._localizer.GetLocalizedHtmlString("Repeteaded"), "categoría", "nombre"), "Nombre");
                     return false;
                 }
                 registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave);
@@ -81,6 +82,7 @@ namespace CaducaRest.DAO
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                return false;
             }
             return true;
         }

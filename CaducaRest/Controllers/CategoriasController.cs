@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using CaducaRest.Models;
 using CaducaRest.DAO;
 using System.Collections.Generic;
+using CaducaRest.Resources;
 
 namespace CaducaRest.Controllers
 {
@@ -15,6 +16,7 @@ namespace CaducaRest.Controllers
     [ApiController]
     public class CategoriasController : ControllerBase
     {
+        private readonly LocService _localizer;
         private readonly CaducaContext _context;
         private CategoriaDAO categoriaDAO;
 
@@ -22,10 +24,11 @@ namespace CaducaRest.Controllers
         /// Constructor
         /// </summary>
         /// <param name="context">Contexto para la base de datos</param>
-        public CategoriasController(CaducaContext context)
+        public CategoriasController(CaducaContext context, LocService localizer)
         {
             _context = context;
-            categoriaDAO = new CategoriaDAO(_context);
+            _localizer = localizer;
+            categoriaDAO = new CategoriaDAO(context, localizer);
         }
 
         /// <summary>

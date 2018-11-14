@@ -118,18 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NotFound" xml:space="preserve">
-    <value>{0} que deseas borrar ya no existe u otro usuario la borró, vuelve a consultar la información.</value>
+    <value>{0} doesn't exists, maybe was delete for other user, please try again</value>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>El campo {0} solo admite valores de {1} a {2}. Por favor teclea un número dentro de este rango</value>
+    <value>The field {0} should be from {1} to  {2}. Please write a number between this range.</value>
   </data>
   <data name="Repetead" xml:space="preserve">
-    <value>Ya existe {0} con este {1}. Por favor teclea  {1} diferente</value>
+    <value>{0} Exist with this  {1}. Please write a different {1} </value>
   </data>
   <data name="Required" xml:space="preserve">
-    <value>Por favor registra el campo {0} </value>
+    <value>Please register the field {0} </value>
   </data>
   <data name="StringLength" xml:space="preserve">
-    <value>El campo {0} debe tener como máximo {1} caracteres. Por favor abrevia el campo.</value>
+    <value>The field {0} should be max {1} characters. Please abbreviate</value>
   </data>
 </root>

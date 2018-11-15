@@ -133,8 +133,7 @@ namespace CaducaRest.DAO
             var categoria = await ObtenerPorIdAsync(id);
             if (categoria == null)
             {
-                customError = new CustomError(404,
-                                              String.Format(this.localizacion.GetLocalizedHtmlString("NotFound", "La categoría"), "Id");
+                customError = new CustomError(404, String.Format(this.localizacion.GetLocalizedHtmlString("NotFound"), "La categoría"), "Id");
                 return false;
             }
 

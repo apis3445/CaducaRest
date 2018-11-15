@@ -16,7 +16,7 @@ namespace CaducaRest.DAO
     public class CategoriaDAO
     {
         private readonly CaducaContext contexto;
-        private readonly LocService _localizer;
+        private readonly LocService localizacion;
         /// <summary>
         /// Mensaje de error personalizado
         /// </summary>
@@ -29,7 +29,7 @@ namespace CaducaRest.DAO
         public CategoriaDAO(CaducaContext context, LocService locService)
         {
             this.contexto = context;
-            this._localizer = locService;
+            this.localizacion = locService;
         }
 
         /// <summary>
@@ -64,15 +64,13 @@ namespace CaducaRest.DAO
                 registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == categoria.Nombre);
                 if (registroRepetido != null)
                 {
-                    customError = new CustomError(400, String.Format(this._localizer.GetLocalizedHtmlString("Repeteaded"), "categoría", "nombre"), "Nombre");
+                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "nombre"), "Nombre");
                     return false;
                 }
                 registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave);
                 if (registroRepetido != null)
                 {
-                    customError = new CustomError(400,
-                                            "Ya existe una categoría con esta clave, " +
-                                            "por favor teclea una clave diferente", "Nombre");
+                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "clave"), "Clave");
                     return false;
                 }
 
@@ -102,18 +100,14 @@ namespace CaducaRest.DAO
                                                 && c.Id != categoria.Id);
                 if (registroRepetido != null)
                 {
-                    customError = new CustomError(400,
-                                            "Ya existe una categoría con este nombre, " +
-                                            "por favor teclea un nombre diferente", "Nombre");
+                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "nombre"), "Nombre");
                     return false;
                 }
                 registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave
                                                 && c.Id != categoria.Id);
                 if (registroRepetido != null)
                 {
-                    customError = new CustomError(400,
-                                            "Ya existe una categoría con esta clave, " +
-                                            "por favor teclea una clave diferente", "Nombre");
+                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "clave"), "Clave");
                     return false;
                 }
                 contexto.Entry(categoria).State = EntityState.Modified;
@@ -140,8 +134,7 @@ namespace CaducaRest.DAO
             if (categoria == null)
             {
                 customError = new CustomError(404,
-                                            "La categoría que deseas borrar ya no existe, " +
-                                            "probablemente fue borrada por otro usuario", "Id");
+                                              String.Format(this.localizacion.GetLocalizedHtmlString("NotFound", "La categoría"), "Id");
                 return false;
             }
 

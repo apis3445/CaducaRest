@@ -14,5 +14,10 @@ namespace CaducaRest.Models
             modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
         }
         public virtual DbSet<Categoria> Categoria { get; set; }
+
+        /// <summary>
+        /// Productos
+        /// </summary>
+        public virtual DbSet<Producto> Producto { get; set; }
     }
 }

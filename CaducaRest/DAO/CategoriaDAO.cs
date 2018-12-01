@@ -136,7 +136,7 @@ namespace CaducaRest.DAO
                 customError = new CustomError(404, String.Format(this.localizacion.GetLocalizedHtmlString("NotFound"), "La categoría"), "Id");
                 return false;
             }
-
+            
             contexto.Categoria.Remove(categoria);
             await contexto.SaveChangesAsync();
             return true;
@@ -144,6 +144,7 @@ namespace CaducaRest.DAO
 
         private bool ExisteCategoria(int id)
         {
+            
             return contexto.Categoria.Any(e => e.Id == id);
         }
     }

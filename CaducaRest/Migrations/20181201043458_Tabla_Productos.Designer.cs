@@ -2,14 +2,16 @@
 using CaducaRest.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CaducaRest.Migrations
 {
     [DbContext(typeof(CaducaContext))]
-    partial class CaducaContextModelSnapshot : ModelSnapshot
+    [Migration("20181201043458_Tabla_Productos")]
+    partial class Tabla_Productos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

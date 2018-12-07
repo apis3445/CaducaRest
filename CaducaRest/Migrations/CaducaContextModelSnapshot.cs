@@ -55,7 +55,18 @@ namespace CaducaRest.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoriaId")
+                        .HasName("IX_ProductoCategoria");
+
                     b.ToTable("Producto");
+                });
+
+            modelBuilder.Entity("CaducaRest.Models.Producto", b =>
+                {
+                    b.HasOne("CaducaRest.Models.Categoria")
+                        .WithMany()
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

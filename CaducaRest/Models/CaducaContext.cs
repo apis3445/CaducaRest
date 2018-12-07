@@ -12,12 +12,17 @@ namespace CaducaRest.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductoConfiguration());
         }
+
+
         public virtual DbSet<Categoria> Categoria { get; set; }
 
         /// <summary>
         /// Productos
         /// </summary>
         public virtual DbSet<Producto> Producto { get; set; }
+
+
     }
 }

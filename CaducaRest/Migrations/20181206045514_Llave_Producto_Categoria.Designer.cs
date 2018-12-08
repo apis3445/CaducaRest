@@ -2,14 +2,16 @@
 using CaducaRest.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CaducaRest.Migrations
 {
     [DbContext(typeof(CaducaContext))]
-    partial class CaducaContextModelSnapshot : ModelSnapshot
+    [Migration("20181206045514_Llave_Producto_Categoria")]
+    partial class Llave_Producto_Categoria
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +57,8 @@ namespace CaducaRest.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoriaId")                       
+                    b.HasIndex("CategoriaId")
+                        .IsUnique()
                         .HasName("IX_ProductoCategoria");
 
                     b.ToTable("Producto");

@@ -14,9 +14,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
@@ -24,6 +21,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20181007234129_InitialCreate.cs" />
     <Compile Remove="Migrations\20181007234129_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20181206043858_LLaveProductosCategoria.cs" />
+    <Compile Remove="Migrations\20181206043858_LLaveProductosCategoria.Designer.cs" />
     <Compile Remove="Models\EmptyClass.cs" />
   </ItemGroup>
 </Project>

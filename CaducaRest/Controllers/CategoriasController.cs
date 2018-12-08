@@ -6,6 +6,7 @@ using CaducaRest.Models;
 using CaducaRest.DAO;
 using System.Collections.Generic;
 using CaducaRest.Resources;
+using System;
 
 namespace CaducaRest.Controllers
 {
@@ -37,7 +38,7 @@ namespace CaducaRest.Controllers
         /// <returns>Todas las categorías</returns>
         [HttpGet]
         public List<Categoria> GetCategoria()
-        {           
+        {
             return categoriaDAO.ObtenerTodo();
         }
 

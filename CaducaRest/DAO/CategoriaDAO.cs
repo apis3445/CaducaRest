@@ -4,7 +4,6 @@ using CaducaRest.Resources;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -42,7 +41,7 @@ namespace CaducaRest.DAO
         }
 
         /// <summary>
-        /// Obtienen una categoría por us Id
+        /// Obtiene una categoría por us Id
         /// </summary>
         /// <param name="id">Id de la categoría</param>
         /// <returns></returns>

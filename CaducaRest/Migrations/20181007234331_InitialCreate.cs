@@ -3,8 +3,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// Tabla categoría
+    /// </summary>
     public partial class InitialCreate : Migration
     {
+        /// <summary>
+        /// Tabla categoría
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -22,6 +29,10 @@ namespace CaducaRest.Migrations
                 });
         }
 
+        /// <summary>
+        /// Borrado de tabla categoría
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

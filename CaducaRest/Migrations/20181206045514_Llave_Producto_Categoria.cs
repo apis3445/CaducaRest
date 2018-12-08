@@ -2,6 +2,9 @@
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// LLaves foráneas e indices
+    /// </summary>
     public partial class Llave_Producto_Categoria : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,6 +24,10 @@ namespace CaducaRest.Migrations
                 onDelete: ReferentialAction.Restrict);
         }
 
+        /// <summary>
+        /// LLaves foráneas e indices
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(

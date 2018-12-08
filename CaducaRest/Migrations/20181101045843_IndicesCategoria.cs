@@ -2,8 +2,15 @@
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// Índices categoría
+    /// </summary>
     public partial class IndicesCategoria : Migration
     {
+        /// <summary>
+        /// Índices categoría
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateIndex(
@@ -19,6 +26,10 @@ namespace CaducaRest.Migrations
                 unique: true);
         }
 
+        /// <summary>
+        /// Borrrado de Índices categoría
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropIndex(

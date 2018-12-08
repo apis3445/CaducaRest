@@ -55,7 +55,7 @@ namespace CaducaRest.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoriaId")                       
+                    b.HasIndex("CategoriaId")
                         .HasName("IX_ProductoCategoria");
 
                     b.ToTable("Producto");

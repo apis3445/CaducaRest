@@ -43,5 +43,7 @@ namespace CaducaRest.Models
         /// Productos
         /// </summary>
         public virtual DbSet<Producto> Producto { get; set; }
+
+
     }
 }

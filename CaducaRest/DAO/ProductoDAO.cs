@@ -16,6 +16,7 @@ namespace CaducaRest.DAO
     {
         private readonly CaducaContext contexto;
         private readonly LocService localizacion;
+
         /// <summary>
         /// Mensaje de error personalizado
         /// </summary>
@@ -25,6 +26,7 @@ namespace CaducaRest.DAO
         /// Clase para acceso a la base de datos
         /// </summary>
         /// <param name="context"></param>
+        /// <param name="locService"></param>
         public ProductoDAO(CaducaContext context, LocService locService)
         {
             this.contexto = context;

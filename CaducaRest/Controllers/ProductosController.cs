@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using CaducaRest.Models;
+using CaducaRest.Resources;
+using CaducaRest.DAO;
 
 namespace CaducaRest.Controllers
 {
@@ -16,13 +14,15 @@ namespace CaducaRest.Controllers
     [ApiController]
     public class ProductosController : ControllerBase
     {
+        private readonly LocService _localizer;
         private readonly CaducaContext _context;
-
+        private ProductoDAO productoDAO;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public ProductosController(CaducaContext context)
+        /// <param name="localize"></param>
+        public ProductosController(CaducaContext context, LocService localize)
         {
             _context = context;
         }
@@ -35,7 +35,7 @@ namespace CaducaRest.Controllers
         [HttpGet]
         public IEnumerable<Producto> GetProducto()
         {
-            return _context.Producto;
+            return productoDAO.ObtenerTodo();
         }
 
         /// <summary>
@@ -47,12 +47,7 @@ namespace CaducaRest.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProducto([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var producto = await _context.Producto.FindAsync(id);
+            var producto = await productoDAO.ObtenerPorIdAsync(id);
 
             if (producto == null)
             {
@@ -82,25 +77,14 @@ namespace CaducaRest.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(producto).State = EntityState.Modified;
-
-            try
+            if (!await productoDAO.ModificarAsync(producto))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(productoDAO.customError.StatusCode,
+                                  productoDAO.customError.Message);
             }
 
             return NoContent();
+
         }
 
         /// <summary>
@@ -112,15 +96,13 @@ namespace CaducaRest.Controllers
         [HttpPost]
         public async Task<IActionResult> PostProducto([FromBody] Producto producto)
         {
-            if (!ModelState.IsValid)
+            if (!await productoDAO.AgregarAsync(producto))
             {
-                return BadRequest(ModelState);
+                return StatusCode(productoDAO.customError.StatusCode,
+                                  productoDAO.customError.Message);
             }
 
-            _context.Producto.Add(producto);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProducto", new { id = producto.Id }, producto);
+            return CreatedAtAction("GetCategoria", new { id = producto.Id }, producto);
         }
 
         /// <summary>
@@ -136,22 +118,13 @@ namespace CaducaRest.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var producto = await _context.Producto.FindAsync(id);
-            if (producto == null)
+            if (!await productoDAO.BorraAsync(id))
             {
-                return NotFound();
+                return StatusCode(productoDAO.customError.StatusCode,
+                                  productoDAO.customError.Message);
             }
-
-            _context.Producto.Remove(producto);
-            await _context.SaveChangesAsync();
-
-            return Ok(producto);
+            return Ok();
         }
 
-        private bool ProductoExists(int id)
-        {
-            return _context.Producto.Any(e => e.Id == id);
-        }
     }
 }

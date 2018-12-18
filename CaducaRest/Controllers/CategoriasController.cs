@@ -7,6 +7,7 @@ using CaducaRest.DAO;
 using System.Collections.Generic;
 using CaducaRest.Resources;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CaducaRest.Controllers
 {
@@ -14,6 +15,7 @@ namespace CaducaRest.Controllers
     /// Servicios para guardar, modificar o borrar las categorías de los productos
     /// </summary>
     [Route("api/[controller]")]
+    
     [ApiController]
     public class CategoriasController : ControllerBase
     {
@@ -38,6 +40,7 @@ namespace CaducaRest.Controllers
         /// </summary>
         /// <returns>Todas las categorías</returns>
         [HttpGet]
+        [Authorize(Roles = "Administrator")]
         public List<Categoria> GetCategoria()
         {
             return categoriaDAO.ObtenerTodo();

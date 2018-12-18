@@ -4,9 +4,11 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using CaducaRest.Models;
 using CaducaRest.Resources;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -17,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -37,6 +40,22 @@ namespace CaducaRest
             services.AddSingleton<LocService>();
             //Le indicamos la carpeta donde estan todos los mensajes que utiliza la aplicación
             services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.AddAuthentication(o => {
+                            o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                            o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    })
+                    .AddJwtBearer(cfg =>
+                    {
+                        cfg.Audience = Configuration["Tokens:Issuer"];
+                        cfg.ClaimsIssuer = Configuration["Tokens:Issuer"];
+                        cfg.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            ValidIssuer = Configuration["Tokens:Issuer"],
+                            ValidAudience = Configuration["Tokens:Issuer"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                        };
+                    });
             //Indicamos que el modelo tomara los mensajes de error del archivo SharedResource
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(JsonOptions => JsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())

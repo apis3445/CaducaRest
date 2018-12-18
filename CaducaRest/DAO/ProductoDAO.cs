@@ -60,29 +60,22 @@ namespace CaducaRest.DAO
         public async Task<bool> AgregarAsync(Producto Producto)
         {
             Producto registroRepetido;
-            try
+            registroRepetido = contexto.Producto.FirstOrDefault(c => c.Nombre == Producto.Nombre);
+            if (registroRepetido != null)
             {
-                registroRepetido = contexto.Producto.FirstOrDefault(c => c.Nombre == Producto.Nombre);
-                if (registroRepetido != null)
-                {
-                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "nombre"), "Nombre");
-                    return false;
-                }
-                registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == Producto.Clave);
-                if (registroRepetido != null)
-                {
-                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "clave"), "Clave");
-                    return false;
-                }
-
-                contexto.Producto.Add(Producto);
-                await contexto.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "nombre"), "Nombre");
                 return false;
             }
+            registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == Producto.Clave);
+            if (registroRepetido != null)
+            {
+                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "clave"), "Clave");
+                return false;
+            }
+
+            contexto.Producto.Add(Producto);
+            await contexto.SaveChangesAsync();
+
             return true;
         }
 
@@ -94,33 +87,25 @@ namespace CaducaRest.DAO
         public async Task<bool> ModificarAsync(Producto Producto)
         {
             Producto registroRepetido;
-            try
+
+            //Se busca si existe una Producto con el mismo nombre pero diferente Id
+            registroRepetido = contexto.Producto.FirstOrDefault(c => c.Nombre == Producto.Nombre
+                                            && c.Id != Producto.Id);
+            if (registroRepetido != null)
             {
-                //Se busca si existe una Producto con el mismo nombre pero diferente Id
-                registroRepetido = contexto.Producto.FirstOrDefault(c => c.Nombre == Producto.Nombre
-                                                && c.Id != Producto.Id);
-                if (registroRepetido != null)
-                {
-                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "nombre"), "Nombre");
-                    return false;
-                }
-                registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == Producto.Clave
-                                                && c.Id != Producto.Id);
-                if (registroRepetido != null)
-                {
-                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "clave"), "Clave");
-                    return false;
-                }
-                contexto.Entry(Producto).State = EntityState.Modified;
-                await contexto.SaveChangesAsync();
+                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "nombre"), "Nombre");
+                return false;
             }
-            catch (DbUpdateConcurrencyException)
+            registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == Producto.Clave
+                                            && c.Id != Producto.Id);
+            if (registroRepetido != null)
             {
-                if (!ExisteProducto(Producto.Id))
-                {
-                    return false;
-                }
+                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "clave"), "Clave");
+                return false;
             }
+            contexto.Entry(Producto).State = EntityState.Modified;
+            await contexto.SaveChangesAsync();
+
             return true;
         }
 

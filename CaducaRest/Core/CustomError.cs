@@ -26,7 +26,7 @@
         /// <param name="statusCode">Código de erorr</param>
         /// <param name="message">Mensaje que explica el error</param>
         /// <param name="field">Campo que tiene el error</param>
-        public CustomError(int statusCode, string message, string field)
+        public CustomError(int statusCode, string message, string field="")
         {
             StatusCode = statusCode;
             Message = message;

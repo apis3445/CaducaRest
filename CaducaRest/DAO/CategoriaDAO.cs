@@ -58,29 +58,23 @@ namespace CaducaRest.DAO
         public async Task<bool> AgregarAsync(Categoria categoria)
         {
             Categoria registroRepetido;
-            try
-            {
-                registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == categoria.Nombre);
-                if (registroRepetido != null)
-                {
-                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "nombre"), "Nombre");
-                    return false;
-                }
-                registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave);
-                if (registroRepetido != null)
-                {
-                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "clave"), "Clave");
-                    return false;
-                }
 
-                contexto.Categoria.Add(categoria);
-                await contexto.SaveChangesAsync();
-            }
-            catch (Exception ex)
+            registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == categoria.Nombre);
+            if (registroRepetido != null)
             {
-                Console.WriteLine(ex.Message);
+                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "nombre"), "Nombre");
                 return false;
             }
+            registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave);
+            if (registroRepetido != null)
+            {
+                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "clave"), "Clave");
+                return false;
+            }
+
+            contexto.Categoria.Add(categoria);
+            await contexto.SaveChangesAsync();
+            
             return true;
         }
 
@@ -92,33 +86,25 @@ namespace CaducaRest.DAO
         public async Task<bool> ModificarAsync(Categoria categoria)
         {
             Categoria registroRepetido;
-            try
+
+            //Se busca si existe una categoria con el mismo nombre pero diferente Id
+            registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == categoria.Nombre
+                                            && c.Id != categoria.Id);
+            if (registroRepetido != null)
             {
-                //Se busca si existe una categoria con el mismo nombre pero diferente Id
-                registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == categoria.Nombre
-                                                && c.Id != categoria.Id);
-                if (registroRepetido != null)
-                {
-                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "nombre"), "Nombre");
-                    return false;
-                }
-                registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave
-                                                && c.Id != categoria.Id);
-                if (registroRepetido != null)
-                {
-                    customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "clave"), "Clave");
-                    return false;
-                }
-                contexto.Entry(categoria).State = EntityState.Modified;
-                await contexto.SaveChangesAsync();
+                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "nombre"), "Nombre");
+                return false;
             }
-            catch (DbUpdateConcurrencyException)
+            registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave
+                                            && c.Id != categoria.Id);
+            if (registroRepetido != null)
             {
-                if (!ExisteCategoria(categoria.Id))
-                {
-                    return false;
-                }
+                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "clave"), "Clave");
+                return false;
             }
+            contexto.Entry(categoria).State = EntityState.Modified;
+            await contexto.SaveChangesAsync();
+
             return true;
         }
 

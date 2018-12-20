@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using CaducaRest.Filters;
 using CaducaRest.Models;
 using CaducaRest.Resources;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -41,23 +42,27 @@ namespace CaducaRest
             //Le indicamos la carpeta donde estan todos los mensajes que utiliza la aplicación
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddAuthentication(o => {
-                            o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                            o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                    })
-                    .AddJwtBearer(cfg =>
-                    {
-                        cfg.Audience = Configuration["Tokens:Issuer"];
-                        cfg.ClaimsIssuer = Configuration["Tokens:Issuer"];
-                        cfg.TokenValidationParameters = new TokenValidationParameters()
-                        {
-                            ValidIssuer = Configuration["Tokens:Issuer"],
-                            ValidAudience = Configuration["Tokens:Issuer"],
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
-                        };
-                    });
+            //services.AddAuthentication(o => {
+            //                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //        })
+            //        .AddJwtBearer(cfg =>
+            //        {
+            //            cfg.Audience = Configuration["Tokens:Issuer"];
+            //            cfg.ClaimsIssuer = Configuration["Tokens:Issuer"];
+            //            cfg.TokenValidationParameters = new TokenValidationParameters()
+            //            {
+            //                ValidIssuer = Configuration["Tokens:Issuer"],
+            //                ValidAudience = Configuration["Tokens:Issuer"],
+            //                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+            //            };
+            //        });
             //Indicamos que el modelo tomara los mensajes de error del archivo SharedResource
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            services.AddMvc(options=>
+                        {
+                            options.Filters.Add(typeof(CustomExceptionFilter));
+                        }
+                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(JsonOptions => JsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
                 .AddDataAnnotationsLocalization(options =>
                 {

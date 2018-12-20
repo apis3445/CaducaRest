@@ -40,7 +40,6 @@ namespace CaducaRest.Controllers
         /// </summary>
         /// <returns>Todas las categorías</returns>
         [HttpGet]
-        [Authorize(Roles = "Administrator")]
         public List<Categoria> GetCategoria()
         {
             return categoriaDAO.ObtenerTodo();

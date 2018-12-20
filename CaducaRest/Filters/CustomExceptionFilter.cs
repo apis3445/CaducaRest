@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace CaducaRest.Filters
 {
+    /// <summary>
+    /// Filtro para errores persomnalizados
+    /// </summary>
     public class CustomExceptionFilter : ExceptionFilterAttribute
     {
         private readonly IHostingEnvironment _hostingEnvironment;

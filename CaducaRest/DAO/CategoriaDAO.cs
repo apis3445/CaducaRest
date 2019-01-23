@@ -1,6 +1,7 @@
 ﻿using CaducaRest.Core;
 using CaducaRest.Models;
 using CaducaRest.Resources;
+using CaducaRest.Rules;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace CaducaRest.DAO
     {
         private readonly CaducaContext contexto;
         private readonly LocService localizacion;
+        private AccesoDAO<Categoria> categoriaDAO;
         /// <summary>
         /// Mensaje de error personalizado
         /// </summary>
@@ -29,15 +31,16 @@ namespace CaducaRest.DAO
         {
             this.contexto = context;
             this.localizacion = locService;
+            categoriaDAO = new AccesoDAO<Categoria>(context, locService);
         }
 
         /// <summary>
         /// Obtiene todas las categorias
         /// </summary>
         /// <returns></returns>
-        public List<Categoria> ObtenerTodo()
+        public async Task<List<Categoria>> ObtenerTodoAsync()
         {
-            return contexto.Categoria.ToList();
+            return await categoriaDAO.ObtenerTodoAsync();
         }
 
         /// <summary>
@@ -47,7 +50,7 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<Categoria> ObtenerPorIdAsync(int id)
         {
-            return await contexto.Categoria.FindAsync(id);
+            return await categoriaDAO.ObtenerPorIdAsync(id);
         }
 
         /// <summary>
@@ -57,25 +60,20 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<bool> AgregarAsync(Categoria categoria)
         {
-            Categoria registroRepetido;
+            CategoriaNombreAgregarRegla nombreRepetido = new CategoriaNombreAgregarRegla(categoria.Nombre, contexto, localizacion);
+            CategoriaClaveAgregarRegla claveRepetido = new CategoriaClaveAgregarRegla(categoria.Clave, contexto, localizacion);
 
-            registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == categoria.Nombre);
-            if (registroRepetido != null)
+            List<IRegla> reglas = new List<Core.IRegla>();
+            reglas.Add(nombreRepetido);
+            reglas.Add(claveRepetido);
+
+            if (await categoriaDAO.AgregarAsync(categoria, reglas))
+                return true;
+            else
             {
-                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "nombre"), "Nombre");
+                customError = categoriaDAO.customError;
                 return false;
             }
-            registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave);
-            if (registroRepetido != null)
-            {
-                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "clave"), "Clave");
-                return false;
-            }
-
-            contexto.Categoria.Add(categoria);
-            await contexto.SaveChangesAsync();
-            
-            return true;
         }
 
         /// <summary>
@@ -115,22 +113,16 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<bool> BorraAsync(int id)
         {
-            var categoria = await ObtenerPorIdAsync(id);
-            if (categoria == null)
+            if (await categoriaDAO.BorraAsync(id))
+                return true;
+            else
             {
-                customError = new CustomError(404, String.Format(this.localizacion.GetLocalizedHtmlString("NotFound"), "La categoría"), "Id");
+                customError = categoriaDAO.customError;
                 return false;
             }
-            
-            contexto.Categoria.Remove(categoria);
-            await contexto.SaveChangesAsync();
-            return true;
+
         }
 
-        private bool ExisteCategoria(int id)
-        {
-            
-            return contexto.Categoria.Any(e => e.Id == id);
-        }
+ 
     }
 }

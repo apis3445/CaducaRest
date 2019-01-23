@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using CaducaRest.Resources;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using CaducaRest.Core;
 
 namespace CaducaRest.Controllers
 {
@@ -40,9 +41,9 @@ namespace CaducaRest.Controllers
         /// </summary>
         /// <returns>Todas las categorías</returns>
         [HttpGet]
-        public List<Categoria> GetCategoria()
+        public async Task<List<Categoria>> GetCategoriaAsync()
         {
-            return categoriaDAO.ObtenerTodo();
+            return  await categoriaDAO.ObtenerTodoAsync();
         }
 
         /// <summary>

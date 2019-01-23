@@ -113,16 +113,13 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<bool> BorraAsync(int id)
         {
-            if (await categoriaDAO.BorraAsync(id))
+            if (await categoriaDAO.BorraAsync(id, new List<IRegla>(), "La categoría"))
                 return true;
             else
             {
                 customError = categoriaDAO.customError;
                 return false;
             }
-
-        }
-
- 
+        }       
     }
 }

@@ -56,19 +56,26 @@ namespace CaducaRest.Core
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<bool> BorraAsync(int id, List<IRegla> reglas)
+        public async Task<bool> BorraAsync(int id, List<IRegla> reglas, string nombreTabla)
         {
+            foreach (var regla in reglas)
             {
-                var registro = await ObtenerPorIdAsync(id);
-                if (registro == null)
+                if (!regla.ValidarRegla())
                 {
-                    customError = new CustomError(404, String.Format(this.localizacion.GetLocalizedHtmlString("NotFound"), "La Producto"), "Id");
+                    customError = regla.customError;
                     return false;
                 }
-                contexto.Set<TEntity>().Remove(registro);
-                await contexto.SaveChangesAsync();
-                return true;
             }
+            var registro = await ObtenerPorIdAsync(id);
+            if (registro == null)
+            {
+                customError = new CustomError(404, String.Format(this.localizacion.GetLocalizedHtmlString("NotFound"), nombreTabla), "Id");
+                return false;
+            }
+            contexto.Set<TEntity>().Remove(registro);
+            await contexto.SaveChangesAsync();
+            return true;
+
         }
 
         /// <summary>
@@ -78,7 +85,14 @@ namespace CaducaRest.Core
         /// <returns></returns>
         public async Task<bool> ModificarAsync(TEntity registro, List<IRegla> reglas)
         {
-            
+            foreach (var regla in reglas)
+            {
+                if (!regla.ValidarRegla())
+                {
+                    customError = regla.customError;
+                    return false;
+                }
+            }
             contexto.Entry(registro).State = EntityState.Modified;
             await contexto.SaveChangesAsync();
 

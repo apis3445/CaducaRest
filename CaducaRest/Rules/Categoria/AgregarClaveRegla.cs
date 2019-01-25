@@ -2,19 +2,17 @@
 using CaducaRest.Models;
 using CaducaRest.Resources;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace CaducaRest.Rules
+namespace CaducaRest.Rules.Categoria
 {
-    public class CategoriaClaveAgregarRegla: IRegla
+    public class AgregarClaveRegla: IRegla
     {
         private int clave;
         private readonly CaducaContext contexto;
         private readonly LocService localizacion;
 
-        public CategoriaClaveAgregarRegla(int clave, CaducaContext context, LocService locService)
+        public AgregarClaveRegla(int clave, CaducaContext context, LocService locService)
         {
             this.clave = clave;
             this.contexto = context;

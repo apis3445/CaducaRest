@@ -1,11 +1,8 @@
 ﻿using CaducaRest.Core;
 using CaducaRest.Models;
 using CaducaRest.Resources;
-using CaducaRest.Rules;
-using Microsoft.EntityFrameworkCore;
-using System;
+using CaducaRest.Rules.Categoria;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CaducaRest.DAO
@@ -26,7 +23,8 @@ namespace CaducaRest.DAO
         /// <summary>
         /// Clase para acceso a la base de datos
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">Objeto para base de datos</param>
+        /// <param name="locService">Localización</param>
         public CategoriaDAO(CaducaContext context, LocService locService)
         {
             this.contexto = context;
@@ -60,8 +58,8 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<bool> AgregarAsync(Categoria categoria)
         {
-            CategoriaNombreAgregarRegla nombreRepetido = new CategoriaNombreAgregarRegla(categoria.Nombre, contexto, localizacion);
-            CategoriaClaveAgregarRegla claveRepetido = new CategoriaClaveAgregarRegla(categoria.Clave, contexto, localizacion);
+            AgregarNombreRegla nombreRepetido = new AgregarNombreRegla(categoria.Nombre, contexto, localizacion);
+            AgregarClaveRegla claveRepetido = new AgregarClaveRegla(categoria.Clave, contexto, localizacion);
 
             List<IRegla> reglas = new List<Core.IRegla>();
             reglas.Add(nombreRepetido);
@@ -83,27 +81,20 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<bool> ModificarAsync(Categoria categoria)
         {
-            Categoria registroRepetido;
+            ModificarNombreRegla nombreRepetido = new ModificarNombreRegla(categoria.Id, categoria.Nombre, contexto, localizacion);
+            ModificarClaveRegla claveRepetido = new ModificarClaveRegla(categoria.Id, categoria.Clave, contexto, localizacion);
 
-            //Se busca si existe una categoria con el mismo nombre pero diferente Id
-            registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == categoria.Nombre
-                                            && c.Id != categoria.Id);
-            if (registroRepetido != null)
+            List<IRegla> reglas = new List<Core.IRegla>();
+            reglas.Add(nombreRepetido);
+            reglas.Add(claveRepetido);
+
+            if (await categoriaDAO.ModificarAsync(categoria, reglas))
+                return true;
+            else
             {
-                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "nombre"), "Nombre");
+                customError = categoriaDAO.customError;
                 return false;
             }
-            registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == categoria.Clave
-                                            && c.Id != categoria.Id);
-            if (registroRepetido != null)
-            {
-                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "clave"), "Clave");
-                return false;
-            }
-            contexto.Entry(categoria).State = EntityState.Modified;
-            await contexto.SaveChangesAsync();
-
-            return true;
         }
 
         /// <summary>

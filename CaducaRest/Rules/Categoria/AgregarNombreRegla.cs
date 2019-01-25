@@ -4,15 +4,15 @@ using CaducaRest.Resources;
 using System;
 using System.Linq;
 
-namespace CaducaRest.Rules
+namespace CaducaRest.Rules.Categoria
 {
-    public class CategoriaNombreAgregarRegla : IRegla
+    public class AgregarNombreRegla : IRegla
     {
         private string nombre;
         private readonly CaducaContext contexto;
         private readonly LocService localizacion;
 
-        public CategoriaNombreAgregarRegla(string nombre, CaducaContext context, LocService locService)
+        public AgregarNombreRegla(string nombre, CaducaContext context, LocService locService)
         {
             this.nombre = nombre;
             this.contexto = context;

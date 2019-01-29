@@ -118,6 +118,12 @@ namespace CaducaRest.DAO
             return contexto.Producto.Any(e => e.Id == id);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="nombre"></param>
+        /// <returns></returns>
         public bool EsNombreRepetido(int id, string nombre)
         {
             var registroRepetido = contexto.Producto.FirstOrDefault(c => c.Nombre == nombre

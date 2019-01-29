@@ -20,6 +20,11 @@ namespace CaducaRest.Models.Entity_Configurations
             builder.HasOne(typeof(Categoria))
                    .WithMany()
                    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasIndex(e => e.Nombre)
+                .IsUnique()
+                .HasName("UX_ProductoNombre");
+
         }
     }
 }

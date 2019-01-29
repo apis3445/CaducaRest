@@ -9,7 +9,6 @@
     <DocumentationFile>bin\Debug\netcoreapp2.1\CaducaRest.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Rules\Producto\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

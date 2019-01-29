@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CaducaRest.Rules;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CaducaRest.Models
@@ -32,6 +33,7 @@ namespace CaducaRest.Models
         /// </summary>
         [Required(ErrorMessage = "Required")]
         [Column(TypeName = "VARCHAR(80)")]
+        [NombreValidation()]
         public string Nombre { get; set; }
     }
 }

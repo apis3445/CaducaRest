@@ -25,6 +25,7 @@ namespace CaducaRest.Controllers
         public ProductosController(CaducaContext context, LocService localize)
         {
             _context = context;
+            productoDAO = new ProductoDAO(context, localize);
         }
 
         /// <summary>

@@ -59,14 +59,8 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<bool> AgregarAsync(Producto Producto)
         {
-            Producto registroRepetido;
-            registroRepetido = contexto.Producto.FirstOrDefault(c => c.Nombre == Producto.Nombre);
-            if (registroRepetido != null)
-            {
-                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "nombre"), "Nombre");
-                return false;
-            }
-            registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == Producto.Clave);
+
+            var registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == Producto.Clave);
             if (registroRepetido != null)
             {
                 customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "clave"), "Clave");
@@ -86,17 +80,8 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<bool> ModificarAsync(Producto Producto)
         {
-            Producto registroRepetido;
-
-            //Se busca si existe una Producto con el mismo nombre pero diferente Id
-            registroRepetido = contexto.Producto.FirstOrDefault(c => c.Nombre == Producto.Nombre
-                                            && c.Id != Producto.Id);
-            if (registroRepetido != null)
-            {
-                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "nombre"), "Nombre");
-                return false;
-            }
-            registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == Producto.Clave
+            
+            var registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == Producto.Clave
                                             && c.Id != Producto.Id);
             if (registroRepetido != null)
             {
@@ -131,6 +116,18 @@ namespace CaducaRest.DAO
         private bool ExisteProducto(int id)
         {
             return contexto.Producto.Any(e => e.Id == id);
+        }
+
+        public bool EsNombreRepetido(int id, string nombre)
+        {
+            var registroRepetido = contexto.Producto.FirstOrDefault(c => c.Nombre == nombre
+                                          && c.Id != id);
+            if (registroRepetido != null)
+            {
+                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "nombre"), "Nombre");
+                return true;
+            }
+            return false;
         }
 
     }

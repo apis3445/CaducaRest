@@ -26,6 +26,7 @@ namespace CaducaRest.Models
         /// </summary>
         [Required(ErrorMessage = "Required")]
         [Range(1, 999, ErrorMessage = "Range")]
+        [ClaveValidation("Id")]
         public int Clave { get; set; }
 
         /// <summary>

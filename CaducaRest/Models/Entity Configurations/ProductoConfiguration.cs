@@ -25,6 +25,10 @@ namespace CaducaRest.Models.Entity_Configurations
                 .IsUnique()
                 .HasName("UX_ProductoNombre");
 
+            builder.HasIndex(e => e.Clave)
+                .IsUnique()
+                .HasName("UX_ProductoClave");
+
         }
     }
 }

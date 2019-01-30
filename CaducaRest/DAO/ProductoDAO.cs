@@ -59,17 +59,8 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<bool> AgregarAsync(Producto Producto)
         {
-
-            var registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == Producto.Clave);
-            if (registroRepetido != null)
-            {
-                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "clave"), "Clave");
-                return false;
-            }
-
             contexto.Producto.Add(Producto);
             await contexto.SaveChangesAsync();
-
             return true;
         }
 
@@ -80,17 +71,8 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<bool> ModificarAsync(Producto Producto)
         {
-            
-            var registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == Producto.Clave
-                                            && c.Id != Producto.Id);
-            if (registroRepetido != null)
-            {
-                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "clave"), "Clave");
-                return false;
-            }
             contexto.Entry(Producto).State = EntityState.Modified;
             await contexto.SaveChangesAsync();
-
             return true;
         }
 
@@ -107,7 +89,6 @@ namespace CaducaRest.DAO
                 customError = new CustomError(404, String.Format(this.localizacion.GetLocalizedHtmlString("NotFound"), "La Producto"), "Id");
                 return false;
             }
-
             contexto.Producto.Remove(Producto);
             await contexto.SaveChangesAsync();
             return true;
@@ -119,10 +100,10 @@ namespace CaducaRest.DAO
         }
 
         /// <summary>
-        /// 
+        /// Permite validar si el nombre del producto se repite
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="nombre"></param>
+        /// <param name="id">Id del producto</param>
+        /// <param name="nombre">Nombre del producto</param>
         /// <returns></returns>
         public bool EsNombreRepetido(int id, string nombre)
         {
@@ -136,5 +117,22 @@ namespace CaducaRest.DAO
             return false;
         }
 
+        /// <summary>
+        /// Permite validar si la clave del producto se repite
+        /// </summary>
+        /// <param name="id">Id del producto</param>
+        /// <param name="clave">Clave del producto</param>
+        /// <returns></returns>
+        public bool EsClaveRepetida(int id, int clave)
+        {
+            var registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == clave
+                                          && c.Id != id);
+            if (registroRepetido != null)
+            {
+                customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "Producto", "clave"), "Clave");
+                return true;
+            }
+            return false;
+        }
     }
 }

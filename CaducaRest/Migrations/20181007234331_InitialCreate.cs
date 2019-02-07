@@ -18,8 +18,9 @@ namespace CaducaRest.Migrations
                 name: "Categoria",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<int>(nullable: false),
+                       // .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
+                       
                     Clave = table.Column<int>(nullable: false),
                     Nombre = table.Column<string>(type: "VARCHAR(80)", nullable: false)
                 },

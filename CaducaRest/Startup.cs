@@ -89,7 +89,10 @@ namespace CaducaRest
 
                     options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
                 });
-            services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            //Conexión MySQL
+            //services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            //Conexión SQL Server
+            services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
             //Se agrega en generador de Swagger
             services.AddSwaggerGen(c =>
             {

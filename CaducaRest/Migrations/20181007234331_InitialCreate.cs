@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CaducaRest.Migrations
 {
@@ -18,9 +19,9 @@ namespace CaducaRest.Migrations
                 name: "Categoria",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                       // .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
-                       
+                    Id = table.Column<int>(nullable: false)
+                    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                      //.Annotation("MySql:ValueGenerationStrategy", SqlValueGenerationStrategy.IdentityColumn)  ,                   
                     Clave = table.Column<int>(nullable: false),
                     Nombre = table.Column<string>(type: "VARCHAR(80)", nullable: false)
                 },

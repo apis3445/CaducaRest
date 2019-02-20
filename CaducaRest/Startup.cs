@@ -92,7 +92,9 @@ namespace CaducaRest
             //Conexión MySQL
             //services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             //Conexión SQL Server
-            services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
+            //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
+            //Conexión SQL Server Azure
+            services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
             //Se agrega en generador de Swagger
             services.AddSwaggerGen(c =>
             {

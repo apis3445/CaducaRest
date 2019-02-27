@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using CaducaRest.Filters;
 using CaducaRest.Models;
 using CaducaRest.Resources;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,6 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OData.Edm;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -37,7 +40,8 @@ namespace CaducaRest
         
         public void ConfigureServices(IServiceCollection services)
         {
-            //LA clase LocServicde nos permite cambiar los mensajes de error según el idioma
+            services.AddOData();
+            //La clase LocServicde nos permite cambiar los mensajes de error según el idioma
             services.AddSingleton<LocService>();
             //Le indicamos la carpeta donde estan todos los mensajes que utiliza la aplicación
             services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -124,7 +128,17 @@ namespace CaducaRest
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Caduca REST");
             });
-            app.UseMvc();
+            app.UseMvc(b =>
+            {
+                b.MapODataServiceRoute("odata", "odata", GetEdmModel());
+            });
+        }
+
+        private static IEdmModel GetEdmModel()
+        {
+            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Cliente>("Clientes");
+            return builder.GetEdmModel();
         }
     }
 }

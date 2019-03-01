@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CaducaRest.Models;
+﻿using CaducaRest.Models;
 using CaducaRest.Resources;
 using Microsoft.AspNet.OData;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CaducaRest.Controllers

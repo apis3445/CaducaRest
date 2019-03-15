@@ -22,7 +22,7 @@ namespace CaducaRest.Rules.Categoria
        
         public bool ValidarRegla()
         {
-            var registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Clave == clave);
+            var registroRepetido = contexto.Categoria.AsNoTracking().FirstOrDefault(c => c.Clave == clave);
             if (registroRepetido != null)
             {
                 customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "clave"), "Clave");

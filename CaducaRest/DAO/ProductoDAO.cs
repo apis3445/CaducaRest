@@ -107,7 +107,7 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public bool EsNombreRepetido(int id, string nombre)
         {
-            var registroRepetido = contexto.Producto.FirstOrDefault(c => c.Nombre == nombre
+            var registroRepetido = contexto.Producto.AsNoTracking().FirstOrDefault(c => c.Nombre == nombre
                                           && c.Id != id);
             if (registroRepetido != null)
             {
@@ -125,7 +125,7 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public bool EsClaveRepetida(int id, int clave)
         {
-            var registroRepetido = contexto.Producto.FirstOrDefault(c => c.Clave == clave
+            var registroRepetido = contexto.Producto.AsNoTracking().FirstOrDefault(c => c.Clave == clave
                                           && c.Id != id);
             if (registroRepetido != null)
             {

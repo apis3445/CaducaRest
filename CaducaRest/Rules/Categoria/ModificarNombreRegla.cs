@@ -25,7 +25,7 @@ namespace CaducaRest.Rules.Categoria
 
         public bool ValidarRegla()
         {
-            var registroRepetido = contexto.Categoria.FirstOrDefault(c => c.Nombre == nombre
+            var registroRepetido = contexto.Categoria.AsNoTracking().FirstOrDefault(c => c.Nombre == nombre
                                            && c.Id != id);
             if (registroRepetido != null)
             {

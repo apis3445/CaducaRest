@@ -12,6 +12,7 @@ namespace CaducaRest.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [ApiVersionNeutral]
     public class ProductosController : ControllerBase
     {
         private readonly LocService _localizer;

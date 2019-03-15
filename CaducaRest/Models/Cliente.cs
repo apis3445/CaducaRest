@@ -20,6 +20,7 @@ namespace CaducaRest.Models
         /// </summary>
         [Required(ErrorMessage = "Required")]
         [Range(1, 999999, ErrorMessage = "Range")]
+        [CaducaRest.Rules.Cliente.ClaveValidation()]
         public int Clave { get; set; }
 
         /// <summary>
@@ -34,6 +35,7 @@ namespace CaducaRest.Models
         /// </summary>
         [Required(ErrorMessage = "Required")]
         [Column(TypeName = "VARCHAR(250)")]
+        [CaducaRest.Rules.Cliente.RazonSocialValidation()]
         public string  RazonSocial { get; set; }
         
         /// <summary>

@@ -43,8 +43,6 @@ namespace CaducaRest.Core
         /// <param name="id"></param>
         /// <returns></returns>
         Task<bool> BorraAsync(int id, List<IRegla> reglas, string nombreTabla);
-       
-
 
     }
 }

@@ -11,6 +11,7 @@ using CaducaRest.Models;
 using CaducaRest.Resources;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
@@ -65,6 +67,20 @@ namespace CaducaRest
             services.AddMvc(options=>
                         {
                             options.Filters.Add(typeof(CustomExceptionFilter));
+                            foreach (var formatter in options.OutputFormatters
+                                        .OfType<ODataOutputFormatter>()
+                                        .Where(it => !it.SupportedMediaTypes.Any()))
+                            {
+                                formatter.SupportedMediaTypes.Add(
+                                    new MediaTypeHeaderValue("application/prs.mock-odata"));
+                            }
+                            foreach (var formatter in options.InputFormatters
+                                .OfType<ODataInputFormatter>()
+                                .Where(it => !it.SupportedMediaTypes.Any()))
+                            {
+                                formatter.SupportedMediaTypes.Add(
+                                    new MediaTypeHeaderValue("application/prs.mock-odata"));
+                            }
                         }
                 ).SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(JsonOptions => JsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())

@@ -8,6 +8,7 @@ namespace CaducaRest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiVersionNeutral]
     public class ValuesController : ControllerBase
     {
         // GET api/values

@@ -18,6 +18,7 @@ namespace CaducaRest.Controllers
     [Route("api/[controller]")]
     
     [ApiController]
+    [ApiVersionNeutral]
     public class CategoriasController : ControllerBase
     {
         private readonly LocService _localizer;
@@ -53,6 +54,7 @@ namespace CaducaRest.Controllers
         /// <param name="id">Id de la categoría</param>
         // GET: api/Categorias/5
         [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(Categoria))]
         public async Task<IActionResult> GetCategoria([FromRoute] int id)
         {
 

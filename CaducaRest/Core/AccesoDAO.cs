@@ -55,6 +55,8 @@ namespace CaducaRest.Core
         /// Permite borrar un registro
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="reglas"></param>
+        /// <param name="nombreTabla"></param>
         /// <returns></returns>
         public async Task<bool> BorraAsync(int id, List<IRegla> reglas, string nombreTabla)
         {
@@ -82,6 +84,7 @@ namespace CaducaRest.Core
         /// Permite modificar un registro
         /// </summary>
         /// <param name="registro"></param>
+        /// <param name="reglas">Contiene las reglas a validar</param>
         /// <returns></returns>
         public async Task<bool> ModificarAsync(TEntity registro, List<IRegla> reglas)
         {

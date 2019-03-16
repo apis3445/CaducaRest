@@ -1,6 +1,7 @@
 ﻿using CaducaRest.Core;
 using CaducaRest.Models;
 using CaducaRest.Resources;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

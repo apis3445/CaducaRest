@@ -14,6 +14,8 @@ namespace CaducaRest.Models.Entity_Configurations
             builder.HasIndex(e => e.RazonSocial)
             .HasName("UI_ClienteCategoriaNombre")
             .IsUnique();
+
+           
         }
     }
 }

@@ -155,6 +155,8 @@ namespace CaducaRest
         {
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Cliente>("Clientes");
+            builder.EntitySet<ClienteCategoria>("ClientesCategorias");
+            builder.EntitySet<Categoria>("Categorias");
             return builder.GetEdmModel();
         }
     }

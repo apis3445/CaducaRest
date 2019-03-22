@@ -30,8 +30,12 @@ namespace CaducaRest.Models
             //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
             //}
 
+           
+
             modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
             modelBuilder.ApplyConfiguration(new ProductoConfiguration());
+            modelBuilder.ApplyConfiguration(new ClienteConfiguration());
+            modelBuilder.ApplyConfiguration(new ClienteCategoriaConfiguration());
         }
 
         /// <summary>
@@ -48,5 +52,10 @@ namespace CaducaRest.Models
         /// Clientes
         /// </summary>
         public virtual DbSet<Cliente> Cliente { get; set; }
+
+        /// <summary>
+        /// Categorías que maneja cada cliente
+        /// </summary>
+        public virtual DbSet<ClienteCategoria> ClienteCategoria { get; set; }
     }
 }

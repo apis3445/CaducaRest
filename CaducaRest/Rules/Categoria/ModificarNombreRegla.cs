@@ -16,6 +16,7 @@ namespace CaducaRest.Rules.Categoria
         private readonly LocService localizacion;
         public CustomError customError { get; set; }
 
+
         public ModificarNombreRegla(int id, string nombre, CaducaContext context, LocService locService)
         {
             this.nombre = nombre;

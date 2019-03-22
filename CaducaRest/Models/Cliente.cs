@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CaducaRest.Models
@@ -8,6 +10,11 @@ namespace CaducaRest.Models
     /// </summary>
     public class Cliente
     {
+
+        public Cliente()
+        {
+            ClientesCategorias = new Collection<ClienteCategoria>();
+        }
         /// <summary>
         /// Id del cliente
         /// </summary>
@@ -81,5 +88,11 @@ namespace CaducaRest.Models
         /// </summary>
         [Required(ErrorMessage = "Required")]
         public bool Activo { get; set; }
+
+        
+        /// <summary>
+        /// Para mostrar las categorias de los clientes
+        /// </summary>
+        public virtual ICollection<ClienteCategoria> ClientesCategorias { get; set; }
     }
 }

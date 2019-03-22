@@ -29,6 +29,8 @@
     <Compile Remove="Migrations\20181007234129_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20181206043858_LLaveProductosCategoria.cs" />
     <Compile Remove="Migrations\20181206043858_LLaveProductosCategoria.Designer.cs" />
+    <Compile Remove="Migrations\20190320041219_ClienteCategoria.cs" />
+    <Compile Remove="Migrations\20190320041219_ClienteCategoria.Designer.cs" />
     <Compile Remove="Models\EmptyClass.cs" />
   </ItemGroup>
 </Project>

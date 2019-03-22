@@ -6,6 +6,7 @@ using CaducaRest.Rules.Categoria;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CaducaRest.Controllers
@@ -32,6 +33,7 @@ namespace CaducaRest.Controllers
             _context = context;
             _localizer = localizer;
             clienteDAO = new ClienteDAO(_context, _localizer);
+            
 
 
         }

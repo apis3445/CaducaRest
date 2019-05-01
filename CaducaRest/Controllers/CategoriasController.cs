@@ -42,7 +42,7 @@ namespace CaducaRest.Controllers
         /// </summary>
         /// <returns>Todas las categorías</returns>
         [HttpGet]
-        public async Task<List<Caducidad>> GetCategoriaAsync()
+        public async Task<List<Categoria>> GetCategoriaAsync()
         {
             return  await categoriaDAO.ObtenerTodoAsync();
         }
@@ -54,7 +54,7 @@ namespace CaducaRest.Controllers
         /// <param name="id">Id de la categoría</param>
         // GET: api/Categorias/5
         [HttpGet("{id}")]
-        [ProducesResponseType(200, Type = typeof(Caducidad))]
+        [ProducesResponseType(200, Type = typeof(Categoria))]
         public async Task<IActionResult> GetCategoria([FromRoute] int id)
         {
 
@@ -75,7 +75,7 @@ namespace CaducaRest.Controllers
         /// <param name="id">Id de la categoría a Modificar</param>
         /// <param name="categoria">Datos de la Categoria.</param>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategoria([FromRoute] int id, [FromBody] Caducidad categoria)
+        public async Task<IActionResult> PutCategoria([FromRoute] int id, [FromBody] Categoria categoria)
         {
             if (!ModelState.IsValid)
             {
@@ -103,7 +103,7 @@ namespace CaducaRest.Controllers
         /// <param name="categoria">Datos de la categoría</param>
 
         [HttpPost]
-        public async Task<IActionResult> PostCategoria([FromBody] Caducidad categoria)
+        public async Task<IActionResult> PostCategoria([FromBody] Categoria categoria)
         {
             if (!await categoriaDAO.AgregarAsync(categoria))
             {

@@ -11,10 +11,7 @@ namespace CaducaRest.Models
     /// </summary>
     public class Categoria
     {
-        public Categoria()
-        {
-            ClientesCategorias = new Collection<ClienteCategoria>();
-        }
+        public Categoria() => ClientesCategorias = new Collection<ClienteCategoria>();
 
         /// <summary>
         /// Id de la categoria.

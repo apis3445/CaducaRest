@@ -1,5 +1,4 @@
-﻿using CaducaRest.Migrations;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CaducaRest.Models.Entity_Configurations

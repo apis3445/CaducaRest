@@ -17,7 +17,7 @@ namespace CaducaRest.Models.Entity_Configurations
             builder.HasIndex(e => e.CategoriaId)
              .HasName("IX_ProductoCategoria");
 
-            builder.HasOne(typeof(Categoria))
+            builder.HasOne(typeof(Caducidad))
                    .WithMany()
                    .OnDelete(DeleteBehavior.Restrict);
 

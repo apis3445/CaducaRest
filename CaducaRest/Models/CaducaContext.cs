@@ -41,7 +41,7 @@ namespace CaducaRest.Models
         /// <summary>
         /// Categorías para los productos
         /// </summary>
-        public virtual DbSet<Categoria> Categoria { get; set; }
+        public virtual DbSet<Caducidad> Categoria { get; set; }
 
         /// <summary>
         /// Productos

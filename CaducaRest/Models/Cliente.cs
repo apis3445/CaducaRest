@@ -10,7 +10,9 @@ namespace CaducaRest.Models
     /// </summary>
     public class Cliente
     {
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:CaducaRest.Models.Cliente"/> class.
+        /// </summary>
         public Cliente()
         {
             ClientesCategorias = new Collection<ClienteCategoria>();

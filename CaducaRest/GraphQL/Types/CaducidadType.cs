@@ -15,6 +15,7 @@ namespace CaducaRest.GraphQL.Types
             Field(a => a.ProductoId);
             Field(a => a.ClienteId);
             Field(a => a.Cantidad);
+            Field(a => a.Fecha);
         }
 
     }

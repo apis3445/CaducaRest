@@ -40,5 +40,12 @@ namespace CaducaRest.Models
         /// <value>The cantidad.</value>
         [Required(ErrorMessage = "Required")]
         public int Cantidad { get; set; }
+
+        /// <summary>
+        /// Fecha en que caducan los articulos
+        /// </summary>
+        /// <value>The fecha.</value>
+        [Required(ErrorMessage = "Required")]
+        public DateTime Fecha { get; set; }
     }
 }

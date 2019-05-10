@@ -1,4 +1,5 @@
 ﻿using CaducaRest.Models.Entity_Configurations;
+using CaducaRest.Models.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -30,11 +31,10 @@ namespace CaducaRest.Models
             //    relationship.DeleteBehavior = DeleteBehavior.Restrict;
             //}
 
-           
-
             modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
             modelBuilder.ApplyConfiguration(new ProductoConfiguration());
             modelBuilder.ApplyConfiguration(new ClienteConfiguration());
+            modelBuilder.ApplyConfiguration(new CaducidadConfiguration());
             modelBuilder.ApplyConfiguration(new ClienteCategoriaConfiguration());
         }
 
@@ -52,6 +52,12 @@ namespace CaducaRest.Models
         /// Clientes
         /// </summary>
         public virtual DbSet<Cliente> Cliente { get; set; }
+
+        /// <summary>
+        /// Caducidad
+        /// </summary>
+        /// <value>The caducidad.</value>
+        public virtual DbSet<Caducidad> Caducidad { get; set; }
 
         /// <summary>
         /// Categorías que maneja cada cliente

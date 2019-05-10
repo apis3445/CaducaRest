@@ -11,6 +11,9 @@ namespace CaducaRest.Models
     /// </summary>
     public class Categoria
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="T:CaducaRest.Models.Categoria"/> class.
+        /// </summary>
         public Categoria() => ClientesCategorias = new Collection<ClienteCategoria>();
 
         /// <summary>
@@ -37,6 +40,10 @@ namespace CaducaRest.Models
         [Column(TypeName = "VARCHAR(80)")]
         public string Nombre { get; set; }
 
+        /// <summary>
+        /// Gets or sets the clientes categorias.
+        /// </summary>
+        /// <value>The clientes categorias.</value>
         public virtual ICollection<ClienteCategoria> ClientesCategorias { get; set; }
     }
 }

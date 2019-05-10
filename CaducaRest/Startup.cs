@@ -7,8 +7,12 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using CaducaRest.Filters;
+using CaducaRest.GraphQL.Schemas;
 using CaducaRest.Models;
 using CaducaRest.Resources;
+using GraphiQl;
+using GraphQL;
+using GraphQL.Server;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
@@ -125,7 +129,17 @@ namespace CaducaRest
                 var xmlPath = Path.Combine(basePath, fileName);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            services.AddScoped<IDependencyResolver>(s =>
+                new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<CaducidadSchema>();
+            services.AddGraphQL(x =>
+            {
+                x.ExposeExceptions = true; //set true only in development mode. make it switchable.
+            })
+            .AddGraphTypes(ServiceLifetime.Scoped);
         }
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -134,6 +148,10 @@ namespace CaducaRest
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseGraphQL<CaducidadSchema>();
+            app.UseGraphiQl();
+          
             //Habilitar swagger
             app.UseSwagger();
             //Indicamos que se van a utilizar varios idiomas

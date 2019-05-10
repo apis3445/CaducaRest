@@ -26,7 +26,8 @@ namespace CaducaRest.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    //  .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Clave = table.Column<int>(nullable: false),
                     RFC = table.Column<string>(type: "VARCHAR(15)", nullable: true),
                     RazonSocial = table.Column<string>(type: "VARCHAR(250)", nullable: false),

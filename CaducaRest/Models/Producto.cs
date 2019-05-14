@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -38,8 +37,11 @@ namespace CaducaRest.Models
         [NombreValidation()]
         public string Nombre { get; set; }
 
+        /// <summary>
+        /// Lista de caducidades
+        /// </summary>
+        /// <value>The caducidades.</value>
         public virtual ICollection<Caducidad> Caducidades { get; set; }
-
 
     }
 }

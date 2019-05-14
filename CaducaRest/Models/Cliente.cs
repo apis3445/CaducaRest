@@ -96,5 +96,8 @@ namespace CaducaRest.Models
         /// Para mostrar las categorias de los clientes
         /// </summary>
         public virtual ICollection<ClienteCategoria> ClientesCategorias { get; set; }
+
+        public virtual ICollection<Caducidad> Caducidades { get; set; }
+
     }
 }

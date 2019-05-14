@@ -13,6 +13,7 @@ using CaducaRest.Resources;
 using GraphiQl;
 using GraphQL;
 using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
@@ -137,7 +138,9 @@ namespace CaducaRest
             {
                 x.ExposeExceptions = true; //set true only in development mode. make it switchable.
             })
-            .AddGraphTypes(ServiceLifetime.Scoped);
+            .AddGraphTypes(ServiceLifetime.Scoped)
+            .AddUserContextBuilder(httpContext => httpContext.User)
+                .AddDataLoader();
         }
         
 
@@ -148,10 +151,20 @@ namespace CaducaRest
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+           
 
             app.UseGraphQL<CaducidadSchema>();
-            app.UseGraphiQl();
           
+            app.UseGraphiQl();
+            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+
             //Habilitar swagger
             app.UseSwagger();
             //Indicamos que se van a utilizar varios idiomas

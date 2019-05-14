@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CaducaRest.Models
@@ -35,5 +37,9 @@ namespace CaducaRest.Models
         [Column(TypeName = "VARCHAR(80)")]
         [NombreValidation()]
         public string Nombre { get; set; }
+
+        public virtual ICollection<Caducidad> Caducidades { get; set; }
+
+
     }
 }

@@ -15,6 +15,7 @@ namespace CaducaRest.GraphQL.Types
         public CaducidadType(CaducaContext caducaContext, LocService locService)
         {
             ProductoDAO productoDAO = new ProductoDAO(caducaContext, locService);
+            ClienteDAO clienteDAO = new ClienteDAO(caducaContext, locService);
 
             Name = "Caducidad";
 
@@ -26,6 +27,10 @@ namespace CaducaRest.GraphQL.Types
             Field<ProductoType>("Producto", 
                 arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "Id" }),
                 resolve: context => productoDAO.ObtenerPorIdAsync(context.Source.Id).Result, description: "Datos del producto");
+
+            Field<ClienteType>("Cliente", 
+                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "Id" }),
+                resolve: context => clienteDAO.ObtenerPorIdAsync(context.Source.Id).Result, description: "Datos del cliente");
 
         }
     }

@@ -10,7 +10,6 @@ using CaducaRest.Filters;
 using CaducaRest.GraphQL.Schemas;
 using CaducaRest.Models;
 using CaducaRest.Resources;
-using GraphiQl;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
@@ -162,7 +161,6 @@ namespace CaducaRest
 
             app.UseGraphQL<CaducidadSchema>();
           
-            app.UseGraphiQl();
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
 
             //Habilitar swagger

@@ -53,7 +53,7 @@ namespace CaducaRest.DAO
         }
 
         /// <summary>
-        /// Permite agregar una nueva Producto
+        /// Permite agregar un nuevo Producto
         /// </summary>
         /// <param name="Producto"></param>
         /// <returns></returns>
@@ -65,9 +65,9 @@ namespace CaducaRest.DAO
         }
 
         /// <summary>
-        /// Modidica una Producto
+        /// Modidica un Producto
         /// </summary>
-        /// <param name="Producto">Datos de la Producto</param>
+        /// <param name="Producto">Datos del Producto</param>
         /// <returns></returns>
         public async Task<bool> ModificarAsync(Producto Producto)
         {
@@ -77,7 +77,7 @@ namespace CaducaRest.DAO
         }
 
         /// <summary>
-        /// Permite borrar una Producto por Id
+        /// Permite borrar un Producto por Id
         /// </summary>
         /// <param name="id">Id de la Producto</param>
         /// <returns></returns>
@@ -86,7 +86,7 @@ namespace CaducaRest.DAO
             var Producto = await ObtenerPorIdAsync(id);
             if (Producto == null)
             {
-                customError = new CustomError(404, String.Format(this.localizacion.GetLocalizedHtmlString("NotFound"), "La Producto"), "Id");
+                customError = new CustomError(404, String.Format(this.localizacion.GetLocalizedHtmlString("NotFound"), "El Producto"), "Id");
                 return false;
             }
             contexto.Producto.Remove(Producto);

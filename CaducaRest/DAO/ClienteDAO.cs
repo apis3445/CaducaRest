@@ -89,7 +89,6 @@ namespace CaducaRest.DAO
                 customError = clienteDAO.customError;
                 return false;
             }
-
         }
 
 

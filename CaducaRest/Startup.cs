@@ -139,7 +139,7 @@ namespace CaducaRest
             })
             .AddGraphTypes(ServiceLifetime.Scoped)
             .AddUserContextBuilder(httpContext => httpContext.User)
-                .AddDataLoader();
+            .AddDataLoader();
         }
         
 

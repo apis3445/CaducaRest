@@ -1,4 +1,5 @@
-﻿using CaducaRest.GraphQL.Query;
+﻿using CaducaRest.GraphQL.Mutation;
+using CaducaRest.GraphQL.Query;
 using GraphQL;
 using GraphQL.Types;
 
@@ -9,6 +10,8 @@ namespace CaducaRest.GraphQL.Schemas
         public CaducidadSchema(IDependencyResolver resolver) : base(resolver)
         {
             Query = resolver.Resolve<CaducidadQuery>();
+
+            Mutation = resolver.Resolve<CaducidadMutation>();
         }
     }
 }

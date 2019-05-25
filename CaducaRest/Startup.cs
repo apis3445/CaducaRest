@@ -7,7 +7,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using CaducaRest.Filters;
+using CaducaRest.GraphQL.Mutation;
 using CaducaRest.GraphQL.Schemas;
+using CaducaRest.GraphQL.Types;
 using CaducaRest.Models;
 using CaducaRest.Resources;
 using GraphQL;
@@ -133,6 +135,8 @@ namespace CaducaRest
             services.AddScoped<IDependencyResolver>(s =>
                 new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<CaducidadSchema>();
+            services.AddScoped<CaducidadInputType>();
+            services.AddScoped<CaducidadMutation>();
             services.AddGraphQL(x =>
             {
                 x.ExposeExceptions = true; //set true only in development mode. make it switchable.

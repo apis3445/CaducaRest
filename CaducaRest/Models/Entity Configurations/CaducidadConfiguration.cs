@@ -14,9 +14,9 @@ namespace CaducaRest.Models.EntityConfigurations
                      .WithMany(cc => cc.Caducidades)
                      .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(e => e.Producto)
-                .WithMany(c => c.Caducidades)
-                .OnDelete(DeleteBehavior.Restrict); ;
+             builder.HasOne(e => e.Producto)
+               .WithMany(c => c.Caducidades)
+                .OnDelete(DeleteBehavior.Restrict); 
 
             builder.HasIndex(e => new { e.ClienteId, e.ProductoId })
                .HasName("UI_ClienteProducto")

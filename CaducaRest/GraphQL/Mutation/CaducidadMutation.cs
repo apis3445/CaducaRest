@@ -24,7 +24,10 @@ namespace CaducaRest.GraphQL.Mutation
                     {
                         var caducidad = context.GetArgument<Caducidad>("caducidad");
                         var correcto = caducidadDAO.AgregarAsync(caducidad).Result;
-                        return caducidad;
+                        if (correcto)
+                            return caducidad;
+                        else
+                            return new Caducidad();
                     }
                 );
             Field<StringGraphType>(
@@ -37,8 +40,25 @@ namespace CaducaRest.GraphQL.Mutation
                         var caducidad = caducidadDAO.BorraAsync(id).Result;
                         return $"La caducidad con el id: {id} fue borrada correctamente";
                     }
+                );
+            Field<CaducidadType>(
+                    "updateCaducidad",
+                      arguments: new QueryArguments(
+                        new QueryArgument
+                        <NonNullGraphType<CaducidadInputType>>
+                        { Name = "caducidad" },
+                        new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
+                      resolve: context =>
+                      {
+                          var caducidad = context.GetArgument<Caducidad>("caducidad");
+                          var id = context.GetArgument<int>("id");
+                          var correcto = caducidadDAO.ModificarAsync(caducidad).Result;
+                          return caducidad;
+                      }
 
-                    );
+                );
+
+
         }
     }
 }

@@ -36,6 +36,15 @@ namespace CaducaRest.Models
             modelBuilder.ApplyConfiguration(new ClienteConfiguration());
             modelBuilder.ApplyConfiguration(new CaducidadConfiguration());
             modelBuilder.ApplyConfiguration(new ClienteCategoriaConfiguration());
+
+            #region Inserts
+            modelBuilder.Entity<Rol>().HasData(
+               new Rol { Id = 1,  Nombre = "Administrador" },
+               new Rol { Id = 2,  Nombre = "Vendedor" },
+               new Rol { Id = 3,  Nombre = "Cliente" }
+           );
+
+            #endregion Inserts
         }
 
         /// <summary>
@@ -58,6 +67,16 @@ namespace CaducaRest.Models
         /// </summary>
         /// <value>The caducidad.</value>
         public virtual DbSet<Caducidad> Caducidad { get; set; }
+
+        /// <summary>
+        /// Crea la tabla rol, la cual nos permite clasificar a los usuarios
+        /// en los siguientes tipos:
+        /// Administrador
+        /// Vendedor
+        /// Cliente
+        /// </summary>
+        /// <value>Rol</value>
+        public virtual DbSet<Rol>  Rol { get; set; }
 
         /// <summary>
         /// Categorías que maneja cada cliente

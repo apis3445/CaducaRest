@@ -6,6 +6,7 @@ namespace CaducaRest.Models.EntityConfigurations
 {
     public class HistorialConfiguration : IEntityTypeConfiguration<Historial>
     {
+
         public void Configure(EntityTypeBuilder<Historial> builder)
         {
             builder.HasIndex(h => h.TabladId)

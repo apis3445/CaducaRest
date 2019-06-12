@@ -37,6 +37,12 @@ namespace CaducaRest.Models
             modelBuilder.ApplyConfiguration(new CaducidadConfiguration());
             modelBuilder.ApplyConfiguration(new ClienteCategoriaConfiguration());
 
+            modelBuilder.ApplyConfiguration(new HistorialConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioAccesoConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioClienteConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioRolConfiguration());
+
             #region Inserts
             modelBuilder.Entity<Rol>().HasData(
                new Rol { Id = 1,  Nombre = "Administrador" },
@@ -82,5 +88,17 @@ namespace CaducaRest.Models
         /// Categorías que maneja cada cliente
         /// </summary>
         public virtual DbSet<ClienteCategoria> ClienteCategoria { get; set; }
+
+        public virtual DbSet<Historial> Historial { get; set; }
+
+        public virtual DbSet<Tabla> Tabla { get; set; }
+
+        public virtual DbSet<Usuario> Usuario { get; set; }
+
+        public virtual DbSet<UsuarioAcceso> UsuarioAcceso { get; set; }
+
+        public virtual DbSet<UsuarioCliente> UsuarioCliente { get; set; }
+
+        public virtual DbSet<UsuarioRol> UsuarioRol { get; set; }
     }
 }

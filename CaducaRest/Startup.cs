@@ -19,10 +19,12 @@ using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -54,24 +56,33 @@ namespace CaducaRest
             //Le indicamos la carpeta donde estan todos los mensajes que utiliza la aplicación
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            //services.AddAuthentication(o => {
-            //                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //        })
-            //        .AddJwtBearer(cfg =>
-            //        {
-            //            cfg.Audience = Configuration["Tokens:Issuer"];
-            //            cfg.ClaimsIssuer = Configuration["Tokens:Issuer"];
-            //            cfg.TokenValidationParameters = new TokenValidationParameters()
-            //            {
-            //                ValidIssuer = Configuration["Tokens:Issuer"],
-            //                ValidAudience = Configuration["Tokens:Issuer"],
-            //                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
-            //            };
-            //        });
-            //Indicamos que el modelo tomara los mensajes de error del archivo SharedResource
-            services.AddMvc(options=>
+            services.AddAuthentication(o => {
+                            o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                            o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    })
+                    .AddJwtBearer(cfg =>
+                    {
+                        cfg.Audience = Configuration["Tokens:Issuer"];
+                        cfg.ClaimsIssuer = Configuration["Tokens:Issuer"];
+                        cfg.TokenValidationParameters = new TokenValidationParameters()
                         {
+                            ValidIssuer = Configuration["Tokens:Issuer"],
+                            ValidAudience = Configuration["Tokens:Issuer"],
+                            //Se valida la llave de cifrado
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
+                            //Se validara el tiempo de vida del token
+                            ValidateLifetime = true
+                        };
+                    });
+            services.AddMvc(options =>
+                        {
+                            //Agregamos una politica para indicar que todos nuestros servicios 
+                            //requieren que los usuarios hayan iniciado sesióm
+                            var policy = new AuthorizationPolicyBuilder()
+                                                .RequireAuthenticatedUser()
+                                                .Build();
+                            options.Filters.Add(new AuthorizeFilter(policy));
                             options.Filters.Add(typeof(CustomExceptionFilter));
                             foreach (var formatter in options.OutputFormatters
                                         .OfType<ODataOutputFormatter>()
@@ -92,12 +103,16 @@ namespace CaducaRest
                 .AddJsonOptions(JsonOptions => JsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
                 .AddDataAnnotationsLocalization(options =>
                 {
+                    //Indicamos que el modelo tomara los mensajes de error del archivo SharedResource
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
                     {
                         var assemblyName = new AssemblyName(typeof(SharedResource).GetTypeInfo().Assembly.FullName);
                         return factory.Create("SharedResource", assemblyName.Name);
                     };
                 });
+
+                               
+                       
             //Agregamos los idiomas que tiene configurada nuestra aplicación es esta caso es español e ingles
             //Seleccionamos por default es-MX
             services.Configure<RequestLocalizationOptions>(
@@ -130,6 +145,17 @@ namespace CaducaRest
                 var fileName = System.IO.Path.GetFileName(assemblyName + ".xml");
                 var xmlPath = Path.Combine(basePath, fileName);
                 c.IncludeXmlComments(xmlPath);
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme()
+                {
+                    In = "header",
+                    Description = "Por favor teclea el header de autorización",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                    {
+                        { "Bearer", new string[] { } }
+                    });
             });
 
             services.AddScoped<IDependencyResolver>(s =>

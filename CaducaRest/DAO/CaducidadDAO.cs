@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace CaducaRest.DAO
 {
+    /// <summary>
+    /// Servicios para la tabla Caducidad
+    /// </summary>
     public class CaducidadDAO
     {
         private readonly CaducaContext contexto;

@@ -22,7 +22,7 @@ namespace CaducaRest.Core
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             JwtSecurityToken jwtToken = new JwtSecurityToken(Config["Tokens:Issuer"],
-                                                            Config["Tokens:Issuer"],
+                                                            Config["Tokens:Audience"],
                                                             claims,
                                                             expires: fechaExpiracion,
                                                             signingCredentials: creds);

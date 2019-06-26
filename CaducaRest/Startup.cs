@@ -62,12 +62,13 @@ namespace CaducaRest
                     })
                     .AddJwtBearer(cfg =>
                     {
-                        cfg.Audience = Configuration["Tokens:Issuer"];
+                        cfg.Audience = Configuration["Tokens:Audience"];
                         cfg.ClaimsIssuer = Configuration["Tokens:Issuer"];
                         cfg.TokenValidationParameters = new TokenValidationParameters()
                         {
                             ValidIssuer = Configuration["Tokens:Issuer"],
-                            ValidAudience = Configuration["Tokens:Issuer"],
+                            ValidateAudience = true,
+                            ValidAudience = Configuration["Tokens:Audience"],
                             //Se valida la llave de cifrado
                             ValidateIssuerSigningKey = true,
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
@@ -185,8 +186,8 @@ namespace CaducaRest
             }
 
             app.UseHttpsRedirection();
-           
 
+            app.UseAuthentication();
             app.UseGraphQL<CaducidadSchema>();
           
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());

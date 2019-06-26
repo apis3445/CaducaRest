@@ -40,5 +40,9 @@
     <Compile Remove="Migrations\20190320041219_ClienteCategoria.Designer.cs" />
     <Compile Remove="Models\EmptyClass.cs" />
     <Compile Remove="Controllers\CaducidadController.cs" />
+    <Compile Remove="Resources.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="DAO\RolDAO.config" />
   </ItemGroup>
 </Project>

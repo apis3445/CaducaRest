@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CaducaRest.Core;
@@ -59,16 +60,26 @@ namespace CaducaRest.DAO
             {
                 customError = new CustomError(403, this.localizacion.GetLocalizedHtmlString("UsuarioInactivo"));
                 return tokenDTO;
-            }           
-            var claims = new Claim[]
+            }
+            
+            var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Sid, usuario.Id.ToString()),
+                 new Claim(ClaimTypes.Sid, usuario.Id.ToString()),              
             };
+            RolDAO rolDAO = new RolDAO(contexto, localizacion);
+            var roles = rolDAO.ObtenerRolesPorUsuarios(usuario.Id);
+            foreach (var rol in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, rol));
+            }
+           
             DateTime fechaExpiracion = DateTime.Now.AddDays(15).ToLocalTime();
-            tokenDTO.Token = token.GenerarToken(claims, fechaExpiracion);
+            tokenDTO.Token = token.GenerarToken(claims.ToArray(), fechaExpiracion);
             tokenDTO.TokenExpiration = fechaExpiracion;
             tokenDTO.UsuarioId = usuario.Id;
             tokenDTO.RefreshToken = token.RefrescarToken();
+            tokenDTO.Nombre = usuario.Nombre;
+
             return tokenDTO;
         }
 

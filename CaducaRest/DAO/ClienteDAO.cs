@@ -12,6 +12,7 @@ namespace CaducaRest.DAO
     /// <summary>
     /// Acceso a datos para los clientes
     /// </summary>
+    /// 
     public class ClienteDAO
     {
         private readonly CaducaContext contexto;

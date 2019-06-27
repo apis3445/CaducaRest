@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using CaducaRest.Models;
 using CaducaRest.Resources;
 using CaducaRest.DAO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CaducaRest.Controllers
 {
@@ -13,6 +14,7 @@ namespace CaducaRest.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiVersionNeutral]
+    [Authorize(Roles = "Administrador")]
     public class ProductosController : ControllerBase
     {
         private readonly LocService _localizer;

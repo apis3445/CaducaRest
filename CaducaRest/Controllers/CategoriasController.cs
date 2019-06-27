@@ -42,6 +42,7 @@ namespace CaducaRest.Controllers
         /// </summary>
         /// <returns>Todas las categorías</returns>
         [HttpGet]
+        [Authorize(Roles = "Administrador, Ventas")]
         public async Task<List<Categoria>> GetCategoriaAsync()
         {
             return  await categoriaDAO.ObtenerTodoAsync();

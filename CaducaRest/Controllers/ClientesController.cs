@@ -4,6 +4,7 @@ using CaducaRest.Models;
 using CaducaRest.Resources;
 using CaducaRest.Rules.Categoria;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace CaducaRest.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiVersionNeutral]
+    [Authorize(Roles = "Administrador")]
     public class ClientesController : ODataController
     {
         private readonly LocService _localizer;
@@ -33,9 +35,6 @@ namespace CaducaRest.Controllers
             _context = context;
             _localizer = localizer;
             clienteDAO = new ClienteDAO(_context, _localizer);
-            
-
-
         }
     
         /// <summary>
@@ -49,16 +48,7 @@ namespace CaducaRest.Controllers
             return Ok(clientes);
         }
 
-        /// <summary>
-        /// Obtener los datos de un cliente mediante ODATA
-        /// </summary>
-        /// <param name="key">Id del cliente</param>
-        /// <returns></returns>
-        [EnableQuery]
-        public IActionResult GetCliente([FromODataUri]int key)
-        {
-            return Ok(_context.Cliente.Find(key));
-        }
+
 
         /// <summary>
         /// Guardar un nuevo cliente

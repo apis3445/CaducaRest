@@ -214,7 +214,7 @@ namespace CaducaRest
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Cliente>("Clientes");
             builder.EntitySet<ClienteCategoria>("ClientesCategorias");
-            builder.EntitySet<Caducidad>("Categorias");
+            builder.EntitySet<Caducidad>("Caducidad");
             return builder.GetEdmModel();
         }
     }

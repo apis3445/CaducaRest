@@ -48,7 +48,16 @@ namespace CaducaRest.Controllers
             return Ok(clientes);
         }
 
-
+        /// <summary>
+        /// Obtener los datos de un cliente mediante ODATA
+        /// </summary>
+        /// <param name="key">Id del cliente</param>
+        /// <returns></returns>
+        [EnableQuery]
+        public IActionResult GetCliente([FromODataUri]int key)
+        {
+            return Ok(_context.Cliente.Find(key));
+        }
 
         /// <summary>
         /// Guardar un nuevo cliente

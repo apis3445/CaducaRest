@@ -14,7 +14,7 @@ namespace CaducaRest.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiVersionNeutral]
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrador,Vendedor")]
     public class ProductosController : ControllerBase
     {
         private readonly LocService _localizer;
@@ -35,12 +35,12 @@ namespace CaducaRest.Controllers
         /// Obtener todos los productos
         /// </summary>
         /// <returns></returns>
-        // GET: api/Productos
-        [HttpGet]
-        public IEnumerable<Producto> GetProducto()
-        {
-            return productoDAO.ObtenerTodo();
-        }
+    [Authorize(Policy = "VendedorConCategorias")]
+    [HttpGet]
+    public IEnumerable<Producto> GetProducto()
+    {
+        return productoDAO.ObtenerTodo();
+    }
 
         /// <summary>
         /// Obtener un producto por su Id

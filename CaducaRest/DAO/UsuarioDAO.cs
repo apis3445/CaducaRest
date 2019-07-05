@@ -47,18 +47,20 @@ namespace CaducaRest.DAO
             if (usuario == null)
             {
                 customError = new CustomError(400,
-                    String.Format(this.localizacion.GetLocalizedHtmlString("GeneralNoExiste")
-                    , "La clave del usuario"));
+                    String.Format(this.localizacion.GetLocalizedHtmlString("GeneralNoExiste"),
+                            "La clave del usuario"));
                 return tokenDTO;
             }
             if (usuario.Password != seguridad.GetHash(usuario.Adicional1 + loginDTO.Password))
             {
-                customError = new CustomError(400, this.localizacion.GetLocalizedHtmlString("PasswordIncorrecto"));
+                customError = new CustomError(400,
+                            this.localizacion.GetLocalizedHtmlString("PasswordIncorrecto"));
                 return tokenDTO;
             }
             if (!usuario.Activo)
             {
-                customError = new CustomError(403, this.localizacion.GetLocalizedHtmlString("UsuarioInactivo"));
+                customError = new CustomError(403,
+                            this.localizacion.GetLocalizedHtmlString("UsuarioInactivo"));
                 return tokenDTO;
             }
             
@@ -68,9 +70,17 @@ namespace CaducaRest.DAO
             };
             RolDAO rolDAO = new RolDAO(contexto, localizacion);
             var roles = rolDAO.ObtenerRolesPorUsuarios(usuario.Id);
+            
             foreach (var rol in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, rol));
+                if (rol == "Vendedor")
+                {
+                    var totalCategorias = contexto.UsuarioCategoria
+                                                .Where(u => u.UsuarioId == usuario.Id).Count();
+                    if (totalCategorias > 0)
+                        claims.Add(new Claim("Categorias", totalCategorias.ToString()));
+                }
             }
            
             DateTime fechaExpiracion = DateTime.Now.AddDays(15).ToLocalTime();

@@ -1,9 +1,6 @@
-﻿using CaducaRest.Core;
-using CaducaRest.DAO;
-using CaducaRest.Models.Entity_Configurations;
+﻿using CaducaRest.Models.Entity_Configurations;
 using CaducaRest.Models.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace CaducaRest.Models
 {
@@ -41,6 +38,7 @@ namespace CaducaRest.Models
 
             modelBuilder.ApplyConfiguration(new HistorialConfiguration());
             modelBuilder.ApplyConfiguration(new UsuarioAccesoConfiguration());
+            modelBuilder.ApplyConfiguration(new UsuarioCategoriaConfiguration());
             modelBuilder.ApplyConfiguration(new UsuarioClienteConfiguration());
             modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
             modelBuilder.ApplyConfiguration(new UsuarioRolConfiguration());
@@ -53,6 +51,7 @@ namespace CaducaRest.Models
            );
                modelBuilder.Entity<Usuario>().HasData(
                 new Usuario
+
                 {
                     Id = 1,
                     Activo = true,
@@ -62,7 +61,7 @@ namespace CaducaRest.Models
                     Adicional1 = "2a3efe03a96840478bde71ae36a20f2e",
                     Password = "9f9b901a43d795295661443f7f7098ee8e6c6c3694428717c54d5fd058220fed"
                 },
-                new Usuario
+                new Usuario
                 {
                     Id = 2,
                     Activo = true,
@@ -73,6 +72,7 @@ namespace CaducaRest.Models
                     Password = "6ad9ebcfe2bebed6655a4abb3e0409c83ad1e6db35098083476744cfe0d106b9"
                 },
                 new Usuario
+
                 {
                     Id = 3,
                     Activo = true,
@@ -150,6 +150,8 @@ namespace CaducaRest.Models
         public virtual DbSet<Usuario> Usuario { get; set; }
 
         public virtual DbSet<UsuarioAcceso> UsuarioAcceso { get; set; }
+
+        public virtual DbSet<UsuarioCategoria> UsuarioCategoria { get; set; }
 
         public virtual DbSet<UsuarioCliente> UsuarioCliente { get; set; }
 

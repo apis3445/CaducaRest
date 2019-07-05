@@ -84,6 +84,8 @@ namespace CaducaRest
                                                 .RequireAuthenticatedUser()
                                                 .Build();
                             options.Filters.Add(new AuthorizeFilter(policy));
+                            
+                            
                             options.Filters.Add(typeof(CustomExceptionFilter));
                             foreach (var formatter in options.OutputFormatters
                                         .OfType<ODataOutputFormatter>()
@@ -112,8 +114,11 @@ namespace CaducaRest
                     };
                 });
 
-                               
-                       
+
+            services.AddAuthorization(options =>
+            {
+               options.AddPolicy("VendedorConCategorias", policy => policy.RequireClaim("Categorias"));
+            });        
             //Agregamos los idiomas que tiene configurada nuestra aplicación es esta caso es español e ingles
             //Seleccionamos por default es-MX
             services.Configure<RequestLocalizationOptions>(

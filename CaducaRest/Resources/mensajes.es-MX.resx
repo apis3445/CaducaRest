@@ -132,4 +132,13 @@
   <data name="StringLength" xml:space="preserve">
     <value>El campo {0} debe tener como máximo {1} caracteres. Por favor abrevia el campo.</value>
   </data>
+  <data name="ForbiddenUpdate" xml:space="preserve">
+    <value>No tienes permiso para actualizar {0}, Por favor solicita el acceso.</value>
+  </data>
+  <data name="ForbiddenAdd" xml:space="preserve">
+    <value>No tienes permiso para agregar {0}, Por favor solicita el acceso.</value>
+  </data>
+  <data name="ForbiddenDelete" xml:space="preserve">
+    <value>No tienes permiso para borrar {0}, Por favor solicita el acceso.</value>
+  </data>
 </root>

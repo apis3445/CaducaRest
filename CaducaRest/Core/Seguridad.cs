@@ -7,6 +7,15 @@ namespace CaducaRest.Core
     public class Seguridad
     {
 
+        public Seguridad()
+        {
+
+        }
+        public Seguridad(string abi)
+        {
+
+        }
+
         public string GetSalt()
         {
             byte[] bytes = new byte[128 / 8];

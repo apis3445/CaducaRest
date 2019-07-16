@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using CaducaRest.Core;
 using CaducaRest.Filters;
 using CaducaRest.GraphQL.Mutation;
 using CaducaRest.GraphQL.Schemas;
@@ -176,6 +177,8 @@ namespace CaducaRest
             .AddGraphTypes(ServiceLifetime.Scoped)
             .AddUserContextBuilder(httpContext => httpContext.User)
             .AddDataLoader();
+
+            services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

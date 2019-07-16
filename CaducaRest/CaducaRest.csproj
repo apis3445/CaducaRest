@@ -41,6 +41,7 @@
     <Compile Remove="Models\EmptyClass.cs" />
     <Compile Remove="Controllers\CaducidadController.cs" />
     <Compile Remove="Resources.Designer.cs" />
+    <Compile Remove="Models\UsuarioPermiso.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="DAO\RolDAO.config" />

@@ -12,7 +12,7 @@ namespace CaducaRest.GraphQL.Mutation
         public CaducidadMutation(CaducaContext caducaContext, LocService locService)
         {
             CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
-
+            RolTablaPermisoDAO test;
             Field<CaducidadType>
                 (
                     "createCaducidad",

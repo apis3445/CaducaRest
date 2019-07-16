@@ -25,5 +25,18 @@ public class RolDAO
                 where usuarioRol.UsuarioId == usuarioId
             select rol.Nombre).ToList();
     }
+
+    public bool EsAdministrador(int usuarioId)
+    {
+        var total = (from usuarioRol in contexto.UsuarioRol
+                        join rol in contexto.Rol
+                            on usuarioRol.RolId equals rol.Id
+                        where usuarioRol.UsuarioId == usuarioId
+                            && rol.Nombre == "Administrador"
+                        select usuarioRol.Id).Count();
+        if (total > 0)
+            return true;
+        return false;
+    }
 }
 }

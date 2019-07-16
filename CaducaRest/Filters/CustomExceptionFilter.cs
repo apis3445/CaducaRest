@@ -38,13 +38,13 @@ namespace CaducaRest.Filters
         /// <param name="context">Datos de la excepción</param>
         public override void OnException(ExceptionContext context)
         {
-            string mensajeError = string.Empty;
-            if (context.Exception.InnerException != null && context.Exception.InnerException.GetType() == typeof(MySqlException))
+            var y = new object();
+            if (context.Exception.InnerException != null && context.Exception.InnerException is MySqlException)
             {              
                 string tabla = " el/la " + context.RouteData.Values["controller"].ToString() + " ";
                 MySqlException exMySql = (MySqlException)context.Exception.InnerException;
                 CustomMySQLException mySqlCustomError = new CustomMySQLException();
-                mensajeError = mySqlCustomError.MuestraErrorMYSQL(exMySql, tabla, this.GetType().Name);              
+                var mensajeError = mySqlCustomError.MuestraErrorMYSQL(exMySql, tabla, this.GetType().Name);              
                 BadRequestObjectResult badRequest = new BadRequestObjectResult(new CustomError(400, mensajeError));
                 context.Result = badRequest;
             }    

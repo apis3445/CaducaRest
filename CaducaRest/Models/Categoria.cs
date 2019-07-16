@@ -9,6 +9,7 @@ namespace CaducaRest.Models
     /// Permite registrar las categorías de los productos
     /// que vende la empresa
     /// </summary>
+    [Display(Name = "Categoría")]
     public class Categoria
     {
         /// <summary>

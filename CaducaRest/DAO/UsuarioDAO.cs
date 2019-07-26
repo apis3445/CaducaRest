@@ -74,7 +74,7 @@ namespace CaducaRest.DAO
             foreach (var rol in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, rol));
-                if (rol == "Vendedor")
+                if (rol == "Vendedor" || rol == "Administrador")
                 {
                     var totalCategorias = contexto.UsuarioCategoria
                                                 .Where(u => u.UsuarioId == usuario.Id).Count();

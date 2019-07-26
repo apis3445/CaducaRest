@@ -5,6 +5,7 @@ using CaducaRest.Models;
 using CaducaRest.Resources;
 using CaducaRest.DAO;
 using Microsoft.AspNetCore.Authorization;
+using CaducaRest.Filters;
 
 namespace CaducaRest.Controllers
 {
@@ -15,7 +16,8 @@ namespace CaducaRest.Controllers
     [ApiController]
     [ApiVersionNeutral]
     [Authorize(Roles = "Administrador,Vendedor")]
-    public class ProductosController : ControllerBase
+    [TypeFilter(typeof(PermisoFilter))]
+    public class ProductosController : BaseController
     {
         private readonly LocService _localizer;
         private readonly CaducaContext _context;
@@ -25,10 +27,12 @@ namespace CaducaRest.Controllers
         /// </summary>
         /// <param name="context"></param>
         /// <param name="localize"></param>
-        public ProductosController(CaducaContext context, LocService localize)
+        public ProductosController(CaducaContext context, LocService localize) : base( context,  localize)
         {
             _context = context;
             productoDAO = new ProductoDAO(context, localize);
+            this.permiso.Tabla = "Producto";
+            this.permiso.RequiereAdministrador = false;
         }
 
         /// <summary>

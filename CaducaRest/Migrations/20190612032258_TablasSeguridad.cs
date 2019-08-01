@@ -46,13 +46,12 @@ namespace CaducaRest.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    TabladId = table.Column<int>(nullable: false),
+                    TablaId = table.Column<int>(nullable: false),
                     OrigenId = table.Column<int>(nullable: false),
                     Actividad = table.Column<int>(nullable: false),
                     UsuarioId = table.Column<int>(nullable: false),
                     FechaHora = table.Column<DateTime>(nullable: false),
                     Observa = table.Column<string>(type: "VARCHAR(250)", maxLength: 250, nullable: true),
-                    TablaId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {

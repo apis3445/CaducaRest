@@ -11,7 +11,7 @@ namespace CaducaRest.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        public int TabladId { get; set; }
+        public int TablaId { get; set; }
 
         [Required(ErrorMessage = "Required")]
         public int OrigenId { get; set; }

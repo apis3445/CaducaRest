@@ -36,22 +36,22 @@ namespace CaducaRest.Controllers
             return "value";
         }
 
-    [HttpPost("Login")]
-    [AllowAnonymous]
-    public async Task<IActionResult> PostAsync([FromBody] LoginDTO loginDTO)
-    {
-        var token = await usuarioDAO.LoginAsync(loginDTO, _config);
-        if (string.IsNullOrEmpty(token.Token))         
-            return StatusCode(usuarioDAO.customError.StatusCode, usuarioDAO.customError.Message);
-        return Ok(token);
-    }
+        [HttpPost("Login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PostAsync([FromBody] LoginDTO loginDTO)
+        {
+            var token = await usuarioDAO.LoginAsync(loginDTO, _config);
+            if (string.IsNullOrEmpty(token.Token))
+                return StatusCode(usuarioDAO.customError.StatusCode, usuarioDAO.customError.Message);
+            return Ok(token);
+        }
 
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        
+
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

@@ -19,6 +19,10 @@ public class BaseController : Controller
     /// </summary>
     public PermisoDTO permiso;
 
+    public int Id;
+
+        public string Observaciones;
+
     public BaseController(CaducaContext context, LocService localizer)
     {
         this._context = context;

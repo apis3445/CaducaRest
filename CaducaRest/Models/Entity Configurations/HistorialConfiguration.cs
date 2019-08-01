@@ -9,16 +9,16 @@ namespace CaducaRest.Models.EntityConfigurations
 
         public void Configure(EntityTypeBuilder<Historial> builder)
         {
-            builder.HasIndex(h => h.TabladId)
+            builder.HasIndex(h => h.TablaId)
                    .HasName("IX_HistorialTabla");
 
             builder.HasIndex(e => e.UsuarioId)
               .HasName("IX_ctrUsuario");
 
-            builder.HasIndex(e => new { e.Actividad, e.TabladId, e.FechaHora })
+            builder.HasIndex(e => new { e.Actividad, e.TablaId, e.FechaHora })
               .HasName("IX_Actividad");
 
-            builder.HasIndex(e => new { e.TabladId, e.OrigenId, e.Actividad })
+            builder.HasIndex(e => new { e.TablaId, e.OrigenId, e.Actividad })
               .HasName("IX_Historial");
 
             builder.HasOne(typeof(Tabla))

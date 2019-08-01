@@ -10,6 +10,7 @@ using System;
 using Microsoft.AspNetCore.Authorization;
 using CaducaRest.Core;
 using CaducaRest.DTO;
+using CaducaRest.Filters;
 
 namespace CaducaRest.Controllers
 {
@@ -19,12 +20,12 @@ namespace CaducaRest.Controllers
     [Route("api/[controller]")]   
     [ApiController]
     [ApiVersionNeutral]
-    public class CategoriasController : ControllerBase
+    [TypeFilter(typeof(HistorialFilter))]
+    public class CategoriasController : BaseController
     {
         private readonly LocService localizacion;
         private readonly CaducaContext _context;
         private CategoriaDAO categoriaDAO;
-        private PermisoDTO permisoDTO;
         protected IAuthorizationService _authorizationService;
         /// <summary>
         /// Constructor
@@ -34,12 +35,13 @@ namespace CaducaRest.Controllers
         public CategoriasController(CaducaContext context,
                                     LocService localizer,
                                     IAuthorizationService authorizationService)
+                                    : base(context, localizer)
         {
             _context = context;
             localizacion = localizer;
             _authorizationService = authorizationService;
             categoriaDAO = new CategoriaDAO(context, localizer);
-            permisoDTO = new PermisoDTO
+            this.permiso = new PermisoDTO
             {
                 Tabla = "Categoria",
                 RequiereAdministrador = false
@@ -56,7 +58,7 @@ namespace CaducaRest.Controllers
         {
             //Agregamos nuestra validación personalizada
             var authorizationResult = await _authorizationService
-                    .AuthorizeAsync(User, permisoDTO, Operaciones.Consultar);
+                    .AuthorizeAsync(User, permiso, Operaciones.Consultar);
             //Si el resultado no fue exitoso regresamos una lista vacia
             if (!authorizationResult.Succeeded)
                  return new List<Categoria>();
@@ -92,7 +94,7 @@ namespace CaducaRest.Controllers
         public async Task<IActionResult> PutCategoria([FromRoute] int id, [FromBody] Categoria categoria)
         {
             var authorizationResult = await _authorizationService
-                   .AuthorizeAsync(User, permisoDTO, Operaciones.Modificar);
+                   .AuthorizeAsync(User, permiso, Operaciones.Modificar);
             //Si el resultado no fue exitoso regresamos una lista vacia
             if (!authorizationResult.Succeeded)
                 return StatusCode(403, String.Format(this.localizacion.GetLocalizedHtmlString("ForbiddenUpdate"), "La categoría"));
@@ -111,7 +113,7 @@ namespace CaducaRest.Controllers
                 return StatusCode(categoriaDAO.customError.StatusCode,
                                   categoriaDAO.customError.Message);
             }
-
+            this.Id = id;
             return NoContent();
         }
 
@@ -125,7 +127,7 @@ namespace CaducaRest.Controllers
         public async Task<IActionResult> PostCategoria([FromBody] Categoria categoria)
         {
             var authorizationResult = await _authorizationService
-                .AuthorizeAsync(User, permisoDTO, Operaciones.Crear);
+                .AuthorizeAsync(User, permiso, Operaciones.Crear);
             //Si el resultado no fue exitoso regresamos una lista vacia
             if (!authorizationResult.Succeeded)
                 return StatusCode(403, String.Format(this.localizacion.GetLocalizedHtmlString("ForbiddenUpdate"), "La categoría"));
@@ -135,7 +137,7 @@ namespace CaducaRest.Controllers
                 return StatusCode(categoriaDAO.customError.StatusCode, 
                                   categoriaDAO.customError.Message);
             }
-
+            this.Id = categoria.Id;
             return CreatedAtAction("GetCategoria", new { id = categoria.Id }, categoria);
         }
 
@@ -149,7 +151,7 @@ namespace CaducaRest.Controllers
         public async Task<IActionResult> DeleteCategoria([FromRoute] int id)
         {
             var authorizationResult = await _authorizationService
-                        .AuthorizeAsync(User, permisoDTO, Operaciones.Borrar);
+                        .AuthorizeAsync(User, permiso, Operaciones.Borrar);
             //Si el resultado no fue exitoso regresamos una lista vacia
             if (!authorizationResult.Succeeded)
                 return StatusCode(403, String.Format(this.localizacion.
@@ -164,6 +166,7 @@ namespace CaducaRest.Controllers
                 return StatusCode(categoriaDAO.customError.StatusCode,
                                   categoriaDAO.customError.Message);
             }
+            this.Id = id;
             return Ok();
         }
     }

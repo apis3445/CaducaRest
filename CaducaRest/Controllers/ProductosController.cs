@@ -17,6 +17,7 @@ namespace CaducaRest.Controllers
     [ApiVersionNeutral]
     [Authorize(Roles = "Administrador,Vendedor")]
     [TypeFilter(typeof(PermisoFilter))]
+    [TypeFilter(typeof(HistorialFilter))]
     public class ProductosController : BaseController
     {
         private readonly LocService _localizer;
@@ -90,9 +91,8 @@ namespace CaducaRest.Controllers
                 return StatusCode(productoDAO.customError.StatusCode,
                                   productoDAO.customError.Message);
             }
-
+            Id = producto.Id;
             return NoContent();
-
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace CaducaRest.Controllers
                 return StatusCode(productoDAO.customError.StatusCode,
                                   productoDAO.customError.Message);
             }
-
+            Id = producto.Id;
             return CreatedAtAction("GetCategoria", new { id = producto.Id }, producto);
         }
 
@@ -131,6 +131,7 @@ namespace CaducaRest.Controllers
                 return StatusCode(productoDAO.customError.StatusCode,
                                   productoDAO.customError.Message);
             }
+            Id = id;
             return Ok();
         }
 

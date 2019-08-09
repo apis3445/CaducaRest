@@ -16,7 +16,7 @@ namespace CaducaRest.Models
         [Required(ErrorMessage = "Required")]
         public DateTime Fecha { get; set; }
 
-        [Column(TypeName = "VARCHAR(300)")]
+        [Column(TypeName = "VARCHAR(400)")]
         [Required(ErrorMessage = "Required")]
         public string Token { get; set; }
 

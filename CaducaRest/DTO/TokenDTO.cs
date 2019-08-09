@@ -6,7 +6,6 @@ namespace CaducaRest.DTO
     /// </summary>
     public class TokenDTO
     {
-
         /// <summary>
         /// Token generado.
         /// </summary>
@@ -21,7 +20,6 @@ namespace CaducaRest.DTO
         /// Número de control del usuario en sesión.
         /// </summary>
         public int UsuarioId { get; set; }
-
 
         /// <summary>
         /// Nombre Usuario

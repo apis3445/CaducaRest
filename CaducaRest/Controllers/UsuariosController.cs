@@ -1,27 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using CaducaRest.Core;
 using CaducaRest.DAO;
 using CaducaRest.DTO;
 using CaducaRest.Models;
 using CaducaRest.Resources;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace CaducaRest.Controllers
 {
     [Route("api/[controller]")]
-    public class UsuariosController : ControllerBase
-    {
+public class UsuariosController : BaseController
+{
         private UsuarioDAO usuarioDAO;
+
         protected readonly IConfiguration _config;
 
-        public UsuariosController(CaducaContext context, LocService localize, IConfiguration config)
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public UsuariosController(CaducaContext context,
+                                  LocService localize,
+                                  IConfiguration config,
+                                  IHostingEnvironment hostingEnvironment) : base(context, localize)
         {
             usuarioDAO = new UsuarioDAO(context, localize);
-            _config = config;
+            _config = config;            
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet]
@@ -55,6 +66,16 @@ namespace CaducaRest.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [HttpPost("Refresh")]
+        [AllowAnonymous]
+        public IActionResult RefreshToken([FromBody]RefreshTokenDTO refreshToken)
+        {
+            UsuarioDAO usuarioDao = new UsuarioDAO(this._context, this._localizer);
+            if (!usuarioDao.ValidarToken(refreshToken.RefreshToken, _config))
+                return StatusCode(403, new CustomError(403, this._localizer.GetLocalizedHtmlString("AccesoNoAutorizado")));
+            return Ok(usuarioDao.tokenDTO);
         }
     }
 }

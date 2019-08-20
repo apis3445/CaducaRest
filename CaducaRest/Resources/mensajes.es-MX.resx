@@ -141,4 +141,7 @@
   <data name="ForbiddenDelete" xml:space="preserve">
     <value>No tienes permiso para borrar {0}, Por favor solicita el acceso.</value>
   </data>
+  <data name="PasswordLocked" xml:space="preserve">
+    <value>El password fue bloqueado debido a varios intentos incorrectos.</value>
+  </data>
 </root>

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -17,15 +17,19 @@ namespace CaducaRest.DAO
     {
         private readonly CaducaContext contexto;
         private readonly LocService localizacion;
+        private readonly string _path;
 
         public CustomError customError;
         public TokenDTO tokenDTO;
         private readonly AccesoDAO<Usuario> usuarioDAO;
 
-        public UsuarioDAO(CaducaContext context, LocService localize)
+        public UsuarioDAO(CaducaContext context, LocService localize, string path)
         {
             this.contexto = context;
             this.localizacion = localize;
+            this.tokenDTO = new TokenDTO();
+            this._path = path;
+            usuarioDAO = new AccesoDAO<Usuario>(context,localize);
         }
 
         public async Task<List<Usuario>> ObtenerTodoAsync()
@@ -53,44 +57,77 @@ namespace CaducaRest.DAO
             return true;
         }
 
-public async Task<TokenDTO> LoginAsync(LoginDTO loginDTO, IConfiguration config)
-{
-    Seguridad seguridad = new Seguridad();           
-    var usuario = await contexto.Usuario.FirstOrDefaultAsync(usu => usu.Clave == loginDTO.Usuario);
-    if (usuario == null)
+    public async Task<TokenDTO> LoginAsync(LoginDTO loginDTO, IConfiguration config)
     {
-        customError = new CustomError(400,
-            String.Format(this.localizacion.GetLocalizedHtmlString("GeneralNoExiste"),
-                    "La clave del usuario"));
-        return tokenDTO;
-    }
-    if (usuario.Password != seguridad.GetHash(usuario.Adicional1 + loginDTO.Password))
-    {
-        customError = new CustomError(400,
+        Seguridad seguridad = new Seguridad();           
+        var usuario = await contexto.Usuario.FirstOrDefaultAsync(usu => usu.Clave == loginDTO.Usuario);
+        if (usuario == null)
+        {
+            customError = new CustomError(400,
+                String.Format(this.localizacion.GetLocalizedHtmlString("GeneralNoExiste"),
+                        "La clave del usuario"));
+            return tokenDTO;
+        }
+        //Si el usuario tiene un código mayor a 0, el usuario ha sido bloqueado
+        if (usuario.Codigo > 0 )
+        {
+            if (usuario.Password == seguridad.GetHash(usuario.Adicional1 + loginDTO.Password)
+                && usuario.Codigo == loginDTO.Codigo)
+            {
+                //Reiniciamos el número de intentos y el código para iniciar sesión
+                usuario.Intentos = 0;
+                usuario.Codigo = 0;
+                contexto.SaveChanges();
+            }
+            else
+            {
+                customError = new CustomError(423,
+                                this.localizacion.GetLocalizedHtmlString("PasswordLocked"));
+            }
+                
+        }
+        if (usuario.Password != seguridad.GetHash(usuario.Adicional1 + loginDTO.Password))
+        {
+            usuario.Intentos = usuario.Intentos + 1;
+            if (usuario.Intentos > 5)
+            {
+                Random r = new Random();
+                int codigo = r.Next(0, 999999);
+                usuario.Codigo = codigo;
+                customError = new CustomError(423,
+                                    this.localizacion.GetLocalizedHtmlString("PasswordLocked"));
+                EnviaCorreoIntentosIncorrectos(_path,usuario.Clave, usuario.Email, codigo);
+            }
+            else
+            {
+                customError = new CustomError(400,
                     this.localizacion.GetLocalizedHtmlString("PasswordIncorrecto"));
+            }
+            contexto.SaveChanges();
+            return tokenDTO;
+        }
+
+        if (!usuario.Activo)
+        {
+            customError = new CustomError(403,
+                        this.localizacion.GetLocalizedHtmlString("UsuarioInactivo"));
+            return tokenDTO;
+        }
+        tokenDTO = GenerarToken(config, usuario.Id, usuario.Nombre);
+        var usuarioAcceso = new UsuarioAcceso();
+        usuarioAcceso.UsuarioId = usuario.Id;       
+        usuarioAcceso.Fecha = DateTime.Now;
+        usuarioAcceso.Token = tokenDTO.Token;
+        usuarioAcceso.Activo = true;
+        usuarioAcceso.Ciudad = "Default";
+        usuarioAcceso.Estado = "Default";
+        usuarioAcceso.SistemaOperativo = "Default";
+        usuarioAcceso.RefreshToken = tokenDTO.RefreshToken;
+        usuarioAcceso.Navegador = "Default";
+        contexto.UsuarioAcceso.Add(usuarioAcceso);
+        contexto.SaveChanges();
         return tokenDTO;
     }
-    if (!usuario.Activo)
-    {
-        customError = new CustomError(403,
-                    this.localizacion.GetLocalizedHtmlString("UsuarioInactivo"));
-        return tokenDTO;
-    }
-    tokenDTO = GenerarToken(config, usuario.Id, usuario.Nombre);
-    var usuarioAcceso = new UsuarioAcceso();
-    usuarioAcceso.UsuarioId = usuario.Id;       
-    usuarioAcceso.Fecha = DateTime.Now;
-    usuarioAcceso.Token = tokenDTO.Token;
-    usuarioAcceso.Activo = true;
-    usuarioAcceso.Ciudad = "Default";
-    usuarioAcceso.Estado = "Default";
-    usuarioAcceso.SistemaOperativo = "Default";
-    usuarioAcceso.RefreshToken = tokenDTO.RefreshToken;
-    usuarioAcceso.Navegador = "Default";
-    contexto.UsuarioAcceso.Add(usuarioAcceso);
-    contexto.SaveChanges();
-    return tokenDTO;
-}
 
         public TokenDTO GenerarToken(IConfiguration config, int usuarioId, string nombre)
         {
@@ -132,6 +169,27 @@ public async Task<TokenDTO> LoginAsync(LoginDTO loginDTO, IConfiguration config)
             usuario.Password = seguridad.GetHash(usuario.Adicional1 + usuario.Password);
             await contexto.SaveChangesAsync();
             return true;
+        }
+
+        private void EnviaCorreoIntentosIncorrectos(string path,  string usuario, string email, int codigo)
+        {
+            string body = System.IO.File.ReadAllText(Path.Combine(path,"Templates/IntentosIncorrectos.html"));
+            body = body.Replace("{{usuario}}", usuario);
+            body = body.Replace("{{codigo}}", codigo.ToString());
+            Correo mail = new Correo()
+            {
+                Para = email,
+                Mensaje = body,
+                Asunto = "Tu cuenta ha sido bloqueada"
+            };
+            try
+            {
+                mail.Enviar();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException);
+            }
         }
     }
 }

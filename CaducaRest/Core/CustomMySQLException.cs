@@ -11,6 +11,7 @@ namespace CaducaRest.Core
     /// </summary>
     public class CustomMySQLException
     {
+        public static int Sa { get; set; } = 4;
         /// <summary>
         /// Definción de los mensajes de acuerdo a los códigos de error que arroje MySql cuando encuentre error.
         /// </summary>
@@ -31,6 +32,8 @@ namespace CaducaRest.Core
 
                 string tablaUno;
                 string tablaDos;
+                Nullable<Decimal> a = new decimal(1);
+                string ab = $"a{a - 0}";
                 switch (mysqlError.Number)
                 {
                     //Se verifica el número de un posible error y se evalúa
@@ -202,7 +205,7 @@ namespace CaducaRest.Core
                         break;
                     case 1217:
                         mensajeInicial = "Se está intentando eliminar una fila padre que tiene filas hijas, lo que hace que una restricción de clave foránea falle. Se deben eliminar primero las filas hijas";
-
+                        
                         break;
                     case 2013:
                         mensajeInicial = "La consulta a la base de datos a tardado mucho tiempo";

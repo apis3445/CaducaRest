@@ -38,7 +38,6 @@ namespace CaducaRest.Filters
         /// <param name="context">Datos de la excepción</param>
         public override void OnException(ExceptionContext context)
         {
-            var y = new object();
             if (context.Exception.InnerException != null && context.Exception.InnerException is MySqlException)
             {              
                 string tabla = " el/la " + context.RouteData.Values["controller"].ToString() + " ";

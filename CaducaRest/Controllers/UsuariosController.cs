@@ -21,6 +21,7 @@ public class UsuariosController : BaseController
 {
         private UsuarioDAO usuarioDAO;
 
+        
         protected readonly IConfiguration _config;
 
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -29,10 +30,10 @@ public class UsuariosController : BaseController
                                   LocService localize,
                                   IConfiguration config,
                                   IHostingEnvironment hostingEnvironment) : base(context, localize)
-        {
-            usuarioDAO = new UsuarioDAO(context, localize);
+        {           
             _config = config;            
             _hostingEnvironment = hostingEnvironment;
+            usuarioDAO = new UsuarioDAO(context, localize, _hostingEnvironment.ContentRootPath);
         }
 
         [HttpGet]
@@ -72,10 +73,9 @@ public class UsuariosController : BaseController
         [AllowAnonymous]
         public IActionResult RefreshToken([FromBody]RefreshTokenDTO refreshToken)
         {
-            UsuarioDAO usuarioDao = new UsuarioDAO(this._context, this._localizer);
-            if (!usuarioDao.ValidarToken(refreshToken.RefreshToken, _config))
+            if (!usuarioDAO.ValidarToken(refreshToken.RefreshToken, _config))
                 return StatusCode(403, new CustomError(403, this._localizer.GetLocalizedHtmlString("AccesoNoAutorizado")));
-            return Ok(usuarioDao.tokenDTO);
+            return Ok(usuarioDAO.tokenDTO);
         }
     }
 }

@@ -20,8 +20,6 @@ namespace CaducaRest.Controllers
     [TypeFilter(typeof(HistorialFilter))]
     public class ProductosController : BaseController
     {
-        private readonly LocService _localizer;
-        private readonly CaducaContext _context;
         private ProductoDAO productoDAO;
         /// <summary>
         /// Constructor

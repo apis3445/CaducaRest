@@ -23,8 +23,7 @@ namespace CaducaRest.Controllers
     [TypeFilter(typeof(HistorialFilter))]
     public class CategoriasController : BaseController
     {
-        private readonly LocService localizacion;
-        private readonly CaducaContext _context;
+
         private CategoriaDAO categoriaDAO;
         protected IAuthorizationService _authorizationService;
         /// <summary>
@@ -36,9 +35,7 @@ namespace CaducaRest.Controllers
                                     LocService localizer,
                                     IAuthorizationService authorizationService)
                                     : base(context, localizer)
-        {
-            _context = context;
-            localizacion = localizer;
+        {         
             _authorizationService = authorizationService;
             categoriaDAO = new CategoriaDAO(context, localizer);
             this.permiso = new PermisoDTO
@@ -97,7 +94,7 @@ namespace CaducaRest.Controllers
                    .AuthorizeAsync(User, permiso, Operaciones.Modificar);
             //Si el resultado no fue exitoso regresamos una lista vacia
             if (!authorizationResult.Succeeded)
-                return StatusCode(403, String.Format(this.localizacion.GetLocalizedHtmlString("ForbiddenUpdate"), "La categoría"));
+                return StatusCode(403, String.Format(this._localizer.GetLocalizedHtmlString("ForbiddenUpdate"), "La categoría"));
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -130,7 +127,7 @@ namespace CaducaRest.Controllers
                 .AuthorizeAsync(User, permiso, Operaciones.Crear);
             //Si el resultado no fue exitoso regresamos una lista vacia
             if (!authorizationResult.Succeeded)
-                return StatusCode(403, String.Format(this.localizacion.GetLocalizedHtmlString("ForbiddenUpdate"), "La categoría"));
+                return StatusCode(403, String.Format(this._localizer.GetLocalizedHtmlString("ForbiddenUpdate"), "La categoría"));
 
             if (!await categoriaDAO.AgregarAsync(categoria))
             {
@@ -154,7 +151,7 @@ namespace CaducaRest.Controllers
                         .AuthorizeAsync(User, permiso, Operaciones.Borrar);
             //Si el resultado no fue exitoso regresamos una lista vacia
             if (!authorizationResult.Succeeded)
-                return StatusCode(403, String.Format(this.localizacion.
+                return StatusCode(403, String.Format(this._localizer.
                     GetLocalizedHtmlString("ForbiddenDelete"), "La categoría"));
 
             if (!ModelState.IsValid)

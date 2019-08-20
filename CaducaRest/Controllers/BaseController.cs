@@ -11,9 +11,9 @@ namespace CaducaRest.Controllers
         /// <summary>
         /// Objeto para conectarse al a base de datos
         /// </summary>
-        protected readonly CaducaContext _context;
+        protected  CaducaContext _context;
 
-        protected readonly LocService _localizer;
+        protected  LocService _localizer;
 
         /// <summary>
         /// Permite registrar la página para validar sus permisos

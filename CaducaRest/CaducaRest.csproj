@@ -12,6 +12,7 @@
     <Folder Include="wwwroot\" />
     <Folder Include="GraphQL\Mutation\" />
     <Folder Include="DTO\" />
+    <Folder Include="Templates\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,5 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="DAO\RolDAO.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Templates\IntentosIncorrectos.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Templates\IntentosIncorrectos.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

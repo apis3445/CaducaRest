@@ -15,7 +15,6 @@ namespace CaducaRest.Filters
     {
         private readonly LocService _localizer;
         private readonly CaducaContext _context;
-        /// <summary>
 
         public HistorialFilter(CaducaContext context, LocService localizer)
         {

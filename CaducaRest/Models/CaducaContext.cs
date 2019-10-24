@@ -454,6 +454,7 @@ namespace CaducaRest.Models
         /// </summary>
         public virtual DbSet<ClienteCategoria> ClienteCategoria { get; set; }
 
+
         public virtual DbSet<Historial> Historial { get; set; }
 
         public virtual DbSet<Permiso> Permiso { get; set; }

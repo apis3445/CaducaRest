@@ -17,11 +17,12 @@ using Microsoft.Extensions.Configuration;
 namespace CaducaRest.Controllers
 {
     [Route("api/[controller]")]
-public class UsuariosController : BaseController
-{
+    public class UsuariosController : BaseController
+    {
         private UsuarioDAO usuarioDAO;
 
-        
+        private IHttpContextAccessor _accessor;
+
         protected readonly IConfiguration _config;
 
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -29,9 +30,11 @@ public class UsuariosController : BaseController
         public UsuariosController(CaducaContext context,
                                   LocService localize,
                                   IConfiguration config,
-                                  IHostingEnvironment hostingEnvironment) : base(context, localize)
+                                  IHostingEnvironment hostingEnvironment,
+                                  IHttpContextAccessor accessor) : base(context, localize)
         {           
-            _config = config;            
+            _config = config;
+            _accessor = accessor;
             _hostingEnvironment = hostingEnvironment;
             usuarioDAO = new UsuarioDAO(context, localize, _hostingEnvironment.ContentRootPath);
         }
@@ -52,7 +55,10 @@ public class UsuariosController : BaseController
         [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] LoginDTO loginDTO)
         {
-            var token = await usuarioDAO.LoginAsync(loginDTO, _config);
+            string ip = "189.145.141.65"; //Set default ip
+            if (_hostingEnvironment.IsProduction())        
+                ip =_accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+            var token = await usuarioDAO.LoginAsync(loginDTO, _config, ip);
             if (string.IsNullOrEmpty(token.Token))
                 return StatusCode(usuarioDAO.customError.StatusCode, usuarioDAO.customError.Message);
             return Ok(token);

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        body {
+            font-size: 1.3rem;
+            color: #05678e;
+        }
+
+        .acceso {
+            border-radius: 10px;
+            border: solid 1px #ccc;
+            padding: 20px;
+        }
+
+        label {
+            display: inline-block;
+            width: 130px;
+            font-weight: bold;
+        }
+
+        .titulo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        ¡Hola {{usuario}}!
+        <h3>Alguien accedió a tu cuenta en una nueva ciudad</h3>
+    </p>
+    <div class="acceso">
+        <span class="titulo">
+            Nuevo acceso en:
+            {{sistemaOperativo}}
+        </span>
+        <br />
+        <label>Navegador:</label>{{navegador}}
+        <br />
+        <label>El:</label>{{fecha}}
+        <br />
+        <label>Cerca de:</label>{{ciudad}}, {{estado}}, {{pais}}
+        <br />
+        <label> Ip:</label>{{ip}}
+        <hr />
+        <p>
+            Te enviamos este correo electrónico para asegurarnos de
+            que hayas sido tú.
+            Si no fuiste tú, por favor comunícate con nosotros.
+        </p>
+    </div>
+</body>
+</html>

@@ -37,6 +37,7 @@ namespace CaducaRest.Models
         /// Obtiene o establece el nombre de la categoría
         /// </summary>
         /// <value>El nombre de la categoría</value>
+        [StringLength(80)]
         [Required(ErrorMessage = "Required")]
         [Column(TypeName = "VARCHAR(80)")]
         public string Nombre { get; set; }

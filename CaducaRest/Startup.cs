@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -147,9 +148,16 @@ namespace CaducaRest
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Api Caduca REST", Version = "v1" });
+                //Obtenemos el directorio actual
                 var basePath = AppContext.BaseDirectory;
+                //Obtenemos el nombre de la dll por medio de reflexión
                 var assemblyName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
+                //Al nombre del assembly le agregamos la extensión xml
                 var fileName = System.IO.Path.GetFileName(assemblyName + ".xml");
+                //Agregamos el Path, es importante utilizar el comando Path.Combine
+                //ya que entre windows y mas cambian las rutas de los archivos
+                //En windows es por ejemplo c:/Uusuarios con / y en linux es \usr
+                // con \
                 var xmlPath = Path.Combine(basePath, fileName);
                 c.IncludeXmlComments(xmlPath);
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme()
@@ -178,6 +186,7 @@ namespace CaducaRest
             .AddUserContextBuilder(httpContext => httpContext.User)
             .AddDataLoader();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

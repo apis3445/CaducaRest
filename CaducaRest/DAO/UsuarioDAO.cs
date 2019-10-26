@@ -137,22 +137,25 @@ namespace CaducaRest.DAO
             return true;
         }
 
-        public async Task<TokenDTO> LoginAsync(LoginDTO loginDTO, IConfiguration config, string ip)
-        {
-            var usuario = await ObtenerPorClave(loginDTO.Usuario);
-            if (usuario == null)
-                return tokenDTO;
-            if (!EsUsuarioActivo(usuario))
-                return tokenDTO;
-            if (!EsPasswordValido(usuario, loginDTO.Password, loginDTO.Codigo))
-                 return tokenDTO;
-            tokenDTO = GenerarToken(config, usuario.Id, usuario.Nombre);
-            UsuarioAccesoDAO usuarioAccesoDAO = new UsuarioAccesoDAO(contexto, localizacion);
-            await usuarioAccesoDAO.AgregarAsync(tokenDTO, usuario.Id, ip);
+    public async Task<TokenDTO> LoginAsync(LoginDTO loginDTO, IConfiguration config, string ip, string navegador)
+    {
+        var usuario = await ObtenerPorClave(loginDTO.Usuario);
+        if (usuario == null)
             return tokenDTO;
-        }
+        if (!EsUsuarioActivo(usuario))
+            return tokenDTO;
+        if (!EsPasswordValido(usuario, loginDTO.Password, loginDTO.Codigo))
+                return tokenDTO;
+        tokenDTO = GenerarToken(config, usuario.Id, usuario.Nombre);
+        UsuarioAccesoDAO usuarioAccesoDAO = new UsuarioAccesoDAO(contexto, localizacion);
+        var esOtroNavegador = usuarioAccesoDAO.EsOtroNavegador(navegador, usuario.Id);
+        var esOtraCiudad = await usuarioAccesoDAO.EsOtraCiudadAsync(ip, usuario.Id);
+        if (esOtroNavegador || esOtraCiudad)
+            EnviaCorreoNuevoAcceso(_path, usuario.Clave, usuario.Email, usuarioAccesoDAO.datosIP, ip, navegador);
+        await usuarioAccesoDAO.GuardarAccesoAsync(tokenDTO, usuario.Id, ip, navegador);
+        return tokenDTO;
+    }
 
-        
         public TokenDTO GenerarToken(IConfiguration config, int usuarioId, string nombre)
         {
             Token token = new Token(config);
@@ -215,5 +218,31 @@ namespace CaducaRest.DAO
                 Console.WriteLine(ex.InnerException);
             }
         }
+
+private void EnviaCorreoNuevoAcceso(string path, string usuario, string email, DatosIPDTO datosIP, string ip, string navegador)
+{
+    string body = System.IO.File.ReadAllText(Path.Combine(path, "Templates", "NuevoAcceso.html"));
+    body = body.Replace("{{usuario}}", usuario);
+    body = body.Replace("{{ciudad}}", datosIP.city);
+    body = body.Replace("{{estado}}", datosIP.subdivision);
+    body = body.Replace("{{pais}}", datosIP.country);
+    body = body.Replace("{{ip}}", ip);
+    body = body.Replace("{{navegador}}", navegador);
+            
+    Correo mail = new Correo()
+    {
+        Para = email,
+        Mensaje = body,
+        Asunto = "Tu cuenta ha sido bloqueada"
+    };
+    try
+    {
+        mail.Enviar();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.InnerException);
+    }
+}
     }
 }

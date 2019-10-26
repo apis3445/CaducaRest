@@ -55,10 +55,13 @@ namespace CaducaRest.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] LoginDTO loginDTO)
         {
+            var navegador = _accessor.HttpContext?.Request.Headers["User-Agent"];
+            //Para obtener cualquier otro dato en el Header
+            //var otroDato = _accessor.HttpContext?.Request.Headers["Secreto"];
             string ip = "189.145.141.65"; //Set default ip
             if (_hostingEnvironment.IsProduction())        
                 ip =_accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-            var token = await usuarioDAO.LoginAsync(loginDTO, _config, ip);
+            var token = await usuarioDAO.LoginAsync(loginDTO, _config, ip, navegador);
             if (string.IsNullOrEmpty(token.Token))
                 return StatusCode(usuarioDAO.customError.StatusCode, usuarioDAO.customError.Message);
             return Ok(token);

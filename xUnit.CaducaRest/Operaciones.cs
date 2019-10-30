@@ -16,7 +16,7 @@ public class Operaciones
 
     public int Sumar()
     {
-        return _a + _b;
+        return _a * _b;
     }
 }
 }

@@ -58,7 +58,7 @@ namespace CaducaRest.Controllers
             var navegador = _accessor.HttpContext?.Request.Headers["User-Agent"];
             //Para obtener cualquier otro dato en el Header
             //var otroDato = _accessor.HttpContext?.Request.Headers["Secreto"];
-            string ip = "189.145.141.65"; //Set default ip
+            string ip = "198.27.75.143"; //Set default ip
             if (_hostingEnvironment.IsProduction())        
                 ip =_accessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
             var token = await usuarioDAO.LoginAsync(loginDTO, _config, ip, navegador);

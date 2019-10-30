@@ -52,6 +52,7 @@ namespace CaducaRest
         
         public void ConfigureServices(IServiceCollection services)
         {
+            var urlsPermitidas = Configuration.GetSection("AllowedHosts").Value;
             services.AddOData();
             //La clase LocServicde nos permite cambiar los mensajes de error según el idioma
             services.AddSingleton<LocService>();
@@ -104,7 +105,7 @@ namespace CaducaRest
                                     new MediaTypeHeaderValue("application/prs.mock-odata"));
                             }
                         }
-                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(JsonOptions => JsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
                 .AddDataAnnotationsLocalization(options =>
                 {
@@ -144,6 +145,8 @@ namespace CaducaRest
             //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
             //Conexión SQL Server Azure
             //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
+            //Habilitar CORS
+            services.AddCors();
             //Se agrega en generador de Swagger
             services.AddSwaggerGen(c =>
             {
@@ -155,7 +158,7 @@ namespace CaducaRest
                 //Al nombre del assembly le agregamos la extensión xml
                 var fileName = System.IO.Path.GetFileName(assemblyName + ".xml");
                 //Agregamos el Path, es importante utilizar el comando Path.Combine
-                //ya que entre windows y mas cambian las rutas de los archivos
+                //ya que entre windows y linux cambian las rutas de los archivos
                 //En windows es por ejemplo c:/Uusuarios con / y en linux es \usr
                 // con \
                 var xmlPath = Path.Combine(basePath, fileName);
@@ -201,7 +204,12 @@ namespace CaducaRest
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            var urlAceptadas = Configuration.GetSection("AllowedHosts").Value.Split(",");
+            app.UseCors(builder =>
+              builder.WithOrigins(urlAceptadas)
+                           .AllowAnyHeader()
+                           .AllowAnyMethod()
+                           );
             app.UseHttpsRedirection();
 
             app.UseAuthentication();

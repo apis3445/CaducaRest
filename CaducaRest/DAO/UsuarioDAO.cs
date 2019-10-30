@@ -228,7 +228,8 @@ private void EnviaCorreoNuevoAcceso(string path, string usuario, string email, D
     body = body.Replace("{{pais}}", datosIP.country);
     body = body.Replace("{{ip}}", ip);
     body = body.Replace("{{navegador}}", navegador);
-            
+    body = body.Replace("{{fecha}}", DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString());
+
     Correo mail = new Correo()
     {
         Para = email,

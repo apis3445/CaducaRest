@@ -32,7 +32,7 @@ public void Enviar()
     string smtpAddress, usuarioCorreo, passwordCorreo;
     int puerto = 587;            
     smtpAddress = "smtp.gmail.com";
-    usuarioCorreo = "corrego@gmail.com";
+    usuarioCorreo = "correo@gmail.com";
     passwordCorreo = "tupassword";
 
     SmtpClient client = new SmtpClient(smtpAddress, puerto)

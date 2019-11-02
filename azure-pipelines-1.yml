@@ -1,0 +1,26 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+
+  default:
+    - step:
+        caches:
+          - dotnetcore
+        script: # Modify the comma`nds below to build your repository.
+          - export PROJECT_NAME=CaducaRest
+          - export TEST_NAME=xUnit.CaducaRest
+          - dotnet restore
+          - dotnet build $PROJECT_NAME
+          - dotnet test $TEST_NAME
+

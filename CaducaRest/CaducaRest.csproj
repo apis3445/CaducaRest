@@ -13,6 +13,7 @@
     <Folder Include="GraphQL\Mutation\" />
     <Folder Include="DTO\" />
     <Folder Include="Templates\" />
+    <Folder Include="Datos\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,18 +26,14 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.OData.Versioning.ApiExplorer" Version="3.2.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.6" />
   </ItemGroup>
 
   <ItemGroup>

@@ -29,6 +29,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -140,11 +141,15 @@ namespace CaducaRest
                     options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
                 });
             //Conexión MySQL
-            services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             //Conexión SQL Server
             //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
             //Conexión SQL Server Azure
             //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
+            //Conexión en Memoria
+            services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
+                                                         .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
+
             //Habilitar CORS
             services.AddCors();
             //Se agrega en generador de Swagger

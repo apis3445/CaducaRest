@@ -8,7 +8,7 @@ namespace CaducaRest.IntegrationTest
         [TestMethod]
         public void TestMethod1()
         {
-            Assert.Equals(1, 1);
+            Assert.AreEqual(1, 1);
         }
     }
 }

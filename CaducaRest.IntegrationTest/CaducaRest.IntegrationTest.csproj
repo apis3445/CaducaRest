@@ -20,6 +20,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CaducaRest\CaducaRest.csproj" />
-    <ProjectReference Include="..\xUnit.CaducaRest\xUnit.CaducaRest.csproj" />
   </ItemGroup>
 </Project>

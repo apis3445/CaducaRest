@@ -16,7 +16,7 @@ namespace xUnit.CaducaRest
 
         public int Sumar()
         {
-            return _a - _b;
+            return _a + _b;
         }
     }
 }

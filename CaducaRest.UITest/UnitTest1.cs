@@ -19,9 +19,7 @@ namespace CaducaRest.UITest
         public void Test1()
         {
             _driver.Navigate().GoToUrl("http://www.google.com");
-
-
-            Assert.Pass();
+            Assert.AreEqual("Google", _driver.FindElement(By.Id("hplogo")).GetAttribute("alt"));
         }
         public void Dispose()
         {

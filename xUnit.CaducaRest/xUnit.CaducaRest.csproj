@@ -22,6 +22,7 @@
       <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
       <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
     </PackageReference>
+    <PackageReference Include="Selenium.Support" Version="3.141.0" />
   </ItemGroup>
 
   <ItemGroup>

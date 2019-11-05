@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xUnit.CaducaRest", "xUnit.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaducaRest.IntegrationTest", "CaducaRest.IntegrationTest\CaducaRest.IntegrationTest.csproj", "{A2B15FCF-1323-4CEA-B7A0-EB80502276C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaducaRest.UITest", "CaducaRest.UITest\CaducaRest.UITest.csproj", "{AFEA9068-3087-46C0-B2E7-6D8126A6E45A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A2B15FCF-1323-4CEA-B7A0-EB80502276C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2B15FCF-1323-4CEA-B7A0-EB80502276C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2B15FCF-1323-4CEA-B7A0-EB80502276C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFEA9068-3087-46C0-B2E7-6D8126A6E45A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFEA9068-3087-46C0-B2E7-6D8126A6E45A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFEA9068-3087-46C0-B2E7-6D8126A6E45A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFEA9068-3087-46C0-B2E7-6D8126A6E45A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

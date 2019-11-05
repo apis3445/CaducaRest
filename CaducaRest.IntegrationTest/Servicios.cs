@@ -1,14 +1,11 @@
 ﻿using CaducaRest.Models;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -29,6 +26,10 @@ namespace CaducaRest.IntegrationTest
             var builder = new WebHostBuilder()
                             .ConfigureServices(services =>
                             {
+                                services.AddMvcCore(options =>
+                                {
+                                    options.EnableEndpointRouting = false; // TODO: Remove when OData does not causes exceptions anymore
+                                });
                                 services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
                                                       .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
                             })

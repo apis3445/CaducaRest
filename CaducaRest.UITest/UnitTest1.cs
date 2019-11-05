@@ -21,6 +21,7 @@ namespace CaducaRest.UITest
             _driver.Navigate().GoToUrl("http://www.google.com");
             Assert.AreEqual("Google", _driver.FindElement(By.Id("hplogo")).GetAttribute("alt"));
         }
+        
         public void Dispose()
         {
             _driver.Quit();

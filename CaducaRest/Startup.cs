@@ -106,7 +106,7 @@ namespace CaducaRest
                                     new MediaTypeHeaderValue("application/prs.mock-odata"));
                             }
                         }
-                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(JsonOptions => JsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
                 .AddDataAnnotationsLocalization(options =>
                 {
@@ -141,14 +141,14 @@ namespace CaducaRest
                     options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
                 });
             //Conexión MySQL
-            //services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             //Conexión SQL Server
             //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
             //Conexión SQL Server Azure
             //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
             //Conexión en Memoria
-            services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
-                                                         .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
+            //services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
+            //                                             .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
 
             //Habilitar CORS
             services.AddCors();
@@ -156,18 +156,23 @@ namespace CaducaRest
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Api Caduca REST", Version = "v1" });
-                //Obtenemos el directorio actual
-                var basePath = AppContext.BaseDirectory;
                 //Obtenemos el nombre de la dll por medio de reflexión
                 var assemblyName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
-                //Al nombre del assembly le agregamos la extensión xml
-                var fileName = System.IO.Path.GetFileName(assemblyName + ".xml");
-                //Agregamos el Path, es importante utilizar el comando Path.Combine
-                //ya que entre windows y linux cambian las rutas de los archivos
-                //En windows es por ejemplo c:/Uusuarios con / y en linux es \usr
-                // con \
-                var xmlPath = Path.Combine(basePath, fileName);
-                c.IncludeXmlComments(xmlPath);
+                if (assemblyName != "testhost")
+                {
+                    //Obtenemos el directorio actual
+                    var basePath = AppContext.BaseDirectory;
+
+                    //Al nombre del assembly le agregamos la extensión xml
+                    var fileName = System.IO.Path.GetFileName(assemblyName + ".xml");
+                    Console.Write(fileName);
+                    //Agregamos el Path, es importante utilizar el comando Path.Combine
+                    //ya que entre windows y linux cambian las rutas de los archivos
+                    //En windows es por ejemplo c:/Uusuarios con / y en linux es \usr
+                    // con \
+                    var xmlPath = Path.Combine(basePath, fileName);
+                    c.IncludeXmlComments(xmlPath);
+                }
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme()
                 {
                     In = "header",

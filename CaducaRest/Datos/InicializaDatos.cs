@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using CaducaRest.Models;
+﻿using CaducaRest.Models;
 
 namespace CaducaRest.Datos
 {

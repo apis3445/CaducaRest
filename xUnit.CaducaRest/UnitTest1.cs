@@ -63,7 +63,7 @@ namespace xUnit.CaducaRest
                                     var scopedServices = scope.ServiceProvider;
                                     var caducaContext = scopedServices.GetRequiredService<CaducaContext>();
                                     caducaContext.Database.EnsureCreated();
-                                    CaducaRest.Datos.InicializaDatos(caducaContext);
+                                    //CaducaRest.Datos.InicializaDatos(caducaContext);
                                     var total = caducaContext.Usuario.ToList();
                                 }
                             })

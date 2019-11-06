@@ -54,18 +54,18 @@ namespace xUnit.CaducaRest
                                     options.EnableEndpointRouting = false; // TODO: Remove when OData does not causes exceptions anymore
                                 });
 
-                                var sp = services.BuildServiceProvider();
                                 services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
                                                       .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
-                                // Create a scope to obtain a reference to the database contexts
+                                /*var sp = services.BuildServiceProvider();
+
                                 using (var scope = sp.CreateScope())
                                 {
                                     var scopedServices = scope.ServiceProvider;
                                     var caducaContext = scopedServices.GetRequiredService<CaducaContext>();
                                     caducaContext.Database.EnsureCreated();
-                                    //CaducaRest.Datos.InicializaDatos(caducaContext);
+                                 
                                     var total = caducaContext.Usuario.ToList();
-                                }
+                                }*/
                             })
                             .UseStartup<Startup>()
 

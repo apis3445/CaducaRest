@@ -24,15 +24,15 @@ using Xunit;
 namespace xUnit.CaducaRest
 {
     public class UnitTest1
-        //: IClassFixture<Prueba<Startup>>
+        : IClassFixture<Prueba<Startup>>
     {
 
         private  HttpClient httpCliente;
 
-        /*public UnitTest1(Prueba<Startup> factory)
+        public UnitTest1(Prueba<Startup> factory)
         {
             httpCliente = factory.CreateClient();
-        }*/
+        }
         [Fact]
         public void SumaDosNumeros_Correcto()
         {
@@ -46,7 +46,8 @@ namespace xUnit.CaducaRest
         [Fact]
         public async Task Test2Async()
         {
-            var builder = new WebHostBuilder()
+           /* var builder = new WebHostBuilder()
+                .UseStartup<Startup>()
                             .ConfigureServices(services =>
                             {
                                 services.AddMvcCore(options =>
@@ -56,18 +57,18 @@ namespace xUnit.CaducaRest
 
                                 services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
                                                       .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
-                                /*var sp = services.BuildServiceProvider();
+                                var sp = services.BuildServiceProvider();
 
                                 using (var scope = sp.CreateScope())
                                 {
                                     var scopedServices = scope.ServiceProvider;
                                     var caducaContext = scopedServices.GetRequiredService<CaducaContext>();
                                     caducaContext.Database.EnsureCreated();
-                                 
+                                    InicializaDatos.Inicializar(caducaContext);
                                     var total = caducaContext.Usuario.ToList();
-                                }*/
+                                }
                             })
-                            .UseStartup<Startup>()
+                            
 
                             .ConfigureAppConfiguration((context, config) =>
                             {
@@ -79,9 +80,9 @@ namespace xUnit.CaducaRest
             
             
             var servidorPruebas = new TestServer(builder);
-
-             httpCliente = servidorPruebas.CreateClient();
             
+             httpCliente = servidorPruebas.CreateClient();
+            */
             LoginDTO loginDTO = new LoginDTO();
             loginDTO.Password = "zUvyvsRSCMek58eR";
             loginDTO.Usuario = "Juan";

@@ -51,7 +51,7 @@ namespace CaducaRest.IntegrationTest
         public async Task<bool> PostAsync(string servicio, object datos)
         {
             var contenido = new StringContent(JsonConvert.SerializeObject(datos), Encoding.UTF8, "application/json");
-            var response = await httpCliente.PostAsync(Constantes.URLBase + servicio, contenido);
+            var response = await httpCliente.PostAsync(servicio, contenido);
             if (response.StatusCode == HttpStatusCode.OK)
                 return true;
             return false;

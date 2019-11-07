@@ -1,4 +1,5 @@
-﻿using CaducaRest.Models;
+﻿using CaducaRest.Datos;
+using CaducaRest.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
@@ -16,37 +17,31 @@ namespace CaducaRest.IntegrationTest
 {
     public class Servicios
     {
-        private readonly TestServer servidorPruebas;
-
-        public HttpClient httpCliente { get; }
+        public static HttpClient httpCliente;
+        private static CaducaContext caducaContext;
         public HttpResponseMessage httpResponse;
-        public Servicios()
-        {
-            var contexto = new CaducaContextMemoria().ObtenerContexto();
-            var builder = new WebHostBuilder()
-                            .ConfigureServices(services =>
-                            {
-                                services.AddMvcCore(options =>
-                                {
-                                    options.EnableEndpointRouting = false; // TODO: Remove when OData does not causes exceptions anymore
-                                });
-                                services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
-                                                      .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
-                            })
-                            .UseStartup<Startup>()
-                            
-                            .ConfigureAppConfiguration((context, config) =>
-                            {
-                                config.SetBasePath(Path.Combine(
-                                    Directory.GetCurrentDirectory(),
-                                    "..", "..", "..", "..", "CaducaRest"));
-                                config.AddJsonFile("appsettings.json");
-                            });
-            servidorPruebas = new TestServer(builder);
+       
+        
+       
+                public static void Inicializa()
+                {
+                    var builder = new WebHostBuilder()
+                         .UseEnvironment("Testing")
+                         .ConfigureAppConfiguration((c, config) =>
+                         {
+                             config.SetBasePath(Path.Combine(
+                                 Directory.GetCurrentDirectory(),
+                                 "..", "..", "..", "..", "CaducaRest"));
 
-            httpCliente = servidorPruebas.CreateClient();
+                             config.AddJsonFile("appsettings.json");
+                         })
+                         .UseStartup<Startup>();
+                    var servidorPruebas = new TestServer(builder);
+                    caducaContext = servidorPruebas.Host.Services.GetService(typeof(CaducaContext)) as CaducaContext;
+                    httpCliente = servidorPruebas.CreateClient();
+                    InicializaDatos.Inicializar(caducaContext);
            
-        }
+                }
 
         public async Task<bool> PostAsync(string servicio, object datos)
         {

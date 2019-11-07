@@ -44,13 +44,15 @@ namespace CaducaRest
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+
+        public Startup(IConfiguration configuration,  IHostingEnvironment env)
         {
             Configuration = configuration;
+            CurrentEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
-        
+        public IHostingEnvironment CurrentEnvironment { get; }
         public void ConfigureServices(IServiceCollection services)
         {
             var urlsPermitidas = Configuration.GetSection("AllowedHosts").Value;
@@ -140,16 +142,24 @@ namespace CaducaRest
 
                     options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
                 });
-            //Conexión MySQL
-            services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-            //Conexión SQL Server
-            //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
-            //Conexión SQL Server Azure
-            //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
-            //Conexión en Memoria
-            //services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
-            //                                             .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
+            if (CurrentEnvironment.IsEnvironment("Testing"))
+            {
+                //Conexión en Memoria
 
+                services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
+                                                                        .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
+
+            }
+            else
+            {
+                //Conexión MySQL
+                services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+                //Conexión SQL Server
+                //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
+                //Conexión SQL Server Azure
+                //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
+            }
+            
             //Habilitar CORS
             services.AddCors();
             //Se agrega en generador de Swagger
@@ -205,7 +215,7 @@ namespace CaducaRest
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsEnvironment("Testing"))
             {
                 app.UseDeveloperExceptionPage();
             }

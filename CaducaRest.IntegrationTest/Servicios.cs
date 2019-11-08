@@ -20,16 +20,16 @@ namespace CaducaRest.IntegrationTest
         public static void Inicializa()
         {
             var builder = new WebHostBuilder()
-                 .UseEnvironment("Testing")
-                 .ConfigureAppConfiguration((c, config) =>
-                 {
-                     config.SetBasePath(Path.Combine(
-                         Directory.GetCurrentDirectory(),
-                         "..", "..", "..", "..", "CaducaRest"));
+                    .UseEnvironment("Testing")
+                    .ConfigureAppConfiguration((c, config) =>
+                    {
+                        config.SetBasePath(Path.Combine(
+                            Directory.GetCurrentDirectory(),
+                            "..", "..", "..", "..", "CaducaRest"));
 
-                     config.AddJsonFile("appsettings.json");
-                 })
-                 .UseStartup<Startup>();
+                        config.AddJsonFile("appsettings.json");
+                    })
+                    .UseStartup<Startup>();
             var servidorPruebas = new TestServer(builder);
             caducaContext = servidorPruebas.Host.Services.GetService(typeof(CaducaContext)) as CaducaContext;
             InicializaDatos.Inicializar(caducaContext);

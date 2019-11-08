@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Net.Http;
 using CaducaRest.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -9,34 +12,40 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CaducaRest.IntegrationTest
 {
-    public class TestStartup : Startup
+    public class TestStartup
     {
-        
-        public TestStartup(IHostingEnvironment env, IConfiguration configuration) : base(configuration)
-        {
-            var builder = new ConfigurationBuilder()
-               .SetBasePath(env.ContentRootPath)
-               .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-               .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-               .AddEnvironmentVariables();
-            configuration = builder.Build();
-        }
 
-        public IConfigurationRoot Configuration { get; }
+        private readonly TestServer _server;
 
-        public void ConfigureTestServices(IServiceCollection services)
+        public HttpClient Client { get; }
+
+        public TestStartup()
         {
-           services.AddDbContext<CaducaContext>
-                (opt => opt.UseInMemoryDatabase("Caltic")
-                .ConfigureWarnings(x =>
-                x.Ignore(InMemoryEventId
-                       .TransactionIgnoredWarning)));
+            var builder = new WebHostBuilder()
+                .UseStartup<Startup>()
+                .ConfigureAppConfiguration((context, config) =>
+                {
+                    config.SetBasePath(Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "..\\..\\..\\..\\AspNetCoreTodo"));
+
+                    config.AddJsonFile("appsettings.json");
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddMvcCore(options =>
+                    {
+                        options.EnableEndpointRouting = false; // TODO: Remove when OData does not causes exceptions anymore
+                    });
+                    services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
+                                          .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
+                })
+                ;
+
+            _server = new TestServer(builder);
+
+            Client = _server.CreateClient();
             
-        }
-
-        public void Configure(IApplicationBuilder app)
-        {
-            // your usual registrations there
         }
     }
 }

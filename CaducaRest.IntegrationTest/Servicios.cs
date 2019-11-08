@@ -2,10 +2,7 @@
 using CaducaRest.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.IO;
 using System.Net;
@@ -17,33 +14,29 @@ namespace CaducaRest.IntegrationTest
 {
     public class Servicios
     {
-        public static HttpClient httpCliente;
-        private static CaducaContext caducaContext;
-        public HttpResponseMessage httpResponse;
-       
-        
-       
-                public static void Inicializa()
-                {
-                    var builder = new WebHostBuilder()
-                         .UseEnvironment("Testing")
-                         .ConfigureAppConfiguration((c, config) =>
-                         {
-                             config.SetBasePath(Path.Combine(
-                                 Directory.GetCurrentDirectory(),
-                                 "..", "..", "..", "..", "CaducaRest"));
+        private static HttpClient httpCliente;
+        public static CaducaContext caducaContext;
 
-                             config.AddJsonFile("appsettings.json");
-                         })
-                         .UseStartup<Startup>();
-                    var servidorPruebas = new TestServer(builder);
-                    caducaContext = servidorPruebas.Host.Services.GetService(typeof(CaducaContext)) as CaducaContext;
-                    httpCliente = servidorPruebas.CreateClient();
-                    InicializaDatos.Inicializar(caducaContext);
-           
-                }
+        public static void Inicializa()
+        {
+            var builder = new WebHostBuilder()
+                 .UseEnvironment("Testing")
+                 .ConfigureAppConfiguration((c, config) =>
+                 {
+                     config.SetBasePath(Path.Combine(
+                         Directory.GetCurrentDirectory(),
+                         "..", "..", "..", "..", "CaducaRest"));
 
-        public async Task<bool> PostAsync(string servicio, object datos)
+                     config.AddJsonFile("appsettings.json");
+                 })
+                 .UseStartup<Startup>();
+            var servidorPruebas = new TestServer(builder);
+            caducaContext = servidorPruebas.Host.Services.GetService(typeof(CaducaContext)) as CaducaContext;
+            InicializaDatos.Inicializar(caducaContext);
+            httpCliente = servidorPruebas.CreateClient();
+        }
+
+        public static async Task<bool> PostAsync(string servicio, object datos)
         {
             var contenido = new StringContent(JsonConvert.SerializeObject(datos), Encoding.UTF8, "application/json");
             var response = await httpCliente.PostAsync(servicio, contenido);

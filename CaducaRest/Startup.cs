@@ -90,8 +90,6 @@ namespace CaducaRest
                                                 .RequireAuthenticatedUser()
                                                 .Build();
                             options.Filters.Add(new AuthorizeFilter(policy));
-                            
-                            
                             options.Filters.Add(typeof(CustomExceptionFilter));
                             foreach (var formatter in options.OutputFormatters
                                         .OfType<ODataOutputFormatter>()
@@ -119,8 +117,6 @@ namespace CaducaRest
                         return factory.Create("SharedResource", assemblyName.Name);
                     };
                 });
-
-
             services.AddAuthorization(options =>
             {
                options.AddPolicy("VendedorConCategorias", policy => policy.RequireClaim("Categorias"));
@@ -145,10 +141,8 @@ namespace CaducaRest
             if (CurrentEnvironment.IsEnvironment("Testing"))
             {
                 //Conexión en Memoria
-
                 services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
                                                                         .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
-
             }
             else
             {
@@ -158,8 +152,7 @@ namespace CaducaRest
                 //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
                 //Conexión SQL Server Azure
                 //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
-            }
-            
+            }            
             //Habilitar CORS
             services.AddCors();
             //Se agrega en generador de Swagger

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace CaducaRest.IntegrationTest
@@ -28,7 +29,7 @@ namespace CaducaRest.IntegrationTest
         }
 
         [When(@"Yo ejecuto el servicio (.*) con esos datos")]
-        public async System.Threading.Tasks.Task WhenYoEjecutoElServicioUsuariosLoginConEsosDatosAsync(string nombreServicio)
+        public async Task WhenYoEjecutoElServicioUsuariosLoginConEsosDatosAsync(string nombreServicio)
         {
             Servicios.Inicializa();
             caducaContext = Servicios.caducaContext;

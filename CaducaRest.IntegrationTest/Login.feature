@@ -13,8 +13,8 @@ Escenario: Login con uusuario Administrador
 
 Escenario: Login con uusuario Vendedor
 	Dado Tecleo los siguientes datos del usuario
-	| attribute		| value		 |
-	| Usuario		| carlos	 |
-	| Password		| mypassword |
+	| attribute		| value				|
+	| Usuario		| Maria				|
+	| Password		| 8cYyY8paESGbzC5E  |
 	Cuando Yo ejecuto el servicio Usuarios/Login con esos datos
 	Entonces El resultado deberia ser Ok 

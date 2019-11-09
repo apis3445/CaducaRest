@@ -1,11 +1,9 @@
 ﻿using CaducaRest.DTO;
 using CaducaRest.Models;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 
 namespace CaducaRest.IntegrationTest
 {
@@ -26,6 +24,11 @@ namespace CaducaRest.IntegrationTest
         public void GivenYTieneElPasswordDtfhkmTRQmNzgRY(string password)
         {
             loginDTO.Password = password;
+        }
+        [Given(@"Tecleo los siguientes datos del usuario")]
+        public void DadoTecleoLosSiguientesDatosDelUsuario(Table table)
+        {
+            loginDTO = table.CreateInstance<LoginDTO>();
         }
 
         [When(@"Yo ejecuto el servicio (.*) con esos datos")]

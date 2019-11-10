@@ -28,6 +28,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -138,21 +139,28 @@ namespace CaducaRest
 
                     options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
                 });
-            if (CurrentEnvironment.IsEnvironment("Testing"))
+            switch (CurrentEnvironment.EnvironmentName)
             {
-                //Conexión en Memoria
-                services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
-                                                                        .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
+                case "Testing":
+                    //Conexión en Memoria
+                    services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caltic")
+                                                                            .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
+                    break;
+                case "IntegrationTesting":
+                    var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory;" };
+                    var connection = new SqliteConnection(connectionStringBuilder.ToString());
+                    services.AddDbContext<CaducaContext>(opt => opt.UseSqlite(connection));
+                    break;
+                default:
+                    //Conexión MySQL
+                    services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+                    //Conexión SQL Server
+                    //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
+                    //Conexión SQL Server Azure
+                    //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
+                    break;
             }
-            else
-            {
-                //Conexión MySQL
-                services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-                //Conexión SQL Server
-                //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
-                //Conexión SQL Server Azure
-                //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
-            }            
+
             //Habilitar CORS
             services.AddCors();
             //Se agrega en generador de Swagger

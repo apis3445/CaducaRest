@@ -13,10 +13,12 @@ namespace CaducaRest.UITest
         [SetUp]
         public void Setup()
         {
-            _driver = new ChromeDriver();
+          
+            _driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));
         }
   
         [Test]
+        
         public void Test1()
         {
             _driver.Navigate().GoToUrl("http://www.google.com");

@@ -1,5 +1,6 @@
 ﻿using CaducaRest.DTO;
 using CaducaRest.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
@@ -35,7 +36,6 @@ namespace CaducaRest.IntegrationTest
         public async Task WhenYoEjecutoElServicioUsuariosLoginConEsosDatosAsync(string nombreServicio)
         {
             Servicios.Inicializa();
-            caducaContext = Servicios.caducaContext;
             correcto = await Servicios.PostAsync(nombreServicio, loginDTO);
         }
 

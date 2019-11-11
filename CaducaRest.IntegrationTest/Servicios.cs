@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -40,16 +41,17 @@ namespace CaducaRest.IntegrationTest
             //Obtenemos el objeto caducaContext
             caducaContext = servidorPruebas.Host.Services.GetService(typeof(CaducaContext)) as CaducaContext;
             //Abrimos la conexión
-            caducaContext.Database.OpenConnection();
+           
             //Inicializamos la bd con datos de prueba
             InicializaDatos.Inicializar(caducaContext);
+            //var total =caducaContext.Usuario.Count();
             httpCliente = servidorPruebas.CreateClient();
         }
 
         public static async Task<bool> PostAsync(string servicio, object datos)
         {
             var contenido = new StringContent(JsonSerializer.Serialize(datos), Encoding.UTF8, "application/json");
-            var response = await httpCliente.PostAsync("/api/" + servicio, contenido);
+            var response = await httpCliente.PostAsync("api/" + servicio, contenido);
             if (response.StatusCode == HttpStatusCode.OK)
                 return true;
             return false;

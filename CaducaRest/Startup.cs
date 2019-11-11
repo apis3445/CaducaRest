@@ -147,12 +147,12 @@ namespace CaducaRest
                                                                             .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
                     break;
                 case "IntegrationTesting":
-                    var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory;" };
-                    var connection = new SqliteConnection(connectionStringBuilder.ToString());
+                    var connection = new SqliteConnection("DataSource=:memory:");
+                    connection.Open();
                     services.AddDbContext<CaducaContext>(opt => opt.UseSqlite(connection));
                     break;
                 default:
-                    //Conexión MySQL
+                    
                     services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
                     //Conexión SQL Server
                     //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));

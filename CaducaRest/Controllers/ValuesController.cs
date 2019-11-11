@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CaducaRest.Controllers
@@ -13,6 +14,7 @@ namespace CaducaRest.Controllers
     {
         // GET api/values
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };

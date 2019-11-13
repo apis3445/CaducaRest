@@ -64,10 +64,11 @@ steps:
     script: 'npm install -g newman'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: CmdLine@2
+  displayName: Run API Tests
   inputs:
     script: 'newman run test.postman_collection.json --reporters cli,junit --reporter-junit-export junitReport.xml'    
 
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: '$(System.DefaultWorkingDirectory)\*.xml'
+    testResultsFiles: '$(System.DefaultWorkingDirectory)\junitReport.xml'

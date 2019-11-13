@@ -7,11 +7,36 @@
 	"item": [
 		{
 			"name": "json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "29088ff0-db42-422f-b724-beaa86c72190",
+						"exec": [
+							"pm.test(\"response is ok\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "https://jsonplaceholder.typicode.com/todos/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"todos",
+						"1"
+					]
 				}
 			},
 			"response": []

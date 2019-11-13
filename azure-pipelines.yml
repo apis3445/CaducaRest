@@ -59,6 +59,7 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
 
 - task: CmdLine@2
+  displayName: Install Newman
   inputs:
     script: 'npm install -g newman'
     workingDirectory: '$(System.DefaultWorkingDirectory)'

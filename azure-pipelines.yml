@@ -65,4 +65,7 @@ steps:
 - task: CmdLine@2
   inputs:
     script: 'newman run test.postman_collection.json -e myenv.postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/TEST-*.xml'

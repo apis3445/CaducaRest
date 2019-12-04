@@ -66,7 +66,7 @@ steps:
 - task: CmdLine@2
   displayName: Run API Tests
   inputs:
-    script: 'newman run test.postman_collection.json --reporters cli,junit --reporter-junit-export junitReport.xml'    
+    script: 'newman run test.postman_collection.json -x --reporters cli,junit --reporter-junit-export junitReport.xml'    
 
 - task: PublishTestResults@2
   inputs:

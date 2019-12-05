@@ -35,7 +35,7 @@ steps:
       **\xUnit.CaducaRest.dll
       !**\*TestAdapter.dll
       !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
+    searchFolder: '$(System.DefaultWorkingDirectory)\bin'
 
 - task: VSTest@2
   inputs:

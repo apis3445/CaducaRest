@@ -37,7 +37,7 @@ steps:
       **\xUnit.CaducaRest.dll
       !**\*TestAdapter.dll
       !**\obj\**
-    searchFolder: '$(Build.SourcesDirectory)\CaducaRest\bin'
+    searchFolder: '$(Build.SourcesDirectory)\xUnit.CaducaRest\bin'
 
 - task: VSTest@2
   displayName: Testing Integration Test
@@ -47,7 +47,7 @@ steps:
       **\CaducaRest.IntegrationTest.dll
       !**\*TestAdapter.dll
       !**\obj\**
-    searchFolder: '$(Build.SourcesDirectory)\CaducaRest\bin'
+    searchFolder: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin'
 - task: VisualStudioTestPlatformInstaller@1
   inputs:
     packageFeedSelector: 'nugetOrg'
@@ -59,7 +59,7 @@ steps:
       **\CaducaRest.UITest.dll
       !**\*TestAdapter.dll
       !**\obj\**
-    searchFolder: '$(Build.SourcesDirectory)\CaducaRest\bin'
+    searchFolder: '$(Build.SourcesDirectory)\CaducaRest.UITest\bin'
 
 - task: CmdLine@2
   displayName: Install Newman

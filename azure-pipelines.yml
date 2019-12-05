@@ -78,6 +78,6 @@ steps:
     
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/bin/$(BuildConfiguration)/Publish'
+    PathtoPublish: '$(Build.SourcesDirectory)/CaducaRest/bin/$(BuildConfiguration)/Publish'
     ArtifactName: 'caduca'
     

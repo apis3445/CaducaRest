@@ -75,15 +75,15 @@ steps:
     testResultsFormat: 'JUnit'
     testResultsFiles: '$(System.DefaultWorkingDirectory)\junitReport.xml'
     
-- task: VSBuild@1
-  displayName: Build Solution
+- task: DotNetCoreCLI@2
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:OutputPath=bin /p:DeployOnBuild=true /p:PublishProfile=Folder'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.SourcesDirectory)/CaducaRest/bin/$(BuildConfiguration)/Publish'
-    ArtifactName: 'caduca'
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'caducaRest'
     

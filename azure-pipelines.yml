@@ -25,7 +25,6 @@ steps:
   displayName: Build Solution
   inputs:
     solution: '$(solution)'
-    msbuildArgs: '/p:OutputPath=bin /p:DeployOnBuild=true /p:PublishProfile=Folder'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
@@ -37,7 +36,7 @@ steps:
       **\xUnit.CaducaRest.dll
       !**\*TestAdapter.dll
       !**\obj\**
-    searchFolder: '$(Build.SourcesDirectory)\xUnit.CaducaRest\bin'
+    searchFolder: '$(System.DefaultWorkingDirectory)'
 
 - task: VSTest@2
   displayName: Testing Integration Test
@@ -47,7 +46,7 @@ steps:
       **\CaducaRest.IntegrationTest.dll
       !**\*TestAdapter.dll
       !**\obj\**
-    searchFolder: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin'
+    searchFolder: '$(System.DefaultWorkingDirectory)'
 - task: VisualStudioTestPlatformInstaller@1
   inputs:
     packageFeedSelector: 'nugetOrg'
@@ -59,7 +58,7 @@ steps:
       **\CaducaRest.UITest.dll
       !**\*TestAdapter.dll
       !**\obj\**
-    searchFolder: '$(Build.SourcesDirectory)\CaducaRest.UITest\bin'
+    searchFolder: '$(System.DefaultWorkingDirectory)'
 
 - task: CmdLine@2
   displayName: Install Newman
@@ -76,6 +75,13 @@ steps:
     testResultsFormat: 'JUnit'
     testResultsFiles: '$(System.DefaultWorkingDirectory)\junitReport.xml'
     
+- task: VSBuild@1
+  displayName: Build Solution
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:OutputPath=bin /p:DeployOnBuild=true /p:PublishProfile=Folder'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.SourcesDirectory)/CaducaRest/bin/$(BuildConfiguration)/Publish'

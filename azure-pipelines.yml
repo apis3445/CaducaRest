@@ -72,3 +72,9 @@ steps:
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '$(System.DefaultWorkingDirectory)\junitReport.xml'
+    
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.SourcesDirectory)/bin/$(BuildConfiguration)/Publish'
+    ArtifactName: 'caduca'
+    

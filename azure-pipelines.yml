@@ -22,6 +22,7 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
+  displayName: Build Solution
   inputs:
     solution: '$(solution)'
     msbuildArgs: '/p:OutputPath=bin /p:DeployOnBuild=true /p:PublishProfile=Folder'
@@ -29,6 +30,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  displayName: Testing Unit Test
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
@@ -38,13 +40,14 @@ steps:
     searchFolder: '$(Build.SourcesDirectory)\CaducaRest\bin'
 
 - task: VSTest@2
+  displayName: Testing Integration Test
   inputs:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
       **\CaducaRest.IntegrationTest.dll
       !**\*TestAdapter.dll
       !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
+    searchFolder: '$(Build.SourcesDirectory)\CaducaRest\bin'
 - task: VisualStudioTestPlatformInstaller@1
   inputs:
     packageFeedSelector: 'nugetOrg'
@@ -56,7 +59,7 @@ steps:
       **\CaducaRest.UITest.dll
       !**\*TestAdapter.dll
       !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
+    searchFolder: '$(Build.SourcesDirectory)\CaducaRest\bin'
 
 - task: CmdLine@2
   displayName: Install Newman

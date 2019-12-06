@@ -51,20 +51,6 @@ steps:
   inputs:
     packageFeedSelector: 'nugetOrg'
     versionSelector: 'latestPreRelease'
-- task: VSTest@2
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\CaducaRest.UITest.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-
-- task: CmdLine@2
-  displayName: Install Newman
-  inputs:
-    script: 'npm install -g newman'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
     
 - task: DotNetCoreCLI@2
   inputs:
@@ -73,19 +59,10 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
 
-
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'caducaRest'
-
-- task: VSBuild@1
-  displayName: Build Solution
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    msbuildArgs: '/p:OutputPath=bin /p:DeployOnBuild=true /p:PublishProfile=Folder'
-    configuration: '$(buildConfiguration)'
 
 - task: AzureRmWebAppDeployment@4
   inputs:
@@ -104,3 +81,13 @@ steps:
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '$(System.DefaultWorkingDirectory)\junitReport.xml'
+- task: VSTest@2
+  displayName: Testing Selenium
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\CaducaRest.UITest.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+

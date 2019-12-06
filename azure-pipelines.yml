@@ -65,15 +65,6 @@ steps:
   inputs:
     script: 'npm install -g newman'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
-- task: CmdLine@2
-  displayName: Run API Tests
-  inputs:
-    script: 'newman run test.postman_collection.json -x --reporters cli,junit --reporter-junit-export junitReport.xml'    
-
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '$(System.DefaultWorkingDirectory)\junitReport.xml'
     
 - task: DotNetCoreCLI@2
   inputs:
@@ -86,4 +77,21 @@ steps:
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'caducaRest'
-    
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'
+    appType: 'webAppLinux'
+    WebAppName: 'caducarest'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
+- task: CmdLine@2
+  displayName: Run API Tests
+  inputs:
+    script: 'newman run test.postman_collection.json -x --reporters cli,junit --reporter-junit-export junitReport.xml'    
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '$(System.DefaultWorkingDirectory)\junitReport.xml'

@@ -77,7 +77,6 @@ steps:
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'caducaRest'
-
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
@@ -85,7 +84,6 @@ steps:
     appType: 'webAppLinux'
     WebAppName: 'caducarest'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-
 - task: CmdLine@2
   displayName: Run API Tests
   inputs:

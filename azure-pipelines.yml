@@ -47,10 +47,6 @@ steps:
       !**\*TestAdapter.dll
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
-- task: VisualStudioTestPlatformInstaller@1
-  inputs:
-    packageFeedSelector: 'nugetOrg'
-    versionSelector: 'latestPreRelease'
     
 - task: DotNetCoreCLI@2
   inputs:
@@ -65,12 +61,19 @@ steps:
     artifactName: 'caducaRest'
 
 - task: AzureRmWebAppDeployment@4
+  displayName: Deploy to Azure
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'
     appType: 'webAppLinux'
     WebAppName: 'caducarest'
     packageForLinux: '$(Build.ArtifactStagingDirectory)'
+
+- task: CmdLine@2
+  displayName: Install Newman
+  inputs:
+    script: 'npm install -g newman'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
 
 - task: CmdLine@2
   displayName: Run API Tests

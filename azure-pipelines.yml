@@ -93,7 +93,7 @@ steps:
     azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'
     appType: 'webAppLinux'
     WebAppName: 'caducarest'
-    packageForLinux: '$(Build.SourcesDirectory)/CaudcaRest/bin'
+    packageForLinux: '$(Build.ArtifactStagingDirectory)'
 
 - task: CmdLine@2
   displayName: Run API Tests

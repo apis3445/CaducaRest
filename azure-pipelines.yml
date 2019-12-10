@@ -78,8 +78,8 @@ steps:
   inputs:
     script: |
         cd postman
-        for /r %i in (*) do echo %i
-        newman run r -x --reporters cli,junit --reporter-junit-export junitReport.xml
+        for /r %i in (*) do 
+            newman run r -x --reporters cli,junit --reporter-junit-export junitReport.xml
 
 
 - task: PublishTestResults@2

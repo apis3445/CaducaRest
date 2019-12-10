@@ -77,9 +77,8 @@ steps:
   displayName: Run API Tests
   inputs:
     script: |
-        cd postman
-        for /r %i in (*) do 
-            newman run r -x --reporters cli,junit --reporter-junit-export junitReport.xml
+        cd postman        
+            newman run test.postman_collection.json -x --reporters cli,junit --reporter-junit-export junitReport.xml
 
 
 - task: PublishTestResults@2

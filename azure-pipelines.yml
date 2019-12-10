@@ -68,17 +68,19 @@ steps:
     appType: 'webAppLinux'
     WebAppName: 'caducarest'
     packageForLinux: '$(Build.ArtifactStagingDirectory)'
-
 - task: CmdLine@2
   displayName: Install Newman
   inputs:
     script: 'npm install -g newman'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
-
 - task: CmdLine@2
   displayName: Run API Tests
   inputs:
-    script: 'newman run test.postman_collection.json -x --reporters cli,junit --reporter-junit-export junitReport.xml'    
+    script: |
+        cd postman
+        for /r %i in (*) do echo %i
+        newman run r -x --reporters cli,junit --reporter-junit-export junitReport.xml
+
 
 - task: PublishTestResults@2
   inputs:

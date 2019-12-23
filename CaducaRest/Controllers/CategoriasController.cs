@@ -19,7 +19,6 @@ namespace CaducaRest.Controllers
     /// </summary>
     [Route("api/[controller]")]   
     [ApiController]
-    [ApiVersionNeutral]
     [TypeFilter(typeof(HistorialFilter))]
     public class CategoriasController : BaseController
     {

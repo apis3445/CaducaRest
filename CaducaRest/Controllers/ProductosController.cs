@@ -14,7 +14,6 @@ namespace CaducaRest.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [ApiVersionNeutral]
     [Authorize(Roles = "Administrador,Vendedor")]
     [TypeFilter(typeof(PermisoFilter))]
     [TypeFilter(typeof(HistorialFilter))]

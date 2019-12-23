@@ -17,7 +17,7 @@ namespace CaducaRest.Filters
     /// </summary>
     public class CustomExceptionFilter : ExceptionFilterAttribute
     {
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IModelMetadataProvider _modelMetadataProvider;
      
 
@@ -26,7 +26,7 @@ namespace CaducaRest.Filters
         /// </summary>
         /// <param name="hostingEnvironment">Para saber si el ambiente es producción o desarrolo</param>
         /// <param name="modelMetadataProvider">Datos acerca del modeolo</param>
-        public CustomExceptionFilter(IHostingEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider)
+        public CustomExceptionFilter(IWebHostEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider)
         {
             _hostingEnvironment = hostingEnvironment;
             _modelMetadataProvider = modelMetadataProvider;

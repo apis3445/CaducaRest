@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using CaducaRest.Core;
 using CaducaRest.Filters;
 using CaducaRest.GraphQL.Mutation;
@@ -13,13 +11,6 @@ using CaducaRest.GraphQL.Schemas;
 using CaducaRest.GraphQL.Types;
 using CaducaRest.Models;
 using CaducaRest.Resources;
-using GraphQL;
-using GraphQL.Server;
-using GraphQL.Server.Ui.Playground;
-using Microsoft.AspNet.OData.Builder;
-using Microsoft.AspNet.OData.Extensions;
-using Microsoft.AspNet.OData.Formatter;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,40 +18,106 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using GraphQL;
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
+using Microsoft.AspNet.OData.Extensions;
+using System.Linq;
+using Microsoft.AspNet.OData.Formatter;
+using System.Net.Http.Headers;
 using Microsoft.OData.Edm;
-using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNet.OData.Builder;
+using System.Text.Json;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CaducaRest
 {
     public class Startup
     {
 
-        public Startup(IConfiguration configuration,  IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             CurrentEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
-        public IHostingEnvironment CurrentEnvironment { get; }
+        public IWebHostEnvironment CurrentEnvironment { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             var urlsPermitidas = Configuration.GetSection("AllowedHosts").Value;
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+            services.AddControllers(options =>
+            {
+                options.EnableEndpointRouting = false;
+                //Agregamos una politica para indicar que nuestros servicios 
+                //requieren que los usuarios hayan iniciado sesióm
+                var policy = new AuthorizationPolicyBuilder()
+                                    .RequireAuthenticatedUser()
+                                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+                options.Filters.Add(typeof(CustomExceptionFilter));
+                
+                foreach (var formatter in options.OutputFormatters
+                            .OfType<ODataOutputFormatter>()
+                            .Where(it => !it.SupportedMediaTypes.Any()))
+                {
+                    formatter.SupportedMediaTypes.Add(
+                        new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/prs.mock-odata"));
+                }
+                foreach (var formatter in options.InputFormatters
+                    .OfType<ODataInputFormatter>()
+                    .Where(it => !it.SupportedMediaTypes.Any()))
+                {
+                    formatter.SupportedMediaTypes.Add(
+                        new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/prs.mock-odata"));
+                }
+                
+            }
+                ).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddJsonOptions(JsonOptions =>
+                    JsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null)
+            .AddDataAnnotationsLocalization(options =>
+            {
+                //Indicamos que el modelo tomara los mensajes de error del archivo SharedResource
+                options.DataAnnotationLocalizerProvider = (type, factory) =>
+                {
+                    var assemblyName = new AssemblyName(typeof(SharedResource).GetTypeInfo().Assembly.FullName);
+                    return factory.Create("SharedResource", assemblyName.Name);
+                };
+            });
+            //services.AddApiVersioning(options => options.ReportApiVersions = true);
             services.AddOData();
-            //La clase LocServicde nos permite cambiar los mensajes de error según el idioma
+
+            services.AddMvcCore(options =>
+            {
+                foreach (var outputFormatter in options.OutputFormatters.OfType<ODataOutputFormatter>().Where(_ => _.SupportedMediaTypes.Count == 0))
+                {
+                    outputFormatter.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
+                }
+                foreach (var inputFormatter in options.InputFormatters.OfType<ODataInputFormatter>().Where(_ => _.SupportedMediaTypes.Count == 0))
+                {
+                    inputFormatter.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
+                }
+            });
+            //La clase LocService nos permite cambiar los mensajes de error según el idioma
             services.AddSingleton<LocService>();
-            //Le indicamos la carpeta donde estan todos los mensajes que utiliza la aplicación
+            //Le indicamos la carpeta donde estan los mensajes que utiliza la aplicación
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddAuthentication(o => {
@@ -83,41 +140,7 @@ namespace CaducaRest
                             ValidateLifetime = true
                         };
                     });
-            services.AddMvc(options =>
-                        {
-                            //Agregamos una politica para indicar que todos nuestros servicios 
-                            //requieren que los usuarios hayan iniciado sesióm
-                            var policy = new AuthorizationPolicyBuilder()
-                                                .RequireAuthenticatedUser()
-                                                .Build();
-                            options.Filters.Add(new AuthorizeFilter(policy));
-                            options.Filters.Add(typeof(CustomExceptionFilter));
-                            foreach (var formatter in options.OutputFormatters
-                                        .OfType<ODataOutputFormatter>()
-                                        .Where(it => !it.SupportedMediaTypes.Any()))
-                            {
-                                formatter.SupportedMediaTypes.Add(
-                                    new MediaTypeHeaderValue("application/prs.mock-odata"));
-                            }
-                            foreach (var formatter in options.InputFormatters
-                                .OfType<ODataInputFormatter>()
-                                .Where(it => !it.SupportedMediaTypes.Any()))
-                            {
-                                formatter.SupportedMediaTypes.Add(
-                                    new MediaTypeHeaderValue("application/prs.mock-odata"));
-                            }
-                        }
-                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(JsonOptions => JsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
-                .AddDataAnnotationsLocalization(options =>
-                {
-                    //Indicamos que el modelo tomara los mensajes de error del archivo SharedResource
-                    options.DataAnnotationLocalizerProvider = (type, factory) =>
-                    {
-                        var assemblyName = new AssemblyName(typeof(SharedResource).GetTypeInfo().Assembly.FullName);
-                        return factory.Create("SharedResource", assemblyName.Name);
-                    };
-                });
+            
             services.AddAuthorization(options =>
             {
                options.AddPolicy("VendedorConCategorias", policy => policy.RequireClaim("Categorias"));
@@ -163,40 +186,46 @@ namespace CaducaRest
 
             //Habilitar CORS
             services.AddCors();
+            
             //Se agrega en generador de Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Api Caduca REST", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api Caduca REST", Version = "v1" });
                 //Obtenemos el nombre de la dll por medio de reflexión
-                var assemblyName = System.Reflection.Assembly.GetEntryAssembly().GetName().Name;
+                var assemblyName = Assembly.GetEntryAssembly().GetName().Name;
                 if (assemblyName != "testhost")
                 {
-                    //Obtenemos el directorio actual
-                    var basePath = AppContext.BaseDirectory;
-
                     //Al nombre del assembly le agregamos la extensión xml
-                    var fileName = System.IO.Path.GetFileName(assemblyName + ".xml");
-                    Console.Write(fileName);
+                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                     //Agregamos el Path, es importante utilizar el comando Path.Combine
                     //ya que entre windows y linux cambian las rutas de los archivos
                     //En windows es por ejemplo c:/Uusuarios con / y en linux es \usr
                     // con \
-                    var xmlPath = Path.Combine(basePath, fileName);
+                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                     c.IncludeXmlComments(xmlPath);
                 }
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme()
+                
+                c.AddSecurityDefinition("Bearer", //Name the security scheme
+                new OpenApiSecurityScheme
                 {
-                    In = "header",
-                    Description = "Por favor teclea el header de autorización",
-                    Name = "Authorization",
-                    Type = "apiKey"
+                    Description = "JWT Authorization header using the Bearer scheme.",
+                    Type = SecuritySchemeType.Http, //We set the scheme type to http since we're using bearer authentication
+                    Scheme = "bearer" //The name of the HTTP Authorization scheme to be used in the Authorization header. In this case "bearer".
                 });
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
-                    {
-                        { "Bearer", new string[] { } }
-                    });
-            });
 
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement{
+                    {
+                        new OpenApiSecurityScheme{
+                            Reference = new OpenApiReference{
+                                Id = "Bearer", //The name of the previously defined security scheme.
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        },new List<string>()
+                    }
+                });
+                
+            });
+            
             services.AddScoped<IDependencyResolver>(s =>
                 new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<CaducidadSchema>();
@@ -209,12 +238,12 @@ namespace CaducaRest
             .AddGraphTypes(ServiceLifetime.Scoped)
             .AddUserContextBuilder(httpContext => httpContext.User)
             .AddDataLoader();
-
+            //services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment() || env.IsEnvironment("Testing"))
             {
@@ -232,29 +261,42 @@ namespace CaducaRest
                            .AllowAnyMethod()
                            );
             app.UseHttpsRedirection();
-
-            app.UseAuthentication();
-            app.UseGraphQL<CaducidadSchema>();
-          
-            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
-
+            app.UseStaticFiles();
             //Habilitar swagger
             app.UseSwagger();
-            //Indicamos que se van a utilizar varios idiomas
-            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(locOptions.Value);
             //indica la ruta para generar la configuración de swagger
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Caduca REST");
+                c.RoutePrefix = string.Empty;
             });
-            app.UseMvc(b =>
-            {
-                b.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
-                b.MapODataServiceRoute("odata", "odata", GetEdmModel());
-            });
-        }
+            
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
+            app.UseGraphQL<CaducidadSchema>();
+          
+            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+
+            //Indicamos que se van a utilizar varios idiomas
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
+            
+            /*app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });*/
+            
+            app.UseMvc(routeBuilder =>
+            {
+                routeBuilder.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
+                routeBuilder.MapODataServiceRoute("odata", "odata", GetEdmModel());
+                routeBuilder.EnableDependencyInjection();
+            });
+            
+        }
+        
         private static IEdmModel GetEdmModel()
         {
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();

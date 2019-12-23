@@ -1,4 +1,5 @@
-﻿using Swashbuckle.AspNetCore.Swagger;
+﻿using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace CaducaRest.Core
         /// </summary>
         /// <param name="operation">The operation to apply the filter to.</param>
         /// <param name="context">The current operation filter context.</param>
-        public void Apply(Operation operation, OperationFilterContext context)
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             var apiDescription = context.ApiDescription;
 
@@ -28,7 +29,7 @@ namespace CaducaRest.Core
 
             // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/412
             // REF: https://github.com/domaindrivendev/Swashbuckle.AspNetCore/pull/413
-            foreach (var parameter in operation.Parameters.OfType<NonBodyParameter>())
+            foreach (var parameter in operation.Parameters.OfType<OpenApiParameter>())
             {
                 var description = apiDescription.ParameterDescriptions.First(p => p.Name == parameter.Name);
 
@@ -36,14 +37,16 @@ namespace CaducaRest.Core
                 {
                     parameter.Description = description.ModelMetadata?.Description;
                 }
-
+                /*
                 if (parameter.Default == null)
                 {
                     parameter.Default = description.DefaultValue;
                 }
-
+                */
                 parameter.Required |= description.IsRequired;
             }
         }
+
+       
     }
 }

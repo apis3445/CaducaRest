@@ -17,7 +17,6 @@ namespace CaducaRest.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [ApiVersionNeutral]
     [Authorize(Roles = "Administrador")]
     public class ClientesController : ODataController
     {
@@ -53,11 +52,11 @@ namespace CaducaRest.Controllers
         /// </summary>
         /// <param name="key">Id del cliente</param>
         /// <returns></returns>
-        [EnableQuery]
-        public IActionResult GetCliente([FromODataUri]int key)
-        {
-            return Ok(_context.Cliente.Find(key));
-        }
+        //[EnableQuery]
+        //public IActionResult GetCliente([FromODataUri]int key)
+        //{
+        //    return Ok(_context.Cliente.Find(key));
+        //}
 
         /// <summary>
         /// Guardar un nuevo cliente

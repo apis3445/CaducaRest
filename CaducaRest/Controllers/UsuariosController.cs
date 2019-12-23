@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace CaducaRest.Controllers
 {
@@ -25,12 +26,12 @@ namespace CaducaRest.Controllers
 
         protected readonly IConfiguration _config;
 
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
         public UsuariosController(CaducaContext context,
                                   LocService localize,
                                   IConfiguration config,
-                                  IHostingEnvironment hostingEnvironment,
+                                  IWebHostEnvironment hostingEnvironment,
                                   IHttpContextAccessor accessor) : base(context, localize)
         {           
             _config = config;

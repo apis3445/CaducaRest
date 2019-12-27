@@ -13,8 +13,7 @@ namespace CaducaRest.IntegrationTest
     {
         private LoginDTO loginDTO = new LoginDTO();
         private bool correcto;
-        private static CaducaContext caducaContext;
-
+       
         [Given(@"El usuario administrador tiene la clave (.*)")]
         public void GivenElUsuarioAdministradorTieneLaClaveCarlos(string usuario)
         {

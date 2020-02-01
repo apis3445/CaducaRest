@@ -60,6 +60,16 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'caducaRest'
 
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'
+    appType: 'webAppLinux'
+    WebAppName: 'caduca'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'DOTNETCORE|Latest'
+    
 - task: AzureRmWebAppDeployment@4
   displayName: Deploy to Azure
   inputs:
@@ -94,4 +104,3 @@ steps:
       !**\*TestAdapter.dll
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
-

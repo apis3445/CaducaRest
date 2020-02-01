@@ -53,7 +53,7 @@ steps:
     command: publish
     publishWebProjects: True
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
+    zipAfterPublish: false
 
 - task: PublishBuildArtifacts@1
   inputs:
@@ -70,14 +70,7 @@ steps:
     packageForLinux: '$(Build.ArtifactStagingDirectory)'
     RuntimeStack: 'DOTNETCORE|Latest'
     
-- task: AzureRmWebAppDeployment@4
-  displayName: Deploy to Azure
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'
-    appType: 'webAppLinux'
-    WebAppName: 'caduca'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)'
+
 - task: CmdLine@2
   displayName: Install Newman
   inputs:

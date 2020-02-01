@@ -13,16 +13,18 @@ namespace CaducaRest.UITest
         [SetUp]
         public void Setup()
         {
-          
-            _driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));
+            if (Environment.GetEnvironmentVariable("ChromeWebDriver") != null)
+                _driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));
+            else
+                _driver = new ChromeDriver();
         }
   
         [Test]
         
         public void Test1()
         {
-            _driver.Navigate().GoToUrl("http://www.google.com");
-            Assert.AreEqual("Google", _driver.FindElement(By.Id("hplogo")).GetAttribute("alt"));
+            _driver.Navigate().GoToUrl("http://www.google.com?gl=us");
+            Assert.AreEqual("Google Search", _driver.FindElement(By.Name("btnK")).GetAttribute("value"));
         }
         
         public void Dispose()

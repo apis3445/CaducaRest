@@ -55,20 +55,7 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: false
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'caducaRest'
 
-
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'
-    appType: 'webAppLinux'
-    WebAppName: 'caduca'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)'
-    RuntimeStack: 'DOTNETCORE|Latest'
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'

@@ -84,7 +84,7 @@ steps:
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
-    testResultsFiles: '$(System.DefaultWorkingDirectory)\junitReport.xml'
+    testResultsFiles: '$(System.DefaultWorkingDirectory)\postman\junitReport.xml'
 - task: VSTest@2
   displayName: Testing Selenium
   inputs:

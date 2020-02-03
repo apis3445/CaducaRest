@@ -15,7 +15,7 @@ namespace CaducaRest.Core
             HttpClient client = new HttpClient();
             DatosIPDTO datosIP = new DatosIPDTO(); 
 
-            var respuesta = await client.GetStringAsync($"{apiUrl}/apiKey={apiKey}&ip={ip}&fields=geo,continent_name,organization,time_zone.name");
+            var respuesta = await client.GetStringAsync($"{apiUrl}/?apiKey={apiKey}&ip={ip}&fields=geo,continent_name,organization");
             var datosGeo = JsonConvert.DeserializeObject<IPGeoLocationDTO>(respuesta);
             datosIP.city = datosGeo.City;
             datosIP.country = datosGeo.CountryName;

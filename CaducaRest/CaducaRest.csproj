@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Templates\IntentosIncorrectos.html" />
+    <None Remove="CaducaRest.zip" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Templates\IntentosIncorrectos.html">

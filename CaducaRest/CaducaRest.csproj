@@ -4,9 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>4821bfa0-0c24-48a7-9e2f-4954d0a2b042</UserSecretsId>
   </PropertyGroup>
-
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\netcoreapp2.1\CaducaRest.xml</DocumentationFile>
+    
     <Optimize></Optimize>
     <DefineConstants></DefineConstants>
     <TreatWarningsAsErrors></TreatWarningsAsErrors>

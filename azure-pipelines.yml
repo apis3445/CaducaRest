@@ -66,8 +66,9 @@ steps:
     azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'
     appType: 'webAppLinux'
     appName: 'caduca'
-    package: '$(System.ArtifactsDirectory)/**/*.zip'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     deploymentMethod: runFromPackage
+    runtimeStack: 'DOTNETCORE|Latest'
 - task: CmdLine@2
   displayName: Install Newman
   inputs:

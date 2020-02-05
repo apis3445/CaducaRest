@@ -2,8 +2,15 @@
 
 namespace CaducaRest.Datos
 {
+    /// <summary>
+    /// Permite inicializar datos de prueba
+    /// </summary>
     public class InicializaDatos
     {
+        /// <summary>
+        /// Constructro de la clase
+        /// </summary>
+        /// <param name="contexto"></param>
         public static void Inicializar(CaducaContext contexto)
         {
             //Si no es base de datos en memoria no se agrega nada

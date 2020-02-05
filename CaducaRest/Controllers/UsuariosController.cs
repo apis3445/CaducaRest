@@ -17,6 +17,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace CaducaRest.Controllers
 {
+    /// <summary>
+    /// Servicios para usuarios y login
+    /// </summary>
     [Route("api/[controller]")]
     public class UsuariosController : BaseController
     {
@@ -24,10 +27,21 @@ namespace CaducaRest.Controllers
 
         private IHttpContextAccessor _accessor;
 
+        /// <summary>
+        /// Archivo de configuración
+        /// </summary>
         protected readonly IConfiguration _config;
 
         private readonly IWebHostEnvironment _hostingEnvironment;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context">Base de datos</param>
+        /// <param name="localize">Idiomas</param>
+        /// <param name="config">Archivo de configuración</param>
+        /// <param name="hostingEnvironment">Environment</param>
+        /// <param name="accessor"></param>
         public UsuariosController(CaducaContext context,
                                   LocService localize,
                                   IConfiguration config,
@@ -40,18 +54,11 @@ namespace CaducaRest.Controllers
             usuarioDAO = new UsuarioDAO(context, localize, _hostingEnvironment.ContentRootPath);
         }
 
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new List<string>();
-        }
-
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
+        /// <summary>
+        /// Login para los usuarios
+        /// </summary>
+        /// <param name="loginDTO">Datos del usuario</param>
+        /// <returns></returns>
         [HttpPost("Login")]
         [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] LoginDTO loginDTO)
@@ -68,18 +75,12 @@ namespace CaducaRest.Controllers
             return Ok(token);
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
-        [HttpPost("Refresh")]
+        /// <summary>
+        /// Permite refrescar el token
+        /// </summary>
+        /// <param name="refreshToken">Datos para refrescar el token</param>
+        /// <returns></returns>
+        [HttpPost("RefreshToken")]
         [AllowAnonymous]
         public IActionResult RefreshToken([FromBody]RefreshTokenDTO refreshToken)
         {

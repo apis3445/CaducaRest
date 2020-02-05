@@ -6,10 +6,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CaducaRest.Rules.Cliente
 {
+    /// <summary>
+    /// Valida que la clave del cliente no se repita
+    /// </summary>
     public class ClaveValidation:  ValidationAttribute
     {
-        
-
+        /// <summary>
+        /// Valida que la clave no se repita
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="validationContext"></param>
+        /// <returns></returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             //Obtenemos el contexto de nuestra aplicación

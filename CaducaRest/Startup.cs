@@ -241,7 +241,11 @@ namespace CaducaRest
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
         }
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment() || env.IsEnvironment("Testing"))

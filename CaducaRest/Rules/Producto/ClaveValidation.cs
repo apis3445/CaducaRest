@@ -6,15 +6,28 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CaducaRest
 {
+    /// <summary>
+    /// Validaciones para campos clave
+    /// </summary>
     public class ClaveValidation : ValidationAttribute
     {
         string campoAdicional;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="campoAdicional">Campo adicional cuando es clave compuesta</param>
         public ClaveValidation(string campoAdicional)
         {
             this.campoAdicional = campoAdicional;
         }
 
+        /// <summary>
+        /// Permite validar que la clave no se repita
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="validationContext"></param>
+        /// <returns></returns>
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             //Obtenemos el contexto de nuestra aplicación

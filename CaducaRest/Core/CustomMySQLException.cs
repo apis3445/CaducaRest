@@ -11,7 +11,6 @@ namespace CaducaRest.Core
     /// </summary>
     public class CustomMySQLException
     {
-        public static int Sa { get; set; } = 4;
         /// <summary>
         /// Definción de los mensajes de acuerdo a los códigos de error que arroje MySql cuando encuentre error.
         /// </summary>

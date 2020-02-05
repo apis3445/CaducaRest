@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CaducaRest.Controllers
 {
+    /// <summary>
+    /// Funciones generales para los controladores como historial de cambios
+    /// </summary>
     public class BaseController : Controller
     {
         /// <summary>
@@ -13,6 +16,9 @@ namespace CaducaRest.Controllers
         /// </summary>
         protected  CaducaContext _context;
 
+        /// <summary>
+        /// Objeto para mensajes de error en varios idiomas
+        /// </summary>
         protected  LocService _localizer;
 
         /// <summary>
@@ -20,10 +26,21 @@ namespace CaducaRest.Controllers
         /// </summary>
         public PermisoDTO permiso;
 
+        /// <summary>
+        /// Id para guardar el historial de cambios
+        /// </summary>
         public int Id;
 
+        /// <summary>
+        /// Observaciones para el historial de cambios
+        /// </summary>
         public string Observaciones;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="localizer"></param>
         public BaseController(CaducaContext context, LocService localizer)
         {
             this._context = context;

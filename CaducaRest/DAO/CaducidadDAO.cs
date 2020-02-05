@@ -35,6 +35,10 @@ namespace CaducaRest.DAO
             caducidadDAO = new AccesoDAO<Caducidad>(context, locService);
         }
 
+        /// <summary>
+        /// Obtiene todos los productos registrados en la tabla caducidad
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Caducidad>> ObtenerTodoAsync()
         {
            var test= contexto.Caducidad.OrderBy(p => p.Id).ToList();
@@ -42,6 +46,11 @@ namespace CaducaRest.DAO
             return await caducidadDAO.ObtenerTodoAsync();
         }
 
+        /// <summary>
+        /// Obtiene un registro de caducidad por su Id
+        /// </summary>
+        /// <param name="id">Id del registro de caducidad</param>
+        /// <returns></returns>
         public async Task<Caducidad> ObtenerPorIdAsync(int id)
         {
             return await caducidadDAO.ObtenerPorIdAsync(id);

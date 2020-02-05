@@ -24,12 +24,16 @@ namespace CaducaRest.Controllers
     {
 
         private CategoriaDAO categoriaDAO;
+        /// <summary>
+        /// Clase para manejar la seguridad
+        /// </summary>
         protected IAuthorizationService _authorizationService;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context">Contexto para la base de datos</param>
-        /// <param name="localizer"></param>
+        /// <param name="localizer">Mensajes de error en varios idiomas</param>
+        /// <param name="authorizationService"></param>
         public CategoriasController(CaducaContext context,
                                     LocService localizer,
                                     IAuthorizationService authorizationService)

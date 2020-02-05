@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace CaducaRest.Core
 {
+    /// <summary>
+    /// Funciones para acceder a cualquier table de la base de datos
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public class AccesoDAO<TEntity> : IAccesoDAO<TEntity> where TEntity : class
     {
 
@@ -33,7 +37,8 @@ namespace CaducaRest.Core
         /// <summary>
         /// Permite agregar un nuevo registro
         /// </summary>
-        /// <param name="registro"></param>
+        /// <param name="registro">Registro a agregar</param>
+        /// <param name="reglas">Reglas a validar</param>
         /// <returns></returns>
         public async Task<bool> AgregarAsync(TEntity registro, List<IRegla> reglas)
         {       

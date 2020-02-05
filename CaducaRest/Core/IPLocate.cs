@@ -6,6 +6,9 @@ using Newtonsoft.Json;
 
 namespace CaducaRest.Core
 {
+    /// <summary>
+    /// Obtiene los datos de una ip de IPLocate
+    /// </summary>
     public class IPLocate: IPLocation
     {
         /// <summary>

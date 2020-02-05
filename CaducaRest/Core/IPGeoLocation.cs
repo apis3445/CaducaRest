@@ -6,10 +6,18 @@ using Newtonsoft.Json;
 
 namespace CaducaRest.Core
 {
+    /// <summary>
+    /// Funciones para obtener los datos de una io de IPGeoLocation
+    /// </summary>
     public class IPGeoLocation : IPLocation
     {
         private const string apiKey = "ddd67e98951b456f8e08c5a6d4bb4aa8";
         private const string apiUrl = "https://api.ipgeolocation.io/ipgeo";
+        /// <summary>
+        /// Obtiene los datos de la ciudad de una ip
+        /// </summary>
+        /// <param name="ip">Ip de donde se conectan</param>
+        /// <returns></returns>
         public async Task<DatosIPDTO> ObtenerDatosPorIpAsync(string ip)
         {
             HttpClient client = new HttpClient();

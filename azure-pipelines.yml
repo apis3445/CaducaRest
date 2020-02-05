@@ -65,7 +65,7 @@ steps:
   inputs:
     azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'
     appType: 'webAppLinux'
-    appName: 'caduca'
+    appName: 'caducarest'
     package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     deploymentMethod: runFromPackage
     runtimeStack: 'DOTNETCORE|Latest'

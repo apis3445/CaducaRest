@@ -454,6 +454,9 @@ namespace CaducaRest.Models
         /// <value>Rol</value>
         public virtual DbSet<Rol>  Rol { get; set; }
 
+        /// <summary>
+        /// Pemite guardar los permisos que tiene el rol para una tabla
+        /// </summary>
         public virtual DbSet<RolTablaPermiso> RolTablaPermiso { get; set; }
 
         /// <summary>
@@ -461,24 +464,50 @@ namespace CaducaRest.Models
         /// </summary>
         public virtual DbSet<ClienteCategoria> ClienteCategoria { get; set; }
 
-
+        /// <summary>
+        /// Guarda el historial de cambios
+        /// </summary>
         public virtual DbSet<Historial> Historial { get; set; }
 
+        /// <summary>
+        /// Permisos que pueden tener las páginas
+        /// </summary>
         public virtual DbSet<Permiso> Permiso { get; set; }
 
+        /// <summary>
+        /// Tablas del permiso
+        /// </summary>
         public virtual DbSet<Tabla> Tabla { get; set; }
 
+        /// <summary>
+        /// Permiso que tiene una página
+        /// </summary>
         public virtual DbSet<TablaPermiso> TablaPermiso { get; set; }
 
-     
+        /// <summary>
+        /// Guarda un usuario
+        /// </summary>
         public virtual DbSet<Usuario> Usuario { get; set; }
 
+        /// <summary>
+        /// Guarda los accesos que ha realizado un usuario
+        /// </summary>
         public virtual DbSet<UsuarioAcceso> UsuarioAcceso { get; set; }
 
+        /// <summary>
+        /// Guarda las categorias de producto a las que tiene permiso
+        /// un usuario
+        /// </summary>
         public virtual DbSet<UsuarioCategoria> UsuarioCategoria { get; set; }
 
+        /// <summary>
+        /// Guarda los clientes a los que tiene permiso un usuario
+        /// </summary>
         public virtual DbSet<UsuarioCliente> UsuarioCliente { get; set; }       
 
+        /// <summary>
+        /// Guarda los roles deun usuario
+        /// </summary>
         public virtual DbSet<UsuarioRol> UsuarioRol { get; set; }
     }
 }

@@ -6,8 +6,6 @@ namespace CaducaRest.Models.EntityConfigurations
 {
     public class CaducidadConfiguration : IEntityTypeConfiguration<Caducidad>
     {
-
-
         public void Configure(EntityTypeBuilder<Caducidad> builder)
         {
             builder.HasOne(c => c.Cliente)

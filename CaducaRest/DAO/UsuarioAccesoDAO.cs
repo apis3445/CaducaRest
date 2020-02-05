@@ -17,6 +17,9 @@ namespace CaducaRest.DAO
         private readonly CaducaContext contexto;
         private readonly LocService localizacion;
 
+        /// <summary>
+        /// Datos de la ip
+        /// </summary>
         public DatosIPDTO datosIP;
 
         /// <summary>

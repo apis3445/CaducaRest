@@ -1,8 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CaducaRest.DTO
 {
+    /// <summary>
+    /// Datos para el login
+    /// </summary>
     public class LoginDTO
     {
 

@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CaducaRest.Filters
 {
+    /// <summary>
+    /// Filtro para guardar el historial de cambios
+    /// </summary>
     public class HistorialFilter : IActionFilter
     {
         private readonly LocService _localizer;
@@ -22,6 +25,10 @@ namespace CaducaRest.Filters
             this._context = context;
         }
 
+        /// <summary>
+        /// Al terminar una acción se guarda el historial de cambios
+        /// </summary>
+        /// <param name="context"></param>
         public void OnActionExecuted(ActionExecutedContext context)
         {
             bool correcto = false;
@@ -78,6 +85,10 @@ namespace CaducaRest.Filters
 
         }
 
+        /// <summary>
+        /// Se ejecuta antes de iniciar un método en los servicios
+        /// </summary>
+        /// <param name="context"></param>
         public void OnActionExecuting(ActionExecutingContext context)
         {
         }

@@ -45,6 +45,9 @@
         /// Organizatión
         /// </summary>
         public string org { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string asn { get; set; }
         /// <summary>
         /// Estado

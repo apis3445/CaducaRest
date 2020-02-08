@@ -25,6 +25,13 @@ namespace CaducaRest.UITest
         {
             _driver.Navigate().GoToUrl("http://www.google.com?gl=us");
             Assert.AreEqual("Google Search", _driver.FindElement(By.Name("btnK")).GetAttribute("value"));
+            TakeScreenShoot();
+        }
+
+        public void TakeScreenShoot()
+        {
+            var snapshotFile = System.IO.Path.Combine(TestContext.CurrentContext.TestDirectory,  Guid.NewGuid().ToString() + ".png");       
+            ((ITakesScreenshot)_driver).GetScreenshot().SaveAsFile(snapshotFile, ScreenshotImageFormat.Png); 
         }
         
         public void Dispose()

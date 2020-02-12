@@ -29,11 +29,19 @@ namespace CaducaRest.Filters
             this._context = context;
         }
 
+        /// <summary>
+        /// Se ejecuta después del servicio
+        /// </summary>
+        /// <param name="context"></param>
         public void OnActionExecuted(ActionExecutedContext context)
         {
             
         }
 
+        /// <summary>
+        /// Se ejecuta antes de llamar un servicio
+        /// </summary>
+        /// <param name="context"></param>
         public void OnActionExecuting(ActionExecutingContext context)
         {
             JsonResult jsonResult;

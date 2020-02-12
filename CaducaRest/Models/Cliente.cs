@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CaducaRest.Rules;
 
 namespace CaducaRest.Models
 {
@@ -33,6 +34,7 @@ namespace CaducaRest.Models
         /// RFC del cliente
         /// </summary>
         [Column(TypeName = "VARCHAR(15)")]
+        [RequiredWithField("RazonSocial")]
         public string RFC { get; set; }
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace CaducaRest.Models
         /// </summary>
         [Required(ErrorMessage = "Required")]
         [Column(TypeName = "VARCHAR(250)")]
-        [CaducaRest.Rules.Cliente.RazonSocialValidation()]
+        [Rules.Cliente.RazonSocialValidation()]
         public string  RazonSocial { get; set; }
         
         /// <summary>

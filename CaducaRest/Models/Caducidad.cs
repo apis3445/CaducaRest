@@ -27,10 +27,13 @@ namespace CaducaRest.Models
         [Required(ErrorMessage = "Required")]       
         public int ProductoId { get; set; }
 
+        /// <summary>
+        /// Para acceder a los datos de un producto
+        /// </summary>
         public Producto Producto { get; set; }
 
         /// <summary>
-        /// Gets or sets the cliente identifier.
+        /// Gets or sets the cliente Id.
         /// </summary>
         /// <value>The cliente identifier.</value>
         [Required(ErrorMessage = "Required")]

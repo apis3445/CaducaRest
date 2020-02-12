@@ -18,16 +18,18 @@ namespace CaducaRest.Models
         /// <summary>
         /// Id del cliente
         /// </summary>
-        
+        [Required(ErrorMessage = "Required")]
         public int ClienteId { get; set; }
 
         /// <summary>
         /// Datos del cliente
         /// </summary>
         public Cliente Cliente { get; set; }
+
         /// <summary>
         /// Id de la categoria
         /// </summary>
+        [Required(ErrorMessage = "Required")]
         public int CategoriaId { get; set; }
         /// <summary>
         /// Datos de la Categoría

@@ -1,11 +1,17 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CaducaRest.Models.EntityConfigurations
 {
+    /// <summary>
+    /// LLaes foráneas e índices para las Caducidades
+    /// </summary>
     public class CaducidadConfiguration : IEntityTypeConfiguration<Caducidad>
     {
+        /// <summary>
+        /// LLaves foráneas e índices para las Caducidades
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Caducidad> builder)
         {
             builder.HasOne(c => c.Cliente)

@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CaducaRest.Rules
 {
+    /// <summary>
+    /// Permite validar si un campo es obligatorio si otro campo tiene valor
+    /// </summary>
     public class RequiredWithField : ValidationAttribute
     {
         private readonly string _fieldName;

@@ -7,10 +7,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// Migración
+    /// </summary>
     [DbContext(typeof(CaducaContext))]
     [Migration("20181101045843_IndicesCategoria")]
     partial class IndicesCategoria
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

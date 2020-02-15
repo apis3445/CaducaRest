@@ -7,21 +7,41 @@ using System.Linq;
 
 namespace CaducaRest.Rules.Categoria
 {
+    /// <summary>
+    /// Permite validar que no se repita la clave de una categoría
+    /// al agregar
+    /// </summary>
     public class AgregarClaveRegla: IRegla
     {
         private int clave;
         private readonly CaducaContext contexto;
         private readonly LocService localizacion;
 
+        /// <summary>
+        /// Mensaje de error
+        /// </summary>
+        public CustomError customError { get; set; }
+
+        /// <summary>
+        /// Constructor para verificar que la clave no se repite
+        /// en una categoría al agregar
+        /// </summary>
+        /// <param name="clave">Clave de la categoría</param>
+        /// <param name="context">Objeto para la bd</param>
+        /// <param name="locService">Objeto para traducuir a varuis idiomas</param>
         public AgregarClaveRegla(int clave, CaducaContext context, LocService locService)
         {
             this.clave = clave;
             this.contexto = context;
             this.localizacion = locService;
         }
-        public CustomError customError { get; set; }
-       
-        public bool ValidarRegla()
+        
+        /// <summary>
+        /// Indica si la clave de la categoría no se repite
+        /// al agregar
+        /// </summary>
+        /// <returns></returns>
+        public bool EsCorrecto()
         {
             var registroRepetido = contexto.Categoria.AsNoTracking().FirstOrDefault(c => c.Clave == clave);
             if (registroRepetido != null)

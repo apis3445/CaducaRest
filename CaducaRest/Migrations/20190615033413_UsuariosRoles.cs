@@ -2,8 +2,15 @@
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// Migración
+    /// </summary>
     public partial class UsuariosRoles : Migration
     {
+        /// <summary>
+        /// Migración
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropIndex(
@@ -47,6 +54,10 @@ namespace CaducaRest.Migrations
                 unique: true);
         }
 
+        /// <summary>
+        /// Migración
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropIndex(

@@ -3,8 +3,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// Migración
+    /// </summary>
     public partial class Clientes : Migration
     {
+        /// <summary>
+        /// Migración
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             //migrationBuilder.AlterColumn<int>(
@@ -45,6 +52,10 @@ namespace CaducaRest.Migrations
                 });
         }
 
+        /// <summary>
+        /// Migración
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

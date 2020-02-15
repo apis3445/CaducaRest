@@ -7,10 +7,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// Migración
+    /// </summary>
     [DbContext(typeof(CaducaContext))]
     [Migration("20181206045514_Llave_Producto_Categoria")]
     partial class Llave_Producto_Categoria
     {
+        /// <summary>
+        /// Migración
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

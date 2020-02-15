@@ -4,9 +4,11 @@ using System.Linq;
 
 namespace CaducaRest.Core
 {
+    /// <summary>
+    /// Para configurar OData
+    /// </summary>
     public class SwaggerDefaultValues : IOperationFilter
     {
-     
         /// <summary>
         /// Applies the filter to the specified operation using the given context.
         /// </summary>

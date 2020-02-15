@@ -3,8 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CaducaRest.Migrations
 {
+
+    /// <summary>
+    /// Migración
+    /// </summary>
     public partial class RolTablaPermiso : Migration
     {
+        /// <summary>
+        /// Migración
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -182,6 +190,10 @@ namespace CaducaRest.Migrations
                 unique: true);
         }
 
+        /// <summary>
+        /// Migración
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

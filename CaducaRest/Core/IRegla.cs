@@ -14,6 +14,6 @@
         /// Permite validar una regla
         /// </summary>
         /// <returns></returns>
-        bool ValidarRegla();
+        bool EsCorrecto();
     }
 }

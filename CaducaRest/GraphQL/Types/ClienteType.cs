@@ -5,9 +5,18 @@ using GraphQL.Types;
 
 namespace CaducaRest.GraphQL.Types
 {
+    /// <summary>
+    /// GraphQL tiene sus propios tipos de datos por lo que
+    /// es necesario crear un objeto de tipo ObjectGraphType
+    /// para mapear los campos del objeto con los de GraphQL
+    /// </summary>
     public class ClienteType : ObjectGraphType<Cliente>
     {
-        public ClienteType(CaducaContext caducaContext, LocService locService)
+        /// <summary>
+        /// Constructor para mapear los campos
+        /// </summary>
+        /// <param name="locService">Para mensajes de error en varios idiomas</param>
+        public ClienteType( LocService locService)
         {
 
             Name = "Cliente";

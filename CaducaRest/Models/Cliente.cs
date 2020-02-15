@@ -90,12 +90,14 @@ namespace CaducaRest.Models
         [Required(ErrorMessage = "Required")]
         public bool Activo { get; set; }
 
-        
         /// <summary>
         /// Para mostrar las categorias de los clientes
         /// </summary>
         public virtual ICollection<ClienteCategoria> ClientesCategorias { get; set; }
 
+        /// <summary>
+        /// Para mostrar las caducidades
+        /// </summary>
         public virtual ICollection<Caducidad> Caducidades { get; set; }
 
     }

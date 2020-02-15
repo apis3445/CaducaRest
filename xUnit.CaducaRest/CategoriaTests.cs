@@ -26,7 +26,7 @@ namespace xUnit.CaducaRest
         public void AgregarNombreRegla_NombreRepetido_Falso()
         {
             AgregarNombreRegla agregarNombreRegla = new AgregarNombreRegla("Análgesicos", contexto, locService);
-            Assert.False(agregarNombreRegla.ValidarRegla());
+            Assert.False(agregarNombreRegla.EsCorrecto());
         }
         /// <summary>
         /// Validamos que no se pueda agregar una categoria con un nombre repetido
@@ -36,7 +36,7 @@ namespace xUnit.CaducaRest
         public void AgregarNombreRegla_NombreNoRepetido_Verdadero()
         {
             AgregarNombreRegla agregarNombreRegla = new AgregarNombreRegla("Antibióticos", contexto, locService);
-            Assert.True(agregarNombreRegla.ValidarRegla());
+            Assert.True(agregarNombreRegla.EsCorrecto());
         }
 
         /// <summary>

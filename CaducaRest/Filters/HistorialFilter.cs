@@ -19,6 +19,11 @@ namespace CaducaRest.Filters
         private readonly LocService _localizer;
         private readonly CaducaContext _context;
 
+        /// <summary>
+        /// Constructor del filtro
+        /// </summary>
+        /// <param name="context">Objeto para la bd</param>
+        /// <param name="localizer">Objeto para mensajes de error</param>
         public HistorialFilter(CaducaContext context, LocService localizer)
         {
             this._localizer = localizer;

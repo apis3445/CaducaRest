@@ -7,6 +7,10 @@ namespace CaducaRest.Migrations
     /// </summary>
     public partial class Llave_Producto_Categoria : Migration
     {
+        /// <summary>
+        /// Migración
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateIndex(

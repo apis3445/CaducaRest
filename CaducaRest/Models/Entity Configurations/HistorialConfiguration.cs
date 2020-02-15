@@ -1,12 +1,17 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CaducaRest.Models.EntityConfigurations
 {
+    /// <summary>
+    /// LLaves foráneas e indices para el historial de cambios
+    /// </summary>
     public class HistorialConfiguration : IEntityTypeConfiguration<Historial>
     {
-
+        /// <summary>
+        /// LLaves foráneas e indices para el historial de cambios
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(EntityTypeBuilder<Historial> builder)
         {
             builder.HasIndex(h => h.TablaId)

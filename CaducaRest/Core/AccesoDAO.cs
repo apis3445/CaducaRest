@@ -44,7 +44,7 @@ namespace CaducaRest.Core
         {       
             foreach(var regla in reglas)
             {
-                if (!regla.ValidarRegla())
+                if (!regla.EsCorrecto())
                 {
                     customError = regla.customError;
                     return false;
@@ -67,7 +67,7 @@ namespace CaducaRest.Core
         {
             foreach (var regla in reglas)
             {
-                if (!regla.ValidarRegla())
+                if (!regla.EsCorrecto())
                 {
                     customError = regla.customError;
                     return false;
@@ -95,7 +95,7 @@ namespace CaducaRest.Core
         {
             foreach (var regla in reglas)
             {
-                if (!regla.ValidarRegla())
+                if (!regla.EsCorrecto())
                 {
                     customError = regla.customError;
                     return false;

@@ -43,18 +43,34 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CaducaRest
 {
+    /// <summary>
+    /// Clase de configuraciñon de servicios
+    /// </summary>
     public class Startup
     {
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="env">Hosting Environment</param>
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             CurrentEnvironment = env;
         }
-
+        /// <summary>
+        /// Acceso al archivo de configuración
+        /// </summary>
         public IConfiguration Configuration { get; }
+        /// <summary>
+        /// Acceso al enviroment
+        /// </summary>
         public IWebHostEnvironment CurrentEnvironment { get; }
 
+        /// <summary>
+        /// Permite configurar los servicios de la aplicación
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             var urlsPermitidas = Configuration.GetSection("AllowedHosts").Value;
@@ -242,7 +258,7 @@ namespace CaducaRest
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
         }
         /// <summary>
-        /// 
+        /// Permite configurar la aplicación
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>

@@ -8,10 +8,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// Migración
+    /// </summary>
     [DbContext(typeof(CaducaContext))]
     [Migration("20190615033413_UsuariosRoles")]
     partial class UsuariosRoles
     {
+        /// <summary>
+        /// Migración
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

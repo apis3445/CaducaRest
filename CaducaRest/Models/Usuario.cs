@@ -37,6 +37,9 @@ namespace CaducaRest.Models
         [Required(ErrorMessage = "Required")]
         public bool Activo { get; set; }
 
+        /// <summary>
+        /// Dato aidicional para el usuario
+        /// </summary>
         [Required(ErrorMessage = "Required")]
         public string Adicional1 { get; set; }
 

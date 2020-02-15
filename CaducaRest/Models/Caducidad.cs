@@ -39,6 +39,9 @@ namespace CaducaRest.Models
         [Required(ErrorMessage = "Required")]
         public int ClienteId { get; set; }
 
+        /// <summary>
+        /// Guarda los clientes
+        /// </summary>
         public Cliente Cliente { get; set; }
 
         /// <summary>

@@ -23,7 +23,10 @@ namespace CaducaRest.Migrations
                 oldType: "VARCHAR(300)");
 
         }
-
+        /// <summary>
+        /// Migración
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
            

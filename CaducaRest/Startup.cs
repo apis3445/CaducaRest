@@ -34,12 +34,9 @@ using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNet.OData.Extensions;
 using System.Linq;
 using Microsoft.AspNet.OData.Formatter;
-using System.Net.Http.Headers;
 using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
-using System.Text.Json;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CaducaRest
 {

@@ -41,7 +41,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 namespace CaducaRest
 {
     /// <summary>
-    /// Clase de configuraciñon de servicios
+    /// Clase de configuración de servicios
     /// </summary>
     public class Startup
     {

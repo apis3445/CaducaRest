@@ -13,13 +13,10 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  system.debug: true
+  system.debug: false
 
 steps:
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    version: '3.1.102'
+
 - task: UseDotNet@2 
   displayName: ".NET Core 3.1.x"
   inputs:
@@ -27,19 +24,6 @@ steps:
         packageType: sdk
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
-
-- task: NuGetToolInstaller@1
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
-
-- task: VSBuild@1
-  displayName: Build Solution
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
   displayName: Testing Unit Test
@@ -68,46 +52,16 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
 
 - task: DotNetCoreCLI@2
-  inputs:
-    command: publish
-    publishWebProjects: true
-    arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
+displayName: "Publish"
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: true
 
 - task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-    artifactName: 'caduca'
+displayName: "Upload Artifacts"
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+        artifactName: 'abi' 
 
-- task: AzureWebApp@1
-  inputs:
-    azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'
-    appType: 'webAppLinux'
-    appName: 'restcaduca'
-    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
-    runtimeStack: 'DOTNETCORE|3.1'
-- task: CmdLine@2
-  displayName: Install Newman
-  inputs:
-    script: 'npm install -g newman'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
-- task: CmdLine@2
-  displayName: Run API Tests
-  inputs:
-    script: |
-        cd postman
-        test.bat
-
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '$(System.DefaultWorkingDirectory)\postman\junitReport.xml'
-- task: VSTest@2
-  displayName: Testing Selenium
-  inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\CaducaRest.UITest.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'

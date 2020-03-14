@@ -35,12 +35,6 @@ steps:
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-
 - task: VSTest@2
   displayName: Testing Integration Test
   inputs:
@@ -52,16 +46,14 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
 
 - task: DotNetCoreCLI@2
-displayName: "Publish"
-      inputs:
+  displayName: "Publish"
+  inputs:
         command: 'publish'
         publishWebProjects: true
         arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
         zipAfterPublish: true
-
 - task: PublishBuildArtifacts@1
-displayName: "Upload Artifacts"
-      inputs:
+  displayName: "Upload Artifacts"
+  inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
         artifactName: 'abi' 
-

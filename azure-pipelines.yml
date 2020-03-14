@@ -28,27 +28,6 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: "Test"
-  inputs:
-        command: test
-        projects: '**/*tests/*.csproj'
-        arguments: '--configuration $(buildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  displayName: "Publish"
-  inputs:
-        command: 'publish'
-        publishWebProjects: true
-        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-        zipAfterPublish: true
-
-- task: PublishBuildArtifacts@1
-  displayName: "Upload Artifacts"
-  inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
-        artifactName: 'hanselminutes' 
-
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
@@ -104,7 +83,7 @@ steps:
   inputs:
     azureSubscription: 'Pago por uso (d5562316-f06d-4994-abeb-0a0562a8e639)'
     appType: 'webAppLinux'
-    appName: 'caducarest'
+    appName: 'restcaduca'
     package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
     runtimeStack: 'DOTNETCORE|3.1'
 - task: CmdLine@2

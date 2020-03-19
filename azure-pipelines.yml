@@ -50,7 +50,7 @@ steps:
   inputs:
         command: 'publish'
         publishWebProjects: true
-        arguments: '-r win-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --framework netcoreapp3.0'
+        arguments: '-r win-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --framework netcoreapp3.1'
         zipAfterPublish: true
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts"

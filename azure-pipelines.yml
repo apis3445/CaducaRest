@@ -46,11 +46,19 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
 
 - task: DotNetCoreCLI@2
-  displayName: "Publish"
+  displayName: "Publish Linux"
   inputs:
         command: 'publish'
         publishWebProjects: true
-        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --framework netcoreapp3.1'
+        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --framework netcoreapp3.1'
+        zipAfterPublish: true
+
+- task: DotNetCoreCLI@2
+  displayName: "Publish Win"
+  inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-r win-x86 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --framework netcoreapp3.1'
         zipAfterPublish: true
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts"

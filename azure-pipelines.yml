@@ -47,7 +47,7 @@ steps:
   inputs:
     SourceFolder: 'postman'
     Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
 - task: VSTest@2
   displayName: Testing Integration Test
   inputs:

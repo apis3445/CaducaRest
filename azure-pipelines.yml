@@ -25,6 +25,14 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  displayName: "Publish Linux"
+  inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --framework netcoreapp3.1'
+        zipAfterPublish: true
+
 - task: VSTest@2
   displayName: Testing Unit Test
   inputs:
@@ -35,6 +43,11 @@ steps:
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
 
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'postman'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
 - task: VSTest@2
   displayName: Testing Integration Test
   inputs:
@@ -53,13 +66,7 @@ steps:
         publishWebProjects: true
         arguments: '-r win-x86 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/win --framework netcoreapp3.1'
         zipAfterPublish: true
-- task: DotNetCoreCLI@2
-  displayName: "Publish Linux"
-  inputs:
-        command: 'publish'
-        publishWebProjects: true
-        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --framework netcoreapp3.1'
-        zipAfterPublish: true
+
 
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts linux"
@@ -72,3 +79,9 @@ steps:
   inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/win' 
         artifactName: 'restWin' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts postman"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/postman' 
+        artifactName: 'postmanTesting' 

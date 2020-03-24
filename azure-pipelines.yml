@@ -25,13 +25,12 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: "Publish Linux"
+- task: CopyFiles@2
+  displayName: Copy postman scripts
   inputs:
-        command: 'publish'
-        publishWebProjects: true
-        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --framework netcoreapp3.1'
-        zipAfterPublish: true
+    SourceFolder: 'postman'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
 
 - task: VSTest@2
   displayName: Testing Unit Test
@@ -43,12 +42,6 @@ steps:
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
 
-- task: CopyFiles@2
-  displayName: Copy postman scripts
-  inputs:
-    SourceFolder: 'postman'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
 - task: VSTest@2
   displayName: Testing Integration Test
   inputs:
@@ -59,6 +52,13 @@ steps:
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
 
+- task: DotNetCoreCLI@2
+  displayName: "Publish Linux"
+  inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --framework netcoreapp3.1'
+        zipAfterPublish: true
 
 - task: DotNetCoreCLI@2
   displayName: "Publish Win"

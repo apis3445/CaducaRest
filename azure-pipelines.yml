@@ -43,6 +43,12 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
     testRunTitle: 'Unit Test'
 
+- task: DotNetCoreCLI@2
+  displayName: Code Coverage
+  inputs:
+    command: test
+    projects: '**/xUnit.CaducaRest/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 - task: VSTest@2
   displayName: Testing Integration Test
   inputs:
@@ -54,7 +60,12 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
     resultsFolder: '$(Agent.TempDirectory)\TestResults1'
     testRunTitle: 'Integration Test'
-
+- task: DotNetCoreCLI@2
+  displayName: Code Coverage
+  inputs:
+    command: test
+    projects: '**/CaducaRest.IntegrationTest/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
 - task: DotNetCoreCLI@2
   displayName: "Publish Linux"
   inputs:

@@ -68,7 +68,7 @@ steps:
     publishWebProjects: false
     projects: '**/CaducaRest.UITest/*.csproj' 
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium --framework netcoreapp3.1'
-    zipAfterPublish: true
+    zipAfterPublish: false
 
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts linux"

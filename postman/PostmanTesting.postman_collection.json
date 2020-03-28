@@ -1,0 +1,46 @@
+{
+	"info": {
+		"_postman_id": "55ba2ba8-9b0a-436f-9917-091b2fa30120",
+		"name": "Postman Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get_jsonplaceholder_todos_ok",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "26b42f9f-e86b-4b76-a281-f8c0685be92f",
+						"exec": [
+							"pm.test(\"response is 200\", function () {\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/todos/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"todos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

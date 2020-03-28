@@ -32,23 +32,9 @@ steps:
     projects: '**/xUnit.CaducaRest/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
     testRunTitle: 'Unit Test'
-- task: DotNetCoreCLI@2
-  displayName: Collect Code Coverage Unit Test
-  inputs:
-    command: 'test'
-    projects: '**/xUnit.CaducaRest/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-    testRunTitle: 'Integration Test'
 
 - task: DotNetCoreCLI@2
   displayName: Testing Integration Test
-  inputs:
-    command: 'test'
-    projects: '**/CaducaRest.IntegrationTest/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-    testRunTitle: 'Unit Test'
-- task: DotNetCoreCLI@2
-  displayName: Collect Code Coverage Integration Test
   inputs:
     command: 'test'
     projects: '**/CaducaRest.IntegrationTest/*.csproj'

@@ -35,13 +35,11 @@ steps:
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
     testRunTitle: 'Unit Test'
-
 - task: DotNetCoreCLI@2
-  displayName: Code Coverage
   inputs:
-    command: test
-    projects: '**/xUnit.CaducaRest/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    command: 'test'
+    projects: '**/xUnit.CaducaRest/*.csproj'''
+    testRunTitle: 'Unit Test'
 
 - task: VSTest@2
   displayName: Testing Integration Test
@@ -55,12 +53,11 @@ steps:
     resultsFolder: '$(Agent.TempDirectory)\TestResults1'
     testRunTitle: 'Integration Test'
 
-- task: DotNetCoreCLI@2
-  displayName: Code Coverage
+- script: dotnet test CaducaRest.IntegrationTest.dll --logger trx --collect "Code coverage"
+- task: PublishTestResults@2
   inputs:
-    command: test
-    projects: '**/CaducaRest.IntegrationTest/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
 
 - task: CopyFiles@2
   displayName: Copy postman scripts

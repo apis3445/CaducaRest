@@ -25,13 +25,6 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
-- task: CopyFiles@2
-  displayName: Copy postman scripts
-  inputs:
-    SourceFolder: 'postman'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
-
 - task: VSTest@2
   displayName: Testing Unit Test
   inputs:
@@ -49,6 +42,7 @@ steps:
     command: test
     projects: '**/xUnit.CaducaRest/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
 - task: VSTest@2
   displayName: Testing Integration Test
   inputs:
@@ -60,12 +54,21 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
     resultsFolder: '$(Agent.TempDirectory)\TestResults1'
     testRunTitle: 'Integration Test'
+
 - task: DotNetCoreCLI@2
   displayName: Code Coverage
   inputs:
     command: test
     projects: '**/CaducaRest.IntegrationTest/*.csproj'
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
+- task: CopyFiles@2
+  displayName: Copy postman scripts
+  inputs:
+    SourceFolder: 'postman'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
+
 - task: DotNetCoreCLI@2
   displayName: "Publish Linux"
   inputs:
@@ -81,7 +84,14 @@ steps:
         publishWebProjects: true
         arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/win --framework netcoreapp3.1'
         zipAfterPublish: true
-
+- task: DotNetCoreCLI@2
+  displayName: "Build Selenium testing"
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/CaducaRest.UITest/*.csproj' 
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium --framework netcoreapp3.1'
+    zipAfterPublish: true
 
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts linux"
@@ -97,6 +107,12 @@ steps:
 
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts postman"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/postman' 
+        artifactName: 'postmanTesting' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts selenium"
   inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/postman' 
         artifactName: 'postmanTesting' 

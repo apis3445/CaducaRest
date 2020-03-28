@@ -112,4 +112,4 @@ steps:
   displayName: "Upload Artifacts selenium"
   inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/postman' 
-        artifactName: 'postmanTesting' 
+        artifactName: 'seleniumTesting' 

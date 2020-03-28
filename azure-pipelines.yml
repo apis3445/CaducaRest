@@ -42,13 +42,6 @@ steps:
       !**\obj\**
     searchFolder: '$(System.DefaultWorkingDirectory)'
     testRunTitle: 'Unit Test'
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/TestResults/*.xml'
-    searchFolder: '$(Agent.TempDirectory)'
-    mergeTestResults: true
-    testRunTitle: 'Unit Test'
 
 - task: VSTest@2
   displayName: Testing Integration Test
@@ -61,13 +54,7 @@ steps:
     searchFolder: '$(System.DefaultWorkingDirectory)'
     resultsFolder: '$(Agent.TempDirectory)\TestResults1'
     testRunTitle: 'Integration Test'
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/TestResults1/*.xml'
-    searchFolder: '$(Agent.TempDirectory)'
-    mergeTestResults: true
-    testRunTitle: 'Unit Test'
+
 - task: DotNetCoreCLI@2
   displayName: "Publish Linux"
   inputs:

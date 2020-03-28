@@ -91,5 +91,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts selenium"
   inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)/postman' 
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/selenium' 
         artifactName: 'seleniumTesting' 

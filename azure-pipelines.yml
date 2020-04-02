@@ -48,6 +48,11 @@ steps:
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
 
+- task: CmdLine@2
+  displayName: Update database si es necesario
+  inputs:
+    script: 'dotnet ef migrations script -i -o $(Build.ArtifactStagingDirectory)/sql/update_to_latest.sql'
+
 - task: DotNetCoreCLI@2
   displayName: "Publish Linux"
   inputs:

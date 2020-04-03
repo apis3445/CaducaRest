@@ -18,14 +18,14 @@ variables:
 steps:
 
 - task: UseDotNet@2 
-  displayName: "Build .NET Core 3.1.x"
+  displayName: "Instalar .NET Core 3.1.x"
   inputs:
         version: '3.1.103'
         packageType: sdk
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Build Project $(buildConfiguration) '
 
-- script: dotnet ef migrations script -i -o $(System.DefaultWorkingDirectory)/sql/update_to_latest.sql
+- script: dotnet ef migrations script -i -o $(System.DefaultWorkingDirectory)/CaducaRest/sql/update_to_latest.sql
   displayName: 'Generar Script'
 
 - task: DotNetCoreCLI@2

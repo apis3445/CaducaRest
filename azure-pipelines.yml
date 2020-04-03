@@ -25,6 +25,9 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Build Project $(buildConfiguration) '
 
+- script: dotnet ef migrations script -i -o $(Build.ArtifactStagingDirectory)/sql/update_to_latest.sql
+  displayName: 'Generar Script'
+
 - task: DotNetCoreCLI@2
   displayName: Testing Unit Test
   inputs:
@@ -47,11 +50,6 @@ steps:
     SourceFolder: 'postman'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
-
-- task: CmdLine@2
-  displayName: Update database si es necesario
-  inputs:
-    script: 'dotnet ef migrations script -i -o $(Build.ArtifactStagingDirectory)/sql/update_to_latest.sql'
 
 - task: DotNetCoreCLI@2
   displayName: "Publish Linux"

@@ -14,9 +14,16 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   system.debug: false
+  ConnectionStrings.DefaultConnection: $(Mysql)
 
 steps:
 
+- task: FileTransform@2
+  displayName: "Transformar appsettings"
+  inputs:
+    folderPath: '$(build.SourcesDirectory)/CaducaRest/'
+    jsonTargetFiles: '**/appsettings.json'
+    
 - task: UseDotNet@2 
   displayName: "Instalar .NET Core 3.1.x"
   inputs:
@@ -27,6 +34,12 @@ steps:
   displayName: "Instalar .NET Global"
   inputs:
     script: 'dotnet tool install --global dotnet-ef'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    AppSettings: 'ConnectionStrings.DefaultConnection $(Mysql)'
+    JSONFiles: '**/appsettings.json'
 
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Build Project $(buildConfiguration) '

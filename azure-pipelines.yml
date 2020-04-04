@@ -112,3 +112,9 @@ steps:
   inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/selenium' 
         artifactName: 'seleniumTesting' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts MySQL"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/Scripts' 
+        artifactName: 'Scripts' 

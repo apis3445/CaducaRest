@@ -15,6 +15,7 @@ variables:
   buildConfiguration: 'Release'
   system.debug: false
   ConnectionStrings.DefaultConnection: $(Mysql)
+  Logging.LogLevel.Default: "Error"
 
 steps:
 
@@ -34,12 +35,6 @@ steps:
   displayName: "Instalar .NET Global"
   inputs:
     script: 'dotnet tool install --global dotnet-ef'
-
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    AppSettings: 'ConnectionStrings.DefaultConnection $(Mysql)'
-    JSONFiles: '**/appsettings.json'
 
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Build Project $(buildConfiguration) '

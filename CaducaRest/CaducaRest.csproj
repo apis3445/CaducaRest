@@ -81,6 +81,6 @@
     </Content>
   </ItemGroup>
   <Target Name="Create Migrations Script" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
-       <Exec Command="dotnet ef migrations script --configuration $(Configuration) --no-build --idempotent --output $(TargetDir)/sql/migrations.sql"/>
+       <Exec Command="dotnet ef migrations script --configuration $(Configuration) --no-build --idempotent --output $(TargetDir)/migrations.sql"/>
   </Target>
 </Project>

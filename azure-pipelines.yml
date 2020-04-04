@@ -25,6 +25,10 @@ steps:
 
 - task: CmdLine@2
   inputs:
+    script: 'dotnet tool install --global dotnet-ef'
+
+- task: CmdLine@2
+  inputs:
     script: 'dotnet ef --help'
     
 - script: dotnet ef migrations script -p$(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o  .\Scripts\update_to_latest.sql

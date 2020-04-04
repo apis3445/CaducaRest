@@ -24,6 +24,7 @@ steps:
         packageType: sdk
 
 - task: CmdLine@2
+  displayName: "Instalar .NET Global"
   inputs:
     script: 'dotnet tool install --global dotnet-ef'
 

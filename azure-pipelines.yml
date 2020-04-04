@@ -31,7 +31,7 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Build Project $(buildConfiguration) '
 
-- script: dotnet ef migrations script -p$(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o  .\Scripts\update_to_latest.sql
+- script: dotnet ef migrations script -p$(build.SourcesDirectory)CaducaRest\CaducaRest.csproj -i -o  .\Scripts\update_to_latest.sql
   displayName: 'Generar Script'
 
 - task: DotNetCoreCLI@2

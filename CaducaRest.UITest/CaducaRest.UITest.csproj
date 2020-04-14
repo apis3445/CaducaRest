@@ -13,7 +13,10 @@
 </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="80.0.3987.10600" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="81.0.4044.6900" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove=".DS_Store" />
+  </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1"><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 <PrivateAssets>all</PrivateAssets>
 </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="1.2.0"><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    <PackageReference Include="coverlet.collector" Version="1.2.1"><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 <PrivateAssets>all</PrivateAssets>
 </PackageReference>
     <PackageReference Include="Moq" Version="4.13.1" />
@@ -27,5 +27,8 @@
   <ItemGroup>
     <Compile Remove="Prueba.cs" />
     <Compile Remove="TextFixture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove=".DS_Store" />
   </ItemGroup>
 </Project>

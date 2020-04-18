@@ -23,7 +23,7 @@ steps:
   displayName: "Transformar appsettings"
   inputs:
     folderPath: '$(build.SourcesDirectory)/CaducaRest/'
-    jsonTargetFiles: '**/appsettings.json'
+    jsonTargetFiles: '**/*.json'
     
 - task: UseDotNet@2 
   displayName: "Instalar .NET Core 3.1.x"

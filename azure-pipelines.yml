@@ -23,7 +23,7 @@ steps:
   displayName: "Transformar appsettings"
   inputs:
     folderPath: '$(build.SourcesDirectory)/CaducaRest/'
-    jsonTargetFiles: '**/*.json'
+    jsonTargetFiles: '**/appsettings.json'
     
 - task: UseDotNet@2 
   displayName: "Instalar .NET Core 3.1.x"
@@ -118,3 +118,8 @@ steps:
   inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/Scripts' 
         artifactName: 'Scripts' 
+
+- task: DeleteFiles@1
+  inputs:
+    SourceFolder: '$(build.SourcesDirectory)/CaducaRest/'
+    Contents: '**/appsettings.json'

@@ -53,7 +53,8 @@ namespace CaducaRest.Core
                 RolTablaPermisoDAO rolTablaPermisoDAO = new RolTablaPermisoDAO(contexto, _localizer);
                 if (!rolTablaPermisoDAO.TienePermiso(usuarioId,  recurso.Tabla, operacion.Name))
                     context.Fail();
-                context.Succeed(operacion);
+                else
+                    context.Succeed(operacion);
             }
             return Task.CompletedTask;
         }

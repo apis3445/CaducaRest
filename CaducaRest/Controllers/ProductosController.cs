@@ -20,6 +20,7 @@ namespace CaducaRest.Controllers
     public class ProductosController : BaseController
     {
         private ProductoDAO productoDAO;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -37,12 +38,12 @@ namespace CaducaRest.Controllers
         /// Obtener todos los productos
         /// </summary>
         /// <returns></returns>
-    [Authorize(Policy = "VendedorConCategorias")]
-    [HttpGet]
-    public IEnumerable<Producto> GetProducto()
-    {
-        return productoDAO.ObtenerTodo();
-    }
+        [Authorize(Policy = "VendedorConCategorias")]
+        [HttpGet]
+        public IEnumerable<Producto> GetProducto()
+        {
+            return productoDAO.ObtenerTodo();
+        }
 
         /// <summary>
         /// Obtener un producto por su Id

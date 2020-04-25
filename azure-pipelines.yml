@@ -19,17 +19,17 @@ variables:
 
 steps:
 
-- task: FileTransform@2
-  displayName: "Transformar appsettings"
-  inputs:
-    folderPath: '$(build.SourcesDirectory)/CaducaRest/'
-    jsonTargetFiles: '**/appsettings.json'
-    
 - task: UseDotNet@2 
   displayName: "Instalar .NET Core 3.1.x"
   inputs:
         version: '3.1.103'
         packageType: sdk
+
+- task: FileTransform@2
+  displayName: "Transformar appsettings"
+  inputs:
+    folderPath: '$(build.SourcesDirectory)/CaducaRest/'
+    jsonTargetFiles: '**/appsettings.json'
 
 - task: CmdLine@2
   displayName: "Instalar .NET Global"
@@ -47,7 +47,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/xUnit.CaducaRest/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    arguments: '--configuration $(buildConfiguration)'
     testRunTitle: 'Unit Test'
 
 - task: DotNetCoreCLI@2
@@ -55,7 +55,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/CaducaRest.IntegrationTest/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    arguments: '--configuration $(buildConfiguration)'
     testRunTitle: 'Integration Test'
 
 - task: CopyFiles@2

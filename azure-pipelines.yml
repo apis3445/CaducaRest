@@ -47,7 +47,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/xUnit.CaducaRest/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
     testRunTitle: 'Unit Test'
 
 - task: DotNetCoreCLI@2
@@ -55,7 +55,7 @@ steps:
   inputs:
     command: 'test'
     projects: '**/CaducaRest.IntegrationTest/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
     testRunTitle: 'Integration Test'
 
 - task: CopyFiles@2

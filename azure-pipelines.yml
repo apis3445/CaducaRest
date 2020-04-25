@@ -42,20 +42,23 @@ steps:
 - script: dotnet ef migrations script -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o $(Build.ArtifactStagingDirectory)\Scripts\update_to_latest.sql
   displayName: 'Generar Script'
 
-- task: DotNetCoreCLI@2
-  displayName: Testing Unit Test
+
+- task: VSTest@2
   inputs:
-    command: 'test'
-    projects: '**/xUnit.CaducaRest/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
-    testRunTitle: 'Unit Test'
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*xUnit.CaducaRest.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+
 
 - task: DotNetCoreCLI@2
   displayName: Testing Integration Test
   inputs:
     command: 'test'
     projects: '**/CaducaRest.IntegrationTest/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    arguments: '--configuration $(buildConfiguration)'
     testRunTitle: 'Integration Test'
 
 - task: CopyFiles@2

@@ -2,12 +2,10 @@
 using CaducaRest.DAO;
 using CaducaRest.Models;
 using CaducaRest.Resources;
-using CaducaRest.Rules.Categoria;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CaducaRest.Controllers

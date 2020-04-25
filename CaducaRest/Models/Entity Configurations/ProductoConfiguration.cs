@@ -23,11 +23,11 @@ namespace CaducaRest.Models.Entity_Configurations
 
             builder.HasIndex(e => e.Nombre)
                 .IsUnique()
-                .HasName("UX_ProductoNombre");
+                .HasName("UI_ProductoNombre");
 
             builder.HasIndex(e => e.Clave)
                 .IsUnique()
-                .HasName("UX_ProductoClave");
+                .HasName("UI_ProductoClave");
 
         }
     }

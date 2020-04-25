@@ -39,8 +39,9 @@ namespace CaducaRest.Models
                 modelBuilder.ApplyConfiguration(new ClienteCategoriaConfiguration());
 
                 modelBuilder.ApplyConfiguration(new HistorialConfiguration());
+                modelBuilder.ApplyConfiguration(new PermisoConfiguration());
                 modelBuilder.ApplyConfiguration(new TablaPermisoConfiguration());
-                modelBuilder.ApplyConfiguration(new TablaRolPermisoConfiguration());
+                modelBuilder.ApplyConfiguration(new RolTablaPermisoConfiguration());
 
                 modelBuilder.ApplyConfiguration(new UsuarioAccesoConfiguration());
                 modelBuilder.ApplyConfiguration(new UsuarioCategoriaConfiguration());

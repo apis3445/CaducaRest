@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CaducaRest.Models
 {
@@ -45,7 +42,7 @@ namespace CaducaRest.Models
         public Cliente Cliente { get; set; }
 
         /// <summary>
-        /// Gets or sets the cantidad.
+        /// Gets or sets la cantidad.
         /// </summary>
         /// <value>The cantidad.</value>
         [Required(ErrorMessage = "Required")]

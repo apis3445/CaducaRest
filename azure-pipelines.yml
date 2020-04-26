@@ -15,6 +15,9 @@ variables:
   buildConfiguration: 'Release'
   system.debug: false
   ConnectionStrings.DefaultConnection: $(Mysql)
+  Tokens.Key: $(key)
+  Tokens.Issuer: $(issuer)
+  Tokens.Audience: $(issuer)
   Logging.LogLevel.Default: "Error"
 
 steps:

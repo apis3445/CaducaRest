@@ -95,7 +95,7 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts linux"
   inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory/linux' 
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/linux' 
         artifactName: 'restLinux' 
 
 - task: PublishBuildArtifacts@1

@@ -121,8 +121,3 @@ steps:
   inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/Scripts' 
         artifactName: 'Scripts' 
-
-- task: DeleteFiles@1
-  inputs:
-    SourceFolder: '$(build.SourcesDirectory)/CaducaRest/'
-    Contents: '**/appsettings.json'

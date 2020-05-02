@@ -73,7 +73,7 @@ steps:
   inputs:
         command: 'publish'
         publishWebProjects: true
-        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --framework netcoreapp3.1'
+        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/linux --framework netcoreapp3.1'
         zipAfterPublish: true
 
 - task: DotNetCoreCLI@2
@@ -95,7 +95,7 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts linux"
   inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+        pathtoPublish: '$(Build.ArtifactStagingDirectory/linux' 
         artifactName: 'restLinux' 
 
 - task: PublishBuildArtifacts@1

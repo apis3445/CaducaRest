@@ -2,8 +2,15 @@
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// Indices
+    /// </summary>
     public partial class IndicePermiso : Migration
     {
+        /// <summary>
+        /// Creacion de indices
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameIndex(
@@ -23,6 +30,10 @@ namespace CaducaRest.Migrations
                 unique: true);
         }
 
+        /// <summary>
+        /// Borrado de indices
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropIndex(

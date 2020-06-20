@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CaducaRest.Models
 {
+
+
     /// <summary>
     /// Permite registrar las categorías de los productos
     /// que vende la empresa

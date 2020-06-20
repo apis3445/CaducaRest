@@ -13,8 +13,7 @@ namespace CaducaRest.Controllers
     /// <summary>
     /// Servicios para los clientes
     /// </summary>
-    [Route("api/[controller]")]
-    [ApiController]
+    
     [Authorize(Roles = "Administrador")]
     public class ClientesController : ODataController
     {
@@ -33,12 +32,12 @@ namespace CaducaRest.Controllers
             _localizer = localizer;
             clienteDAO = new ClienteDAO(_context, _localizer);
         }
-    
+
         /// <summary>
         /// Obtener todos los clientes mediante ODATA
         /// </summary>
         /// <returns></returns>
-        [EnableQuery]
+        [EnableQuery(PageSize = 10)]
         public IActionResult Get()
         {
             var clientes = _context.Cliente;

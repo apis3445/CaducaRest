@@ -101,19 +101,18 @@ namespace CaducaRest
                         new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/prs.mock-odata"));
                 }
                 
-            }
-                ).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddJsonOptions(JsonOptions =>
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+              .AddJsonOptions(JsonOptions =>
                     JsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null)
-            .AddDataAnnotationsLocalization(options =>
-            {
+              .AddDataAnnotationsLocalization(options =>
+              {
                 //Indicamos que el modelo tomara los mensajes de error del archivo SharedResource
                 options.DataAnnotationLocalizerProvider = (type, factory) =>
                 {
                     var assemblyName = new AssemblyName(typeof(SharedResource).GetTypeInfo().Assembly.FullName);
                     return factory.Create("SharedResource", assemblyName.Name);
                 };
-            });
+              });
             //services.AddApiVersioning(options => options.ReportApiVersions = true);
             services.AddOData();
 
@@ -204,6 +203,7 @@ namespace CaducaRest
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api Caduca REST", Version = "v1" });
+               
                 //Obtenemos el nombre de la dll por medio de reflexión
                 var assemblyName = Assembly.GetEntryAssembly().GetName().Name;
                 if (assemblyName != "testhost")
@@ -285,6 +285,7 @@ namespace CaducaRest
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Caduca REST");
                 c.RoutePrefix = string.Empty;
+                c.DefaultModelsExpandDepth(-1);
             });
             
             app.UseRouting();
@@ -307,15 +308,15 @@ namespace CaducaRest
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
-                routeBuilder.MapODataServiceRoute("odata", "odata", GetEdmModel());
+                routeBuilder.MapODataServiceRoute("odata", "odata", GetEdmModel(app));
                 routeBuilder.EnableDependencyInjection();
             });
             
         }
         
-        private static IEdmModel GetEdmModel()
+        private static IEdmModel GetEdmModel(IApplicationBuilder app)
         {
-            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+            ODataConventionModelBuilder builder = new ODataConventionModelBuilder(app.ApplicationServices);
             builder.EntitySet<Cliente>("Clientes");
             builder.EntitySet<ClienteCategoria>("ClientesCategorias");
             builder.EntitySet<Caducidad>("Caducidad");

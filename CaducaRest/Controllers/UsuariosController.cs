@@ -17,6 +17,7 @@ namespace CaducaRest.Controllers
     /// Servicios para usuarios y login
     /// </summary>
     [Route("api/[controller]")]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class UsuariosController : BaseController
     {
         private UsuarioDAO usuarioDAO;
@@ -56,6 +57,7 @@ namespace CaducaRest.Controllers
         /// <param name="loginDTO">Datos del usuario</param>
         /// <returns></returns>
         [HttpPost("Login")]
+        [ProducesResponseType(typeof(TokenDTO), StatusCodes.Status200OK)]
         [AllowAnonymous]
         public async Task<IActionResult> PostAsync([FromBody] LoginDTO loginDTO)
         {

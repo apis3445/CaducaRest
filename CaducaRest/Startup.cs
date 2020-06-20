@@ -37,6 +37,7 @@ using Microsoft.AspNet.OData.Formatter;
 using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Net.Http.Headers;
 
 namespace CaducaRest
 {
@@ -253,6 +254,8 @@ namespace CaducaRest
             .AddDataLoader();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
+
+            SetOutputFormatters(services);
         }
         /// <summary>
         /// Permite configurar la aplicación
@@ -321,6 +324,21 @@ namespace CaducaRest
             builder.EntitySet<ClienteCategoria>("ClientesCategorias");
             builder.EntitySet<Caducidad>("Caducidad");
             return builder.GetEdmModel();
+        }
+
+        private static void SetOutputFormatters(IServiceCollection services)
+        {
+            services.AddMvcCore(options =>
+            {
+                IEnumerable<ODataOutputFormatter> outputFormatters =
+                    options.OutputFormatters.OfType<ODataOutputFormatter>()
+                        .Where(foramtter => foramtter.SupportedMediaTypes.Count == 0);
+
+                foreach (var outputFormatter in outputFormatters)
+                {
+                    outputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/odata"));
+                }
+            });
         }
     }
 }

@@ -2,8 +2,15 @@
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// Renombrar indice
+    /// </summary>
     public partial class RenombrarIndice : Migration
     {
+        /// <summary>
+        /// Renombrar indice
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameIndex(
@@ -12,6 +19,10 @@ namespace CaducaRest.Migrations
                 newName: "UI_RolTablaPermiso");
         }
 
+        /// <summary>
+        /// Rollback renombrar indice
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameIndex(

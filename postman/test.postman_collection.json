@@ -14,7 +14,7 @@
 						"id": "29088ff0-db42-422f-b724-beaa86c72190",
 						"exec": [
 							"pm.test(\"response is ok\", function () {\r",
-							"    pm.response.to.have.status(500);\r",
+							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							""
 						],

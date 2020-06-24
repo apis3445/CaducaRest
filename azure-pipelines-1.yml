@@ -13,22 +13,111 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  system.debug: false
+  ConnectionStrings.DefaultConnection: $(Mysql)
+  Tokens.Key: $(key)
+  Tokens.Issuer: $(issuer)
+  Tokens.Audience: $(issuer)
+  Logging.LogLevel.Default: "Error"
 
 steps:
-- task: NuGetToolInstaller@1
 
-- task: NuGetCommand@2
+- task: UseDotNet@2 
+  displayName: "Instalar .NET Core 3.1.x"
   inputs:
-    restoreSolution: '$(solution)'
+        version: '3.1.103'
+        packageType: sdk
 
-- task: VSBuild@1
+- task: FileTransform@2
+  displayName: "Transformar appsettings"
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    folderPath: '$(build.SourcesDirectory)/CaducaRest/'
+    jsonTargetFiles: '**/appsettings.json'
 
-- task: VSTest@2
+- task: CmdLine@2
+  displayName: "Instalar .NET Global"
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    script: 'dotnet tool install --global dotnet-ef'
+
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Build Project $(buildConfiguration) '
+
+- script: dotnet ef migrations script -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o $(Build.ArtifactStagingDirectory)\Scripts\update_to_latest.sql
+  displayName: 'Generar Script'
+
+- task: DotNetCoreCLI@2
+  displayName: Testing Unit Test
+  inputs:
+    command: 'test'
+    projects: '**/xUnit.CaducaRest/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    testRunTitle: 'Unit Test'
+
+- task: DotNetCoreCLI@2
+  displayName: Testing Integration Test
+  inputs:
+    command: 'test'
+    projects: '**/CaducaRest.IntegrationTest/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    testRunTitle: 'Integration Test'
+
+- task: CopyFiles@2
+  displayName: Copy postman scripts
+  inputs:
+    SourceFolder: 'postman'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
+
+- task: DotNetCoreCLI@2
+  displayName: "Publish Linux"
+  inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/linux --framework netcoreapp3.1'
+        zipAfterPublish: true
+
+- task: DotNetCoreCLI@2
+  displayName: "Publish Win"
+  inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/win --framework netcoreapp3.1'
+        zipAfterPublish: true
+- task: DotNetCoreCLI@2
+  displayName: "Build Selenium testing"
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/CaducaRest.UITest/*.csproj' 
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium --framework netcoreapp3.1'
+    zipAfterPublish: false
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts linux"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/linux' 
+        artifactName: 'restLinux' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts win"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/win' 
+        artifactName: 'restWin' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts postman"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/postman' 
+        artifactName: 'postmanTesting' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts selenium"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/selenium' 
+        artifactName: 'seleniumTesting' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts MySQL"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/Scripts' 
+        artifactName: 'Scripts' 

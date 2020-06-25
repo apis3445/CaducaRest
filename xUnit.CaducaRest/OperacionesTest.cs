@@ -2,7 +2,7 @@ using Xunit;
 
 namespace xUnit.CaducaRest
 {
-    public class UnitTest1
+    public class OperacionesTest
     { 
         [Fact]
         public void SumaDosNumeros_Correcto()

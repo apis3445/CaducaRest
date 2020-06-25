@@ -1,7 +1,4 @@
-﻿using System;
-using System.Dynamic;
-
-namespace xUnit.CaducaRest
+﻿namespace xUnit.CaducaRest
 {
     public class Operaciones
     {

@@ -303,11 +303,6 @@ namespace CaducaRest
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(locOptions.Value);
             
-            /*app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });*/
-            
             app.UseMvc(routeBuilder =>
             {
                 routeBuilder.Select().Expand().Filter().OrderBy().MaxTop(100).Count();

@@ -1,4 +1,5 @@
 ﻿using System;
+using CaducaRest.Core;
 using CaducaRest.Models.Entity_Configurations;
 using CaducaRest.Models.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,27 @@ namespace CaducaRest.Models
         /// <param name="options"></param>
         public CaducaContext(DbContextOptions<CaducaContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            try
+            {
+                Database.EnsureCreated();
+            }
+            catch (Exception ex)
+            {
+                Correo mail = new Correo()
+                {
+                    Para = "abigail_armijo@yahoo.com",
+                    Mensaje = ex.InnerException.ToString(),
+                    Asunto = "Error en Caduca Rest"
+                };
+                try
+                {
+                    mail.Enviar();
+                }
+                catch (Exception ex1)
+                {
+                    Console.WriteLine(ex1.InnerException);
+                }
+            }
         }
 
         /// <summary>

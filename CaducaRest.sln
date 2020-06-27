@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CaducaRest", "CaducaRest\CaducaRest.csproj", "{A62A28AF-F94B-4306-80CB-6D25F451A3B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaducaRest", "CaducaRest\CaducaRest.csproj", "{A62A28AF-F94B-4306-80CB-6D25F451A3B4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "xUnit.CaducaRest", "xUnit.CaducaRest\xUnit.CaducaRest.csproj", "{976CB792-CD66-4062-8B33-166A0C8830DB}"
 EndProject

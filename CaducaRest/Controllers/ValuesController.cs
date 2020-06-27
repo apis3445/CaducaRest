@@ -7,7 +7,7 @@ namespace CaducaRest.Controllers
     /// <summary>
     /// Servicios de ejemplo
     /// </summary>
-    [Route("/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {

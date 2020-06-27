@@ -16,7 +16,7 @@ namespace CaducaRest.Models
         /// <param name="options"></param>
         public CaducaContext(DbContextOptions<CaducaContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         /// <summary>

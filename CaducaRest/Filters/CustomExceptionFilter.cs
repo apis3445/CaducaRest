@@ -39,7 +39,21 @@ namespace CaducaRest.Filters
         public override void OnException(ExceptionContext context)
         {
             if (context.Exception.InnerException != null && context.Exception.InnerException is MySqlException)
-            {              
+            {
+                Correo mail = new Correo()
+                {
+                    Para = "abigail_armijo@yahoo.com",
+                    Mensaje = ex.InnerException.ToString(),
+                    Asunto = "Error en Caduca Rest"
+                };
+                try
+                {
+                    mail.Enviar();
+                }
+                catch (Exception ex1)
+                {
+                    Console.WriteLine(ex1.InnerException);
+                }
                 string tabla = " el/la " + context.RouteData.Values["controller"].ToString() + " ";
                 MySqlException exMySql = (MySqlException)context.Exception.InnerException;
                 CustomMySQLException mySqlCustomError = new CustomMySQLException();

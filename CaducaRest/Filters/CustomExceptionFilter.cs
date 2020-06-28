@@ -43,7 +43,7 @@ namespace CaducaRest.Filters
                 Correo mail = new Correo()
                 {
                     Para = "abigail_armijo@yahoo.com",
-                    Mensaje = ex.InnerException.ToString(),
+                    Mensaje = context.Exception.InnerException.ToString(),
                     Asunto = "Error en Caduca Rest"
                 };
                 try

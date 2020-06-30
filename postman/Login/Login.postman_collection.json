@@ -31,7 +31,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"Usuario\": \"Carlos\",\n  \"Password\": \"DtfhkmTRQ8mNzgRY\",\n  \"Codigo\": 0\n}",
+							"raw": "{\n  \"Usuario\": \"{{Usuario}}\",\n  \"Password\": \"{{Pass}}\",\n  \"Codigo\": 0\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -92,7 +92,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"Usuario\": \"Carlos\",\n  \"Password\": \"DtfhkmTRQ8mNzgRY\",\n  \"Codigo\": 0\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -3,6 +3,7 @@ using CaducaRest.DAO;
 using CaducaRest.Models;
 using CaducaRest.Resources;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -37,7 +38,12 @@ namespace CaducaRest.Controllers
         /// Obtener todos los clientes mediante ODATA
         /// </summary>
         /// <returns></returns>
-        [EnableQuery(PageSize = 10)]
+        [EnableQuery(PageSize = 10,
+                     AllowedQueryOptions =  AllowedQueryOptions.Skip |
+                                            AllowedQueryOptions.Top |
+                                            AllowedQueryOptions.Count|
+                                            AllowedQueryOptions.Select |
+                                            AllowedQueryOptions.Expand)]       
         public IActionResult Get()
         {
             var clientes = _context.Cliente;

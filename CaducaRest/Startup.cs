@@ -119,6 +119,7 @@ namespace CaducaRest
 
             services.AddMvcCore(options =>
             {
+                options.EnableEndpointRouting = false;
                 foreach (var outputFormatter in options.OutputFormatters.OfType<ODataOutputFormatter>().Where(_ => _.SupportedMediaTypes.Count == 0))
                 {
                     outputFormatter.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/prs.odatatestxx-odata"));

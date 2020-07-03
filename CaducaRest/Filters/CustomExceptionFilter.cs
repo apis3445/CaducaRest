@@ -54,10 +54,18 @@ namespace CaducaRest.Filters
                 {
                     Console.WriteLine(ex1.InnerException);
                 }
-                string tabla = " el/la " + context.RouteData.Values["controller"].ToString() + " ";
-                MySqlException exMySql = (MySqlException)context.Exception.InnerException;
-                CustomMySQLException mySqlCustomError = new CustomMySQLException();
-                var mensajeError = mySqlCustomError.MuestraErrorMYSQL(exMySql, tabla, this.GetType().Name);              
+                string mensajeError;
+                if (context.RouteData.Values["controller"] != null)
+                {
+                    string tabla = " el/la " + context.RouteData.Values["controller"].ToString() + " ";
+                    MySqlException exMySql = (MySqlException)context.Exception.InnerException;
+                    CustomMySQLException mySqlCustomError = new CustomMySQLException();
+                    mensajeError = mySqlCustomError.MuestraErrorMYSQL(exMySql, tabla, this.GetType().Name);                  
+                }
+                else
+                {
+                    mensajeError = "Ocurrio un error y ha sido registrado";
+                }
                 BadRequestObjectResult badRequest = new BadRequestObjectResult(new CustomError(400, mensajeError));
                 context.Result = badRequest;
             }    

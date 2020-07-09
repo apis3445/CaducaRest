@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using CaducaRest.Models;
 using CaducaRest.Resources;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CaducaRest.Controllers
 {
+    /// <summary>
+    /// Controller Odata para clientes categorias
+    /// </summary>
     public class ClientesCategoriasController : ODataController
     {
         private readonly LocService _localizer;
@@ -30,6 +29,10 @@ namespace CaducaRest.Controllers
            
         }
 
+        /// <summary>
+        /// Regresa las categorias de productos que un cliente tiene acceso
+        /// </summary>
+        /// <returns></returns>
         [EnableQuery(PageSize = 10,
                    AllowedQueryOptions = AllowedQueryOptions.Skip |
                                          AllowedQueryOptions.Top |
@@ -41,6 +44,11 @@ namespace CaducaRest.Controllers
             return _context.ClienteCategoria;
         }
 
+        /// <summary>
+        /// Regresa las categorias de productos que un cliente tiene acceso por Id
+        /// </summary>
+        /// <param name="key">Id de Cliente Categoria</param>
+        /// <returns></returns>
         [HttpGet("{key}")]
         [EnableQuery]
         public ActionResult<IQueryable<ClienteCategoria>> GetClienteCategoria(int key)

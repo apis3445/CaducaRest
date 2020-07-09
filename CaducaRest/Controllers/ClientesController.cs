@@ -56,7 +56,11 @@ namespace CaducaRest.Controllers
             return _context.Cliente;
         }
 
-        
+        /// <summary>
+        /// Obtener los clientes por Id
+        /// </summary>
+        /// <param name="key">Id para odata el parámetro es key</param>
+        /// <returns></returns>
         [EnableQuery]
         public ActionResult<IQueryable<ClienteCategoria>> GetCliente([FromODataUri] int key)
         {

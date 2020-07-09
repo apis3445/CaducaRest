@@ -6,7 +6,9 @@ using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CaducaRest.Controllers
@@ -38,16 +40,27 @@ namespace CaducaRest.Controllers
         /// Obtener todos los clientes mediante ODATA
         /// </summary>
         /// <returns></returns>
-        [EnableQuery(PageSize = 10,
+        
+         [EnableQuery(PageSize = 10,
                      AllowedQueryOptions =  AllowedQueryOptions.Skip |
                                             AllowedQueryOptions.Top |
-                                            AllowedQueryOptions.Count|
+                                            AllowedQueryOptions.Count |
+                                            AllowedQueryOptions.Filter |
                                             AllowedQueryOptions.Select |
-                                            AllowedQueryOptions.Expand)]       
-        public IActionResult Get()
+                                            AllowedQueryOptions.OrderBy |
+                                            AllowedQueryOptions.Expand |
+                                            AllowedQueryOptions.Apply,
+                    AllowedOrderByProperties = "Id,Clave,RazonSocial")]       
+        public IQueryable<Cliente> Get()
         {
-            var clientes = _context.Cliente;
-            return Ok(clientes);
+            return _context.Cliente;
+        }
+
+        
+        [EnableQuery]
+        public ActionResult<IQueryable<ClienteCategoria>> GetCliente([FromODataUri] int key)
+        {
+            return Ok(_context.Cliente.Where(c => c.Id == key));
         }
 
         /// <summary>

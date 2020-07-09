@@ -35,9 +35,7 @@ namespace CaducaRest.Controllers
                                          AllowedQueryOptions.Top |
                                          AllowedQueryOptions.Count |
                                          AllowedQueryOptions.Select |
-                                         AllowedQueryOptions.Expand |
-                                         AllowedQueryOptions. |
-            AllowedQueryOptions.Filter)]
+                                         AllowedQueryOptions.Expand)]
         public IQueryable<ClienteCategoria> Get()
         {            
             return _context.ClienteCategoria;

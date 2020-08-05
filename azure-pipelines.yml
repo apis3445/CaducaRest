@@ -50,7 +50,8 @@ steps:
   inputs:
     command: 'test'
     projects: '**/xUnit.CaducaRest/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    publishTestResults: true
     testRunTitle: 'Unit Test'
 
 - task: DotNetCoreCLI@2
@@ -58,8 +59,15 @@ steps:
   inputs:
     command: 'test'
     projects: '**/CaducaRest.IntegrationTest/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    publishTestResults: true
     testRunTitle: 'Integration Test'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage report'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
 
 - task: CopyFiles@2
   displayName: Copy postman scripts

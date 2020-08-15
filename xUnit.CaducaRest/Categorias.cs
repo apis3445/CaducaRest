@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CaducaRest.DAO;
 using CaducaRest.Models;
 using CaducaRest.Resources;
@@ -7,11 +8,11 @@ using Xunit;
 
 namespace xUnit.CaducaRest
 {
-    public class CategoriaTests
+    public class Categorias
     {
         CaducaContext contexto;
         LocService locService;
-        public CategoriaTests()
+        public Categorias()
         {
             contexto = new CaducaContextMemoria().ObtenerContexto();
             locService = new MockLocService().ObtenerLocService();
@@ -23,9 +24,15 @@ namespace xUnit.CaducaRest
         /// El resultado deberia ser falso
         /// </summary>
         [Fact]
-        public void AgregarNombreRegla_NombreRepetido_Falso()
+        public async Task ReglaNombreUnico_ConNombreRepetido_RegresaFalsoAsync()
         {
-            AgregarNombreRegla agregarNombreRegla = new AgregarNombreRegla("Análgesicos", contexto, locService);
+            var categoriaDAO = new CategoriaDAO(contexto, locService);
+            List<Categoria> categorias = await categoriaDAO.ObtenerTodoAsync();
+            if (categorias.Count==0)
+            {
+                categorias.Add(new Categoria { Clave = 1, Nombre = "Análgesicos" });
+            }
+            ReglaNombreUnico agregarNombreRegla = new ReglaNombreUnico(categorias[0].Nombre, contexto, locService);
             Assert.False(agregarNombreRegla.EsCorrecto());
         }
         /// <summary>
@@ -33,9 +40,9 @@ namespace xUnit.CaducaRest
         /// El resultado deberia ser true
         /// </summary>
         [Fact]
-        public void AgregarNombreRegla_NombreNoRepetido_Verdadero()
+        public void ReglaNombreUnico_ConNombreNoRepetido_RegresaVerdadero()
         {
-            AgregarNombreRegla agregarNombreRegla = new AgregarNombreRegla("Antibióticos", contexto, locService);
+            ReglaNombreUnico agregarNombreRegla = new ReglaNombreUnico("Antibióticos", contexto, locService);
             Assert.True(agregarNombreRegla.EsCorrecto());
         }
 
@@ -44,7 +51,7 @@ namespace xUnit.CaducaRest
         /// </summary>
         /// <returns></returns>
         [Fact]
-        public async Task AgregarNueva_Categoria_VerdaderoAsync()
+        public async Task AgregaNuevaCategoria_DatosCorrectos_RegresaVerdaderoAsync()
         {
             var categoriaDAO = new CategoriaDAO(contexto, locService);
             Assert.True(await categoriaDAO.AgregarAsync(new Categoria { Clave = 2, Nombre = "Antibióticos" }));

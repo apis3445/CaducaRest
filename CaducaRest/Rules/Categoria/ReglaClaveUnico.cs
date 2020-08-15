@@ -11,7 +11,7 @@ namespace CaducaRest.Rules.Categoria
     /// Permite validar que no se repita la clave de una categoría
     /// al agregar
     /// </summary>
-    public class AgregarClaveRegla: IRegla
+    public class ReglaClaveUnico: IRegla
     {
         private int clave;
         private readonly CaducaContext contexto;
@@ -29,7 +29,7 @@ namespace CaducaRest.Rules.Categoria
         /// <param name="clave">Clave de la categoría</param>
         /// <param name="context">Objeto para la bd</param>
         /// <param name="locService">Objeto para traducuir a varuis idiomas</param>
-        public AgregarClaveRegla(int clave, CaducaContext context, LocService locService)
+        public ReglaClaveUnico(int clave, CaducaContext context, LocService locService)
         {
             this.clave = clave;
             this.contexto = context;

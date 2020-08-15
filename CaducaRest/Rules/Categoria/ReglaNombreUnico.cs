@@ -10,7 +10,7 @@ namespace CaducaRest.Rules.Categoria
     /// <summary>
     /// Valida que el nombre no se repita al agregar
     /// </summary>
-    public class AgregarNombreRegla : IRegla
+    public class ReglaNombreUnico : IRegla
     {
         private string nombre;
         private readonly CaducaContext contexto;
@@ -28,7 +28,7 @@ namespace CaducaRest.Rules.Categoria
         /// <param name="context">Objeto para la bd</param>
         /// <param name="locService">Objeto para mensajes en varios
         /// idiomas</param>
-        public AgregarNombreRegla(string nombre, CaducaContext context, LocService locService)
+        public ReglaNombreUnico(string nombre, CaducaContext context, LocService locService)
         {
             this.nombre = nombre;
             this.contexto = context;

@@ -211,7 +211,7 @@ namespace CaducaRest.DAO
             if (!EsUsuarioActivo(usuario))
                 return tokenDTO;
             if (!EsPasswordValido(usuario, loginDTO.Password, loginDTO.Codigo))
-                    return tokenDTO;
+                return tokenDTO;
             tokenDTO = GenerarToken(config, usuario.Id, usuario.Nombre);
             UsuarioAccesoDAO usuarioAccesoDAO = new UsuarioAccesoDAO(contexto, localizacion);
             var esOtroNavegador = usuarioAccesoDAO.EsOtroNavegador(navegador, usuario.Id);

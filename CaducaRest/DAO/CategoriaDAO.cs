@@ -58,8 +58,8 @@ namespace CaducaRest.DAO
         /// <returns></returns>
         public async Task<bool> AgregarAsync(Categoria categoria)
         {
-            AgregarNombreRegla nombreRepetido = new AgregarNombreRegla(categoria.Nombre, contexto, localizacion);
-            AgregarClaveRegla claveRepetido = new AgregarClaveRegla(categoria.Clave, contexto, localizacion);
+            ReglaNombreUnico nombreRepetido = new ReglaNombreUnico(categoria.Nombre, contexto, localizacion);
+            ReglaClaveUnico claveRepetido = new ReglaClaveUnico(categoria.Clave, contexto, localizacion);
 
             List<IRegla> reglas = new List<Core.IRegla>();
             reglas.Add(nombreRepetido);

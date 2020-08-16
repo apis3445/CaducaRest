@@ -12,6 +12,7 @@ namespace xUnit.CaducaRest
     {
         CaducaContext contexto;
         LocService locService;
+
         public Categorias()
         {
             contexto = new CaducaContextMemoria().ObtenerContexto();

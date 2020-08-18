@@ -20,20 +20,22 @@ namespace xUnit.CaducaRest
         }
         /// <summary>
         /// Validamos que no se pueda agregar una categoria con un nombre repetido
-        /// Dado que ya existe una categoría con el nombre Análgesicos
-        /// Si queremos agregar una categoría con el mismo nombre
         /// El resultado deberia ser falso
         /// </summary>
         [Fact]
         public async Task ReglaNombreUnico_ConNombreRepetido_RegresaFalsoAsync()
         {
+            //Inicialización de datos (Arrange)
             var categoriaDAO = new CategoriaDAO(contexto, locService);
+            //Obtenemos la lista de categorías si esta vacía agregamos una
             List<Categoria> categorias = await categoriaDAO.ObtenerTodoAsync();
             if (categorias.Count==0)
             {
                 categorias.Add(new Categoria { Clave = 1, Nombre = "Análgesicos" });
             }
-            ReglaNombreUnico agregarNombreRegla = new ReglaNombreUnico(categorias[0].Nombre, contexto, locService);
+            //Método a probar (Act)
+            ReglaNombreUnico agregarNombreRegla = new ReglaNombreUnico(categorias[0].Id, categorias[0].Nombre, contexto, locService);
+            //Comprobación de resultados (Assert)
             Assert.False(agregarNombreRegla.EsCorrecto());
         }
         /// <summary>
@@ -41,21 +43,38 @@ namespace xUnit.CaducaRest
         /// El resultado deberia ser true
         /// </summary>
         [Fact]
-        public void ReglaNombreUnico_ConNombreNoRepetido_RegresaVerdadero()
+        public async Task ReglaNombreUnico_ConNombreNoRepetido_RegresaVerdaderoAsync()
         {
-            ReglaNombreUnico agregarNombreRegla = new ReglaNombreUnico("Antibióticos", contexto, locService);
+            //Inicialización de datos (Arrange)
+            var categoriaDAO = new CategoriaDAO(contexto, locService);
+            //Obtenemos la lista de categorías si esta vacía agregamos una
+            List<Categoria> categorias = await categoriaDAO.ObtenerTodoAsync();
+            if (categorias.Count == 0)
+            {
+                categorias.Add(new Categoria { Clave = 1, Nombre = "Análgesicos" });
+            }
+            //Método a probar (Act)
+            ReglaNombreUnico agregarNombreRegla = new ReglaNombreUnico(2,"Antibióticos", contexto, locService);
+            //Comprobación de resultados (Assert)
             Assert.True(agregarNombreRegla.EsCorrecto());
         }
 
         /// <summary>
-        /// Probamos que se pueda agregar una nueva categoría
+        /// Revisar que se pueda agregar una nueva categoría
         /// </summary>
         /// <returns></returns>
         [Fact]
         public async Task AgregaNuevaCategoria_DatosCorrectos_RegresaVerdaderoAsync()
         {
+            //Inicialización de datos (Arrange)
             var categoriaDAO = new CategoriaDAO(contexto, locService);
-            Assert.True(await categoriaDAO.AgregarAsync(new Categoria { Clave = 2, Nombre = "Antibióticos" }));
+            var categoria = new Categoria();
+            categoria.Clave = 2;
+            categoria.Nombre = "Antibióticos";
+            //Método a probar (Act)
+            var esCorrecto = await categoriaDAO.AgregarAsync(categoria);
+            //Comprobación de resultados (Assert)
+            Assert.True(esCorrecto);
         }
     }
 }

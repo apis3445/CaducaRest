@@ -14,6 +14,7 @@ namespace CaducaRest.Rules.Categoria
     public class ReglaClaveUnico: IRegla
     {
         private int clave;
+        private int id;
         private readonly CaducaContext contexto;
         private readonly LocService localizacion;
 
@@ -29,11 +30,12 @@ namespace CaducaRest.Rules.Categoria
         /// <param name="clave">Clave de la categoría</param>
         /// <param name="context">Objeto para la bd</param>
         /// <param name="locService">Objeto para traducuir a varuis idiomas</param>
-        public ReglaClaveUnico(int clave, CaducaContext context, LocService locService)
+        public ReglaClaveUnico(int id, int clave, CaducaContext context, LocService locService)
         {
             this.clave = clave;
             this.contexto = context;
             this.localizacion = locService;
+            this.id = id;
         }
         
         /// <summary>
@@ -43,7 +45,8 @@ namespace CaducaRest.Rules.Categoria
         /// <returns></returns>
         public bool EsCorrecto()
         {
-            var registroRepetido = contexto.Categoria.AsNoTracking().FirstOrDefault(c => c.Clave == clave);
+            var registroRepetido = contexto.Categoria.AsNoTracking().FirstOrDefault(c => c.Clave == clave
+                                    && c.Id != id);
             if (registroRepetido != null)
             {
                 customError = new CustomError(400, String.Format(this.localizacion.GetLocalizedHtmlString("Repeteaded"), "categoría", "clave"), "Clave");

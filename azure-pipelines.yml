@@ -49,7 +49,7 @@ steps:
   displayName: Testing Unit Test
   inputs:
     command: 'test'
-    projects: '**/xUnit.CaducaRest/*.csproj'
+    projects: '**/CaducaRest.UnitTest/*.csproj'
     arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     publishTestResults: true
     testRunTitle: 'Unit Test'

@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "e916fc0c-2968-43df-8602-596eedf638c7",
+		"name": "Login",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login_ValidUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46ba830f-b82f-4642-99fe-4a213e629e4c",
+								"exec": [
+									"pm.test(\"Login Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.environment.set(\"Token\", pm.response.json().Token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"Usuario\": \"{{Usuario}}\",\n  \"Password\": \"{{Pass}}\",\n  \"Codigo\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/Usuarios/Login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"Usuarios",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Categorias",
+			"item": [
+				{
+					"name": "Categorias_Valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6802a0da-9943-41e1-86f3-095eef4bbb55",
+								"exec": [
+									"pm.test(\"Categorias Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/Categorias",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"Categorias"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

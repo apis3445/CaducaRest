@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace xUnit.CaducaRest
+namespace CaducaRest.UnitTest
 {
     public class MockLocService
     {

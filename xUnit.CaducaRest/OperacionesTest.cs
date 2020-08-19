@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace xUnit.CaducaRest
+namespace CaducaRest.UnitTest
 {
     public class OperacionesTest
     { 

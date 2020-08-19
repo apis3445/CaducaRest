@@ -1,4 +1,4 @@
-﻿namespace xUnit.CaducaRest
+﻿namespace CaducaRest.UnitTest
 {
     public class Operaciones
     {

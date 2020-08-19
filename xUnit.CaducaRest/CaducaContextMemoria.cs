@@ -4,7 +4,7 @@ using CaducaRest.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace xUnit.CaducaRest
+namespace CaducaRest.UnitTest
 {
     public class CaducaContextMemoria
     {

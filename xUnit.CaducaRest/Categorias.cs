@@ -6,7 +6,7 @@ using CaducaRest.Resources;
 using CaducaRest.Rules.Categoria;
 using Xunit;
 
-namespace xUnit.CaducaRest
+namespace CaducaRest.UnitTest
 {
     public class Categorias
     {
@@ -34,7 +34,7 @@ namespace xUnit.CaducaRest
                 categorias.Add(new Categoria { Clave = 1, Nombre = "Análgesicos" });
             }
             //Método a probar (Act)
-            ReglaNombreUnico agregarNombreRegla = new ReglaNombreUnico(categorias[0].Id, categorias[0].Nombre, contexto, locService);
+            ReglaNombreUnico agregarNombreRegla = new ReglaNombreUnico(categorias[0].Id+1, categorias[0].Nombre, contexto, locService);
             //Comprobación de resultados (Assert)
             Assert.False(agregarNombreRegla.EsCorrecto());
         }

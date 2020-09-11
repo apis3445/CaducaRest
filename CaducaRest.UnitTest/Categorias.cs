@@ -59,22 +59,6 @@ namespace CaducaRest.UnitTest
             Assert.True(agregarNombreRegla.EsCorrecto());
         }
 
-        /// <summary>
-        /// Revisar que se pueda agregar una nueva categoría
-        /// </summary>
-        /// <returns></returns>
-        [Fact]
-        public async Task AgregaNuevaCategoria_DatosCorrectos_RegresaVerdaderoAsync()
-        {
-            //Inicialización de datos (Arrange)
-            var categoriaDAO = new CategoriaDAO(contexto, locService);
-            var categoria = new Categoria();
-            categoria.Clave = 2;
-            categoria.Nombre = "Antibióticos";
-            //Método a probar (Act)
-            var esCorrecto = await categoriaDAO.AgregarAsync(categoria);
-            //Comprobación de resultados (Assert)
-            Assert.True(esCorrecto);
-        }
+       
     }
 }

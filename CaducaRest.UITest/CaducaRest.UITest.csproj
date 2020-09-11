@@ -11,9 +11,9 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0"><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 <PrivateAssets>all</PrivateAssets>
 </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="84.0.4147.3001" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="85.0.4183.8700" />
   </ItemGroup>
 
   <ItemGroup>

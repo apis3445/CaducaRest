@@ -13,13 +13,10 @@ namespace CaducaRest.GraphQL.Types
         /// <summary>
         /// Constructor que permite mapear campos
         /// </summary>
-        /// <param name="caducaContext"></param>
         /// <param name="locService">Objeto para mensajes en varios idiomas</param>
-        public ProductoType(CaducaContext caducaContext, LocService locService)
-        {
-          
+        public ProductoType(LocService locService)
+        {         
             Name = "Producto";
-
             Field(c => c.Id).Description("Id");
             Field(c => c.Clave).Description("Clave del producto");
             Field(c => c.Nombre).Description("Nombre del cliente");

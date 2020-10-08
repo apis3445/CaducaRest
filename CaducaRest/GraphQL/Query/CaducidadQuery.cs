@@ -3,6 +3,7 @@ using CaducaRest.GraphQL.Types;
 using CaducaRest.Models;
 using CaducaRest.Resources;
 using GraphQL.Types;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CaducaRest.GraphQL.Query
 {
@@ -16,13 +17,20 @@ namespace CaducaRest.GraphQL.Query
         /// </summary>
         /// <param name="caducaContext">Objeto para el acceso a la bd</param>
         /// <param name="locService">Objeto para mensajes de error en varios idiomas</param>
-        public CaducidadQuery(CaducaContext caducaContext, LocService locService)
+        public CaducidadQuery( LocService locService)
         {
-            CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
-
+            
             Field<ListGraphType<CaducidadType>>(
                 "caducidades",
-                resolve: context => caducidadDAO.ObtenerTodoAsync()
+                resolve:  context =>
+                {
+                    using var scope = context.RequestServices.CreateScope();
+                    var services = scope.ServiceProvider;
+                    var caducaContext = services.GetRequiredService<CaducaContext>();
+                    CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
+                    return caducidadDAO.ObtenerTodoAsync();
+                }
+                
                 );
         }
     }

@@ -1,7 +1,8 @@
-﻿using CaducaRest.GraphQL.Mutation;
+﻿using System;
+using CaducaRest.GraphQL.Mutation;
 using CaducaRest.GraphQL.Query;
-using GraphQL;
 using GraphQL.Types;
+using GraphQL.Utilities;
 
 namespace CaducaRest.GraphQL.Schemas
 {
@@ -15,12 +16,12 @@ namespace CaducaRest.GraphQL.Schemas
         /// Contiene métodos para consultar y modificar registros
         /// de caducidad de productos
         /// </summary>
-        /// <param name="resolver"></param>
-        public CaducidadSchema(IDependencyResolver resolver) : base(resolver)
+        /// <param name="provider"></param>
+        public CaducidadSchema(IServiceProvider provider) : base(provider)
         {
-            Query = resolver.Resolve<CaducidadQuery>();
+            Query = provider.GetRequiredService<CaducidadQuery>();
 
-            Mutation = resolver.Resolve<CaducidadMutation>();
+            Mutation = provider.GetRequiredService<CaducidadMutation>();
         }
     }
 }

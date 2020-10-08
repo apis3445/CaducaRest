@@ -2,7 +2,9 @@
 using CaducaRest.GraphQL.Types;
 using CaducaRest.Models;
 using CaducaRest.Resources;
+using GraphQL;
 using GraphQL.Types;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CaducaRest.GraphQL.Mutation
 {
@@ -18,9 +20,9 @@ namespace CaducaRest.GraphQL.Mutation
         /// </summary>
         /// <param name="caducaContext">Objeto para el acceso a la bd</param>
         /// <param name="locService">Objeto para los mensjaes de error</param>
-        public CaducidadMutation(CaducaContext caducaContext, LocService locService)
+        public CaducidadMutation( LocService locService)
         {
-            CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
+            
             Field<CaducidadType>
                 (
                     "createCaducidad",
@@ -30,6 +32,11 @@ namespace CaducaRest.GraphQL.Mutation
                     ),
                     resolve: context =>
                     {
+                        using var scope = context.RequestServices.CreateScope();
+                        var services = scope.ServiceProvider;
+                        var caducaContext = services.GetRequiredService<CaducaContext>();
+                        CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
+                        
                         var caducidad = context.GetArgument<Caducidad>("caducidad");
                         var correcto = caducidadDAO.AgregarAsync(caducidad).Result;
                         if (correcto)
@@ -45,6 +52,10 @@ namespace CaducaRest.GraphQL.Mutation
                     resolve: context =>
                     {
                         var id = context.GetArgument<int>("id");
+                        using var scope = context.RequestServices.CreateScope();
+                        var services = scope.ServiceProvider;
+                        var caducaContext = services.GetRequiredService<CaducaContext>();
+                        CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
                         var caducidad = caducidadDAO.BorraAsync(id).Result;
                         return $"La caducidad con el id: {id} fue borrada correctamente";
                     }
@@ -58,6 +69,11 @@ namespace CaducaRest.GraphQL.Mutation
                         new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
                       resolve: context =>
                       {
+                          using var scope = context.RequestServices.CreateScope();
+                          var services = scope.ServiceProvider;
+                          var caducaContext = services.GetRequiredService<CaducaContext>();
+                          CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
+
                           var caducidad = context.GetArgument<Caducidad>("caducidad");
                           var id = context.GetArgument<int>("id");
                           var correcto = caducidadDAO.ModificarAsync(caducidad).Result;

@@ -28,7 +28,6 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNet.OData.Extensions;
@@ -38,6 +37,8 @@ using Microsoft.OData.Edm;
 using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Net.Http.Headers;
+using Microsoft.Extensions.Logging;
+using GraphQL.Types;
 
 namespace CaducaRest
 {
@@ -92,14 +93,14 @@ namespace CaducaRest
                             .Where(it => !it.SupportedMediaTypes.Any()))
                 {
                     formatter.SupportedMediaTypes.Add(
-                        new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/prs.mock-odata"));
+                        new MediaTypeHeaderValue("application/prs.mock-odata"));
                 }
                 foreach (var formatter in options.InputFormatters
                     .OfType<ODataInputFormatter>()
                     .Where(it => !it.SupportedMediaTypes.Any()))
                 {
                     formatter.SupportedMediaTypes.Add(
-                        new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/prs.mock-odata"));
+                        new MediaTypeHeaderValue("application/prs.mock-odata"));
                 }
                 
             }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
@@ -122,11 +123,11 @@ namespace CaducaRest
                 options.EnableEndpointRouting = false;
                 foreach (var outputFormatter in options.OutputFormatters.OfType<ODataOutputFormatter>().Where(_ => _.SupportedMediaTypes.Count == 0))
                 {
-                    outputFormatter.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
+                    outputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
                 }
                 foreach (var inputFormatter in options.InputFormatters.OfType<ODataInputFormatter>().Where(_ => _.SupportedMediaTypes.Count == 0))
                 {
-                    inputFormatter.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
+                    inputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
                 }
             });
             //La clase LocService nos permite cambiar los mensajes de error según el idioma
@@ -241,18 +242,20 @@ namespace CaducaRest
                 
             });
             
-            services.AddScoped<IDependencyResolver>(s =>
-                new FuncDependencyResolver(s.GetRequiredService));
-            services.AddScoped<CaducidadSchema>();
-            services.AddScoped<CaducidadInputType>();
-            services.AddScoped<CaducidadMutation>();
-            services.AddGraphQL(x =>
+            services.AddSingleton<ISchema,CaducidadSchema>();
+            services.AddSingleton<CaducidadInputType>();
+            services.AddSingleton<CaducidadMutation>();
+            services.AddGraphQL((options, provider) =>
             {
-                x.ExposeExceptions = true; //set true only in development mode. make it switchable.
-            })
-            .AddGraphTypes(ServiceLifetime.Scoped)
-            .AddUserContextBuilder(httpContext => httpContext.User)
-            .AddDataLoader();
+                options.EnableMetrics = CurrentEnvironment.IsDevelopment() ;
+                var logger = provider.GetRequiredService<ILogger<Startup>>();
+                options.UnhandledExceptionDelegate = ctx => logger.LogError("{Error} occured", ctx.OriginalException.Message);
+           }).AddSystemTextJson(deserializerSettings => { }, serializerSettings => { }) // For .NET Core 3+
+            .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = CurrentEnvironment.IsDevelopment())
+            .AddDataLoader() // Add required services for DataLoader support
+            .AddGraphTypes(typeof(CaducidadSchema)); // Add all IGraphType implementors in assembly which ChatSchema exists 
+
+           
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
 
@@ -296,7 +299,7 @@ namespace CaducaRest
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseGraphQL<CaducidadSchema>();
+            app.UseGraphQL<ISchema>();
           
             app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
 

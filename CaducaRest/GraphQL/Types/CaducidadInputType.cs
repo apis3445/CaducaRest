@@ -1,6 +1,4 @@
-﻿using System;
-using CaducaRest.Models;
-using GraphQL.Types;
+﻿using GraphQL.Types;
 
 namespace CaducaRest.GraphQL.Types
 {

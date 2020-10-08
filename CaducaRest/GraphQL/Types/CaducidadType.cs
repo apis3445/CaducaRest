@@ -2,10 +2,7 @@
 using CaducaRest.Models;
 using CaducaRest.Resources;
 using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CaducaRest.GraphQL.Types
 {
@@ -20,10 +17,8 @@ namespace CaducaRest.GraphQL.Types
         /// </summary>
         /// <param name="caducaContext">Caduca context.</param>
         /// <param name="locService">Location service.</param>
-        public CaducidadType(CaducaContext caducaContext, LocService locService)
+        public CaducidadType(LocService locService)
         {
-            ProductoDAO productoDAO = new ProductoDAO(caducaContext, locService);
-            ClienteDAO clienteDAO = new ClienteDAO(caducaContext, locService);
 
             Name = "Caducidad";
 
@@ -32,14 +27,28 @@ namespace CaducaRest.GraphQL.Types
             Field(c => c.ClienteId).Description("Id del cliente");
             Field(c => c.Cantidad).Description("Cantidad");
             Field(c => c.Fecha).Description("Fecha");
-            Field<ProductoType>("Producto", 
+
+            Field<ProductoType>("Producto",
                 arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "Id" }),
-                resolve: context => productoDAO.ObtenerPorIdAsync(context.Source.Id).Result, description: "Datos del producto");
+                resolve: context =>
+                {
+                   using var scope = context.RequestServices.CreateScope();
+                   var services = scope.ServiceProvider;
+                   var caducaContext = services.GetRequiredService<CaducaContext>();
+                   ProductoDAO productoDAO = new ProductoDAO(caducaContext, locService);
+                   return productoDAO.ObtenerPorIdAsync(context.Source.Id).Result;
+                });
 
             Field<ClienteType>("Cliente", 
                 arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "Id" }),
-                resolve: context => clienteDAO.ObtenerPorIdAsync(context.Source.Id).Result, description: "Datos del cliente");
-
+                resolve: context => {
+                    using var scope = context.RequestServices.CreateScope();
+                    var services = scope.ServiceProvider;
+                    var caducaContext = services.GetRequiredService<CaducaContext>();
+                    ClienteDAO clienteDAO = new ClienteDAO(caducaContext, locService);
+                    return clienteDAO.ObtenerPorIdAsync(context.Source.Id).Result;
+                });
+            
         }
     }
 }

@@ -20,7 +20,6 @@ namespace CaducaRest.GraphQL.Types
         {
 
             Name = "Cliente";
-
             Field(c => c.Id).Description("Id");
             Field(c => c.Clave).Description("Clave del producto");
             Field(c => c.NombreComercial).Description("Nombre comercial del cliente");

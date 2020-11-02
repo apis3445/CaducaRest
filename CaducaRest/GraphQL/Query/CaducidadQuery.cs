@@ -23,14 +23,13 @@ namespace CaducaRest.GraphQL.Query
             Field<ListGraphType<CaducidadType>>(
                 "caducidades",
                 resolve:  context =>
-                {
-                    using var scope = context.RequestServices.CreateScope();
-                    var services = scope.ServiceProvider;
-                    var caducaContext = services.GetRequiredService<CaducaContext>();
-                    CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
-                    return caducidadDAO.ObtenerTodoAsync();
-                }
-                
+                    {
+                        using var scope = context.RequestServices.CreateScope();
+                        var services = scope.ServiceProvider;
+                        var caducaContext = services.GetRequiredService<CaducaContext>();
+                        CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
+                        return caducidadDAO.ObtenerTodoAsync();
+                        }
                 );
         }
     }

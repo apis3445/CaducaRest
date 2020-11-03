@@ -190,9 +190,18 @@ namespace CaducaRest
                     services.AddDbContext<CaducaContext>(opt => opt.UseSqlite(connection));
                     break;
                 default:
-                    
-                    services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-                    //Conexión SQL Server
+                    try
+                    {
+                        services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+
+                    }
+                    catch (Exception ex)
+                    {
+                        AgregaLog(ex.Message);
+                        Console.WriteLine(ex.Message);
+                    }
+                    Console.WriteLine(Configuration.GetConnectionString("DefaultConnection"));
+                     //Conexión SQL Server
                     //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
                     //Conexión SQL Server Azure
                     //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
@@ -338,6 +347,26 @@ namespace CaducaRest
                     outputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/odata"));
                 }
             });
+        }
+
+        private void AgregaLog(string mensajeError)
+        {
+            try
+            {
+                if (CurrentEnvironment.IsDevelopment())
+                    return;
+                Correo mail = new Correo()
+                {
+                    Para = "apis3445@gmail.com",
+                    Mensaje = mensajeError,
+                    Asunto = "Fallo deploy"
+                };
+                mail.Enviar();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error:" + ex.Message);
+            }
         }
     }
 }

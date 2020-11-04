@@ -191,31 +191,7 @@ namespace CaducaRest
                     services.AddDbContext<CaducaContext>(opt => opt.UseSqlite(connection));
                     break;
                 default:
-                    try
-                    {
-                        var loggerFactory = LoggerFactory.Create(builder =>
-                        {
-                            builder.AddConsole();
-                        });
-
-                        ILogger logger = loggerFactory.CreateLogger<Startup>();
-                        logger.LogInformation(Configuration.GetConnectionString("DefaultConnection"));
-
-                        services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-                        
-                    }
-                    catch (Exception ex)
-                    {
-                        var loggerFactory = LoggerFactory.Create(builder =>
-                        {
-                            builder.AddConsole();
-                        });
-                        AgregaLog(ex.Message);
-                        ILogger logger = loggerFactory.CreateLogger<Startup>();
-                        logger.LogError(ex.Message);
-
-                    }
-                    Console.WriteLine(Configuration.GetConnectionString("DefaultConnection"));
+                     services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
                      //Conexión SQL Server
                     //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
                     //Conexión SQL Server Azure

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -19,17 +20,18 @@ namespace CaducaRest.Filters
     {
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IModelMetadataProvider _modelMetadataProvider;
-     
+        private IConfiguration Configuration { get; }
 
         /// <summary>
         /// Filtro para controlar todas las excepciones ocurridas en el sistema
         /// </summary>
         /// <param name="hostingEnvironment">Para saber si el ambiente es producción o desarrolo</param>
         /// <param name="modelMetadataProvider">Datos acerca del modeolo</param>
-        public CustomExceptionFilter(IWebHostEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider)
+        public CustomExceptionFilter(IWebHostEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider, IConfiguration configuration)
         {
             _hostingEnvironment = hostingEnvironment;
             _modelMetadataProvider = modelMetadataProvider;
+            Configuration = configuration;
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace CaducaRest.Filters
         {
             if (context.Exception.InnerException != null && context.Exception.InnerException is MySqlException)
             {
-                Correo mail = new Correo()
+                Correo mail = new Correo(Configuration)
                 {
                     Para = "abigail_armijo@yahoo.com",
                     Mensaje = context.Exception.InnerException.ToString(),

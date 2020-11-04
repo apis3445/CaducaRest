@@ -48,7 +48,7 @@ namespace CaducaRest.Controllers
             _config = config;
             _accessor = accessor;
             _hostingEnvironment = hostingEnvironment;
-            usuarioDAO = new UsuarioDAO(context, localize, _hostingEnvironment.ContentRootPath);
+            usuarioDAO = new UsuarioDAO(context, localize, _hostingEnvironment.ContentRootPath, config);
         }
 
         /// <summary>

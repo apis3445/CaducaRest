@@ -3,6 +3,7 @@ using CaducaRest.Core;
 using CaducaRest.Models.Entity_Configurations;
 using CaducaRest.Models.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace CaducaRest.Models
 {
@@ -11,21 +12,23 @@ namespace CaducaRest.Models
     /// </summary>
     public class CaducaContext : DbContext
     {
+        private IConfiguration _configuration;
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="options"></param>
-        public CaducaContext(DbContextOptions<CaducaContext> options) : base(options)
+        public CaducaContext(DbContextOptions<CaducaContext> options, IConfiguration config) : base(options)
         {
+            _configuration = config;
             try
             {
                 Database.EnsureCreated();
             }
             catch (Exception ex)
             {
-                Correo mail = new Correo()
+                Correo mail = new Correo(config)
                 {
-                    Para = "abigail_armijo@yahoo.com",
+                    Para = config["Correo:para"],
                     Mensaje = ex.InnerException.ToString(),
                     Asunto = "Error en Caduca Rest"
                 };
@@ -531,5 +534,7 @@ namespace CaducaRest.Models
         /// Guarda los roles deun usuario
         /// </summary>
         public virtual DbSet<UsuarioRol> UsuarioRol { get; set; }
+
+        public virtual DbSet<Errorres> Errorres { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace CaducaRest.DAO
         private readonly CaducaContext contexto;
         private readonly LocService localizacion;
         private readonly string _path;
+        private IConfiguration Configuration { get; }
 
         /// <summary>
         /// Mensaje de error
@@ -31,6 +32,7 @@ namespace CaducaRest.DAO
         /// </summary>
         public TokenDTO tokenDTO;
         private readonly AccesoDAO<Usuario> usuarioDAO;
+
         private const int MAXIMOS_INTENTOS = 5;
         /// <summary>
         /// Constructor
@@ -38,12 +40,13 @@ namespace CaducaRest.DAO
         /// <param name="context"></param>
         /// <param name="localize"></param>
         /// <param name="path"></param>
-        public UsuarioDAO(CaducaContext context, LocService localize, string path)
+        public UsuarioDAO(CaducaContext context, LocService localize, string path, IConfiguration configuration)
         {
             this.contexto = context;
             this.localizacion = localize;
             this.tokenDTO = new TokenDTO();
             this._path = path;
+            this.Configuration = configuration;
             usuarioDAO = new AccesoDAO<Usuario>(context, localize);
         }
 
@@ -288,7 +291,7 @@ namespace CaducaRest.DAO
             string body = System.IO.File.ReadAllText(Path.Combine(path, "Templates", "IntentosIncorrectos.html"));
             body = body.Replace("{{usuario}}", usuario);
             body = body.Replace("{{codigo}}", codigo.ToString());
-            Correo mail = new Correo()
+            Correo mail = new Correo(Configuration)
             {
                 Para = email,
                 Mensaje = body,
@@ -324,7 +327,7 @@ namespace CaducaRest.DAO
             body = body.Replace("{{navegador}}", navegador);
             body = body.Replace("{{fecha}}", DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString());
 
-            Correo mail = new Correo()
+            Correo mail = new Correo(Configuration)
             {
                 Para = email,
                 Mensaje = body,

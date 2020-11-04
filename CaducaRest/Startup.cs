@@ -57,6 +57,7 @@ namespace CaducaRest
             Configuration = configuration;
             CurrentEnvironment = env;
         }
+        private readonly ILogger<Startup> _logger;
         /// <summary>
         /// Acceso al archivo de configuración
         /// </summary>
@@ -192,13 +193,14 @@ namespace CaducaRest
                 default:
                     try
                     {
+                        _logger.LogError("Log");
                         services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-
+                        
                     }
                     catch (Exception ex)
                     {
                         AgregaLog(ex.Message);
-                        Console.WriteLine(ex.Message);
+                        _logger.LogError(ex.Message);
                     }
                     Console.WriteLine(Configuration.GetConnectionString("DefaultConnection"));
                      //Conexión SQL Server
@@ -275,7 +277,7 @@ namespace CaducaRest
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment() || env.IsEnvironment("Testing"))
             {
@@ -353,9 +355,8 @@ namespace CaducaRest
         {
             try
             {
-                if (CurrentEnvironment.IsDevelopment())
-                    return;
-                Correo mail = new Correo()
+               
+                Correo mail = new Correo(Configuration)
                 {
                     Para = "apis3445@gmail.com",
                     Mensaje = mensajeError,

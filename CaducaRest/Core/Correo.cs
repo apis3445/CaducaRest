@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
 
 namespace CaducaRest.Core
 {
+
     /// <summary>
     /// Funciones para enviar correos
     /// </summary>
     public class Correo
     {
+        private IConfiguration Configuration { get; }
         /// <summary>
         /// Mensaje del correo
         /// </summary>
@@ -22,6 +25,10 @@ namespace CaducaRest.Core
         /// </summary>
         public string Asunto;
 
+        public Correo(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         /// <summary>
         /// Permite enviar un correo
         /// </summary>
@@ -29,14 +36,16 @@ namespace CaducaRest.Core
         {
             string smtpAddress, usuarioCorreo, passwordCorreo;
             int puerto = 587;
-            smtpAddress = "smtp.gmail.com";
-            usuarioCorreo = "correo@gmail.com";
-            passwordCorreo = "tupassword";
+            smtpAddress = Configuration["Correo:smtp"];
+            usuarioCorreo = Configuration["Correo:correo"];
+            passwordCorreo = Configuration["Correo:pass"];
 
             SmtpClient client = new SmtpClient(smtpAddress, puerto)
             {
                 Credentials = new NetworkCredential(usuarioCorreo, passwordCorreo),
                 EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
             };
             MailMessage mailMessage = new MailMessage
             {

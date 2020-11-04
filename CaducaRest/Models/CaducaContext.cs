@@ -17,29 +17,16 @@ namespace CaducaRest.Models
         /// Constructor
         /// </summary>
         /// <param name="options"></param>
-        public CaducaContext(DbContextOptions<CaducaContext> options, IConfiguration config) : base(options)
+        public CaducaContext(DbContextOptions<CaducaContext> options) : base(options)
         {
-            _configuration = config;
+            
             try
             {
                 Database.EnsureCreated();
             }
             catch (Exception ex)
             {
-                Correo mail = new Correo(config)
-                {
-                    Para = config["Correo:para"],
-                    Mensaje = ex.InnerException.ToString(),
-                    Asunto = "Error en Caduca Rest"
-                };
-                try
-                {
-                    mail.Enviar();
-                }
-                catch (Exception ex1)
-                {
-                    Console.WriteLine(ex1.InnerException);
-                }
+                 Console.WriteLine(ex.InnerException);
             }
         }
 

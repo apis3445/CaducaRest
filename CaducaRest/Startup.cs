@@ -57,7 +57,7 @@ namespace CaducaRest
             Configuration = configuration;
             CurrentEnvironment = env;
         }
-        private readonly ILogger<Startup> _logger;
+        
         /// <summary>
         /// Acceso al archivo de configuración
         /// </summary>
@@ -193,14 +193,27 @@ namespace CaducaRest
                 default:
                     try
                     {
-                        _logger.LogError("Log");
+                        var loggerFactory = LoggerFactory.Create(builder =>
+                        {
+                            builder.AddConsole();
+                        });
+
+                        ILogger logger = loggerFactory.CreateLogger<Startup>();
+                        logger.LogInformation(Configuration.GetConnectionString("DefaultConnection"));
+
                         services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
                         
                     }
                     catch (Exception ex)
                     {
+                        var loggerFactory = LoggerFactory.Create(builder =>
+                        {
+                            builder.AddConsole();
+                        });
                         AgregaLog(ex.Message);
-                        _logger.LogError(ex.Message);
+                        ILogger logger = loggerFactory.CreateLogger<Startup>();
+                        logger.LogError(ex.Message);
+
                     }
                     Console.WriteLine(Configuration.GetConnectionString("DefaultConnection"));
                      //Conexión SQL Server

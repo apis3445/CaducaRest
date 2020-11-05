@@ -1,26 +1,41 @@
 {
 	"info": {
-		"_postman_id": "e916fc0c-2968-43df-8602-596eedf638c7",
+		"_postman_id": "960357b2-b77a-41a0-9ba8-dd45aaf514ca",
 		"name": "Login",
+		"description": "#Pruebas con los diferentes casos de login\n\n## Casos correctos:\n\n* Usuario y password correctos\n\n## Casos incorrectos:\n\n* Password y usuario incorrecto\n* Usuario inactivo\n* Usuario que no exista\n* Solo enviar usuario\n* solo enviar password\n\nNota: Para los casos de bloqueo de usuario al mandar 5 veces un usuario y password se debe realizar como integration test ya que el código de desbloqueo se envia por correo y si se intenta desde postman se dejaria el usuario bloqueado",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Login",
+			"name": "200",
 			"item": [
 				{
-					"name": "Login_ValidUser",
+					"name": "Login_UsuarioPasswordCorrectos_Return200Token",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "46ba830f-b82f-4642-99fe-4a213e629e4c",
+								"id": "dcc912ff-2489-47ec-8bbd-54c1cc01aeba",
 								"exec": [
-									"pm.test(\"Login Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
+									"const moment = require(\"moment\")",
+									"",
+									"pm.test(\"Status is 200\", function () {",
+									"    pm.response.to.be.ok;",
+									"});",
+									"var respuesta = pm.response.json();",
+									"pm.test(\"Token no es vacío\", function() ",
+									"{",
+									"    pm.expect(respuesta.Token).not.to.be.empty;",
+									"});",
+									"pm.test(\"Token es string\", function() ",
+									"{",
+									"    pm.expect(respuesta.Token).to.be.a('string');",
 									"});",
 									"",
-									"pm.environment.set(\"Token\", pm.response.json().Token);"
+									"pm.test(\"Date is present in correct format\", function () {",
+									"   pm.expect(moment(respuesta.TokenExpiration,\"YYYY-MM-DD\").isValid()).to.be.true",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -31,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"Usuario\": \"{{Usuario}}\",\n  \"Password\": \"{{Pass}}\",\n  \"Codigo\": 0\n}",
+							"raw": "{\n  \"Usuario\": \"Juan\",\n  \"Password\": \"zUvyvsRSCMek58eR\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -48,71 +63,13 @@
 								"Usuarios",
 								"Login"
 							]
-						}
+						},
+						"description": "Si envias un usuario y password correcto el servicio regresa el status 200 y regresa un token"
 					},
 					"response": []
 				}
 			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Categorias",
-			"item": [
-				{
-					"name": "Categorias_Valid",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "6802a0da-9943-41e1-86f3-095eef4bbb55",
-								"exec": [
-									"pm.test(\"Categorias Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{Token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{URL}}/api/Categorias",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"api",
-								"Categorias"
-							]
-						}
-					},
-					"response": []
-				}
-			],
+			"description": "Pruebas de login casos correctos",
 			"protocolProfileBehavior": {}
 		}
 	],

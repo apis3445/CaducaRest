@@ -72,7 +72,7 @@ steps:
 - task: CopyFiles@2
   displayName: Copy postman scripts
   inputs:
-    SourceFolder: 'postman'
+    SourceFolder: 'CaducaRest.IntegrationTest/postman'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
 

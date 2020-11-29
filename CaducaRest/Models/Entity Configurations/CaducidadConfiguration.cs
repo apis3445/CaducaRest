@@ -23,7 +23,7 @@ namespace CaducaRest.Models.EntityConfigurations
                 .OnDelete(DeleteBehavior.Restrict); 
 
             builder.HasIndex(e => new { e.ClienteId, e.ProductoId, e.Fecha })
-               .HasName("UI_ClienteProducto")
+               .HasDatabaseName("UI_ClienteProducto")
                .IsUnique();
         }
     }

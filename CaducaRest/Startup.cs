@@ -82,7 +82,7 @@ namespace CaducaRest
             {
                 options.EnableEndpointRouting = false;
                 //Agregamos una politica para indicar que nuestros servicios 
-                //requieren que los usuarios hayan iniciado sesióm
+                //requieren que los usuarios hayan iniciado sesión
                 var policy = new AuthorizationPolicyBuilder()
                                     .RequireAuthenticatedUser()
                                     .Build();
@@ -191,9 +191,9 @@ namespace CaducaRest
                     services.AddDbContext<CaducaContext>(opt => opt.UseSqlite(connection));
                     break;
                 default:
-                     services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+                     services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(Configuration.GetConnectionString("DefaultConnection"))));
                      //Conexión SQL Server
-                    //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
+                    services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));
                     //Conexión SQL Server Azure
                     //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
                     break;

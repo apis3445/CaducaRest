@@ -82,7 +82,7 @@ steps:
   inputs:
         command: 'publish'
         publishWebProjects: true
-        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/linux --framework netcoreapp3.1'
+        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/linux'
         zipAfterPublish: true
 
 - task: DotNetCoreCLI@2
@@ -90,7 +90,7 @@ steps:
   inputs:
         command: 'publish'
         publishWebProjects: true
-        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/win --framework netcoreapp3.1'
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/win'
         zipAfterPublish: true
 - task: DotNetCoreCLI@2
   displayName: "Build Selenium testing"
@@ -98,7 +98,7 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**/CaducaRest.UITest/*.csproj' 
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium --framework netcoreapp3.1'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium'
     zipAfterPublish: false
 
 - task: PublishBuildArtifacts@1

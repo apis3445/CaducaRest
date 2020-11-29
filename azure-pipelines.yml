@@ -23,9 +23,10 @@ variables:
 steps:
 
 - task: UseDotNet@2 
-  displayName: "Instalar .NET Core 3.1.x"
+  displayName: "Instalar .NET Core 5.0.x"
   inputs:
-        version: '5.0.0'
+        version: '5.0.x'
+        performMultiLevelLookup: true
         packageType: sdk
 
 - task: FileTransform@2

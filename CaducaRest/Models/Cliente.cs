@@ -27,7 +27,7 @@ namespace CaducaRest.Models
         /// </summary>
         [Required(ErrorMessage = "Required")]
         [Range(1, 999999, ErrorMessage = "Range")]
-        [CaducaRest.Rules.Cliente.ClaveValidation()]
+        [Rules.Cliente.ClaveValidation()]
         public int Clave { get; set; }
 
         /// <summary>

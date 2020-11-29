@@ -15,7 +15,7 @@ namespace CaducaRest.Models.Entity_Configurations
         public void Configure(EntityTypeBuilder<Producto> builder)
         {
             builder.HasIndex(e => e.CategoriaId)
-             .HasName("IX_ProductoCategoria");
+             .HasDatabaseName("IX_ProductoCategoria");
 
             builder.HasOne(typeof(Caducidad))
                    .WithMany()
@@ -23,11 +23,11 @@ namespace CaducaRest.Models.Entity_Configurations
 
             builder.HasIndex(e => e.Nombre)
                 .IsUnique()
-                .HasName("UI_ProductoNombre");
+                .HasDatabaseName("UI_ProductoNombre");
 
             builder.HasIndex(e => e.Clave)
                 .IsUnique()
-                .HasName("UI_ProductoClave");
+                .HasDatabaseName("UI_ProductoClave");
 
         }
     }

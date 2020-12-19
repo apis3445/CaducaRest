@@ -104,7 +104,7 @@ namespace CaducaRest
                         new MediaTypeHeaderValue("application/prs.mock-odata"));
                 }
                 
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+            }).SetCompatibilityVersion(CompatibilityVersion.Latest)
               .AddJsonOptions(JsonOptions =>
                     JsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null)
               .AddDataAnnotationsLocalization(options =>

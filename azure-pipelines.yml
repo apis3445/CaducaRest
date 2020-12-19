@@ -82,7 +82,7 @@ steps:
   inputs:
         command: 'publish'
         publishWebProjects: true
-        arguments: '-r linux-x64 --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/linux'
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/linux'
         zipAfterPublish: true
 
 - task: DotNetCoreCLI@2

@@ -216,12 +216,12 @@ namespace CaducaRest.DAO
             if (!EsPasswordValido(usuario, loginDTO.Password, loginDTO.Codigo))
                 return tokenDTO;
             tokenDTO = GenerarToken(config, usuario.Id, usuario.Nombre);
-            UsuarioAccesoDAO usuarioAccesoDAO = new UsuarioAccesoDAO(contexto, localizacion);
-            var esOtroNavegador = usuarioAccesoDAO.EsOtroNavegador(navegador, usuario.Id);
-            var esOtraCiudad = await usuarioAccesoDAO.EsOtraCiudadAsync(ip, usuario.Id);
-            if (esOtroNavegador || esOtraCiudad)
-                EnviaCorreoNuevoAcceso(_path, usuario.Clave, usuario.Email, usuarioAccesoDAO.datosIP, ip, navegador);
-            await usuarioAccesoDAO.GuardarAccesoAsync(tokenDTO, usuario.Id, ip, navegador);
+            //UsuarioAccesoDAO usuarioAccesoDAO = new UsuarioAccesoDAO(contexto, localizacion);
+            //var esOtroNavegador = usuarioAccesoDAO.EsOtroNavegador(navegador, usuario.Id);
+            //var esOtraCiudad = await usuarioAccesoDAO.EsOtraCiudadAsync(ip, usuario.Id);
+            //if (esOtroNavegador || esOtraCiudad)
+              //  EnviaCorreoNuevoAcceso(_path, usuario.Clave, usuario.Email, usuarioAccesoDAO.datosIP, ip, navegador);
+            //await usuarioAccesoDAO.GuardarAccesoAsync(tokenDTO, usuario.Id, ip, navegador);
             return tokenDTO;
         }
 

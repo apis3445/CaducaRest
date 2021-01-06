@@ -277,7 +277,7 @@ namespace CaducaRest
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-            var urlAceptadas = Configuration.GetSection("AllowedHosts").Value.Split(",");
+            var urlAceptadas = Configuration.GetSection("AllowedOrigins").Value.Split(",");
             app.UseCors(builder =>
               builder.WithOrigins(urlAceptadas)
                            .AllowAnyHeader()

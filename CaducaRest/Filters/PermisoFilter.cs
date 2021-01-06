@@ -55,7 +55,7 @@ namespace CaducaRest.Filters
                 jsonResult = new JsonResult(customError)
                 {
                     StatusCode = 403,
-                    Value = customError.Message
+                    Value = "Usuario con token incorrecto"
                 };
                 context.Result = jsonResult;
                 return;
@@ -75,7 +75,7 @@ namespace CaducaRest.Filters
                 jsonResult = new JsonResult(customError)
                 {
                     StatusCode = 403,
-                    Value = customError.Message
+                    Value = "El usuario no tiene acceso"
                 };
                 context.Result = jsonResult;
                 return;
@@ -107,7 +107,7 @@ namespace CaducaRest.Filters
                     jsonResult = new JsonResult(customError)
                     {
                         StatusCode = 403,
-                        Value = customError.Message
+                        Value = "Usuario sin permiso"
                     };
                     context.Result = jsonResult;
                     return;

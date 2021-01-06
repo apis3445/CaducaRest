@@ -48,13 +48,17 @@ namespace CaducaRest.Core
             if (recurso.RequiereAdministrador && !esAdministrador)
                      context.Fail();
             else
-            { 
-                //Se revisa si el usuario tiene autorización para realizar la acción
-                RolTablaPermisoDAO rolTablaPermisoDAO = new RolTablaPermisoDAO(contexto, _localizer);
-                if (!rolTablaPermisoDAO.TienePermiso(usuarioId,  recurso.Tabla, operacion.Name))
-                    context.Fail();
-                else
-                    context.Succeed(operacion);
+            {
+                if (!esAdministrador)
+                {
+                    //Se revisa si el usuario tiene autorización para realizar la acción
+                    RolTablaPermisoDAO rolTablaPermisoDAO = new RolTablaPermisoDAO(contexto, _localizer);
+                    if (!rolTablaPermisoDAO.TienePermiso(usuarioId, recurso.Tabla, operacion.Name))
+                        context.Fail();
+                    else
+                        context.Succeed(operacion);
+                }
+                context.Succeed(operacion);
             }
             return Task.CompletedTask;
         }

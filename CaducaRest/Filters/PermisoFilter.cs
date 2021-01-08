@@ -82,35 +82,38 @@ namespace CaducaRest.Filters
             }
             else
             {
-                string operacion = string.Empty;
-                //obtenemos el tipo de método que se esta ejecutando
-                switch (metodo)
+                if (!esAdministrador)
                 {
-                    case "get":
-                        operacion = Operaciones.Consultar.Name;
-                        break;
-                    case "post":
-                        operacion = Operaciones.Crear.Name;
-                        break;
-                    case "put":
-                    case "patch":
-                        operacion = Operaciones.Modificar.Name;
-                        break;
-                    case "delete":
-                        operacion = Operaciones.Borrar.Name;
-                        break;
-                }
-                //Se revisa si el usuario tiene autorización para realizar la acción
-                RolTablaPermisoDAO rolTablaPermisoDAO = new RolTablaPermisoDAO(_context, _localizer);
-                if (!rolTablaPermisoDAO.TienePermiso(usuarioId, controller.permiso.Tabla, operacion))
-                {
-                    jsonResult = new JsonResult(customError)
+                    string operacion = string.Empty;
+                    //obtenemos el tipo de método que se esta ejecutando
+                    switch (metodo)
                     {
-                        StatusCode = 403,
-                        Value = "Usuario sin permiso"
-                    };
-                    context.Result = jsonResult;
-                    return;
+                        case "get":
+                            operacion = Operaciones.Consultar.Name;
+                            break;
+                        case "post":
+                            operacion = Operaciones.Crear.Name;
+                            break;
+                        case "put":
+                        case "patch":
+                            operacion = Operaciones.Modificar.Name;
+                            break;
+                        case "delete":
+                            operacion = Operaciones.Borrar.Name;
+                            break;
+                    }
+                    //Se revisa si el usuario tiene autorización para realizar la acción
+                    RolTablaPermisoDAO rolTablaPermisoDAO = new RolTablaPermisoDAO(_context, _localizer);
+                    if (!rolTablaPermisoDAO.TienePermiso(usuarioId, controller.permiso.Tabla, operacion))
+                    {
+                        jsonResult = new JsonResult(customError)
+                        {
+                            StatusCode = 403,
+                            Value = "Usuario sin permiso"
+                        };
+                        context.Result = jsonResult;
+                        return;
+                    }
                 }
             }
         }

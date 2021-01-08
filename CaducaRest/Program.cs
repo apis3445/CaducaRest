@@ -16,7 +16,7 @@ namespace CaducaRest
         {
             var host = CreateHostBuilder(args).Build();
             
-            host.Run();
+             host.Run();
         }
 
         /// <summary>

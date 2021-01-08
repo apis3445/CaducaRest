@@ -3,14 +3,16 @@ using System;
 using CaducaRest.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CaducaRest.Migrations
 {
     [DbContext(typeof(CaducaContext))]
-    partial class CaducaContextModelSnapshot : ModelSnapshot
+    [Migration("20210107010357_Update")]
+    partial class Update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,7 +263,10 @@ namespace CaducaRest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                      b.Property<int>("CategoriaId")
+                    b.Property<int?>("CaducidadId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
                     b.Property<int>("Clave")
@@ -273,7 +278,8 @@ namespace CaducaRest.Migrations
 
                     b.HasKey("Id");
 
-                    
+                    b.HasIndex("CaducidadId");
+
                     b.HasIndex("CategoriaId")
                         .HasDatabaseName("IX_ProductoCategoria");
 
@@ -952,7 +958,13 @@ namespace CaducaRest.Migrations
                         .IsRequired();
                 });
 
-       
+            modelBuilder.Entity("CaducaRest.Models.Producto", b =>
+                {
+                    b.HasOne("CaducaRest.Models.Caducidad", null)
+                        .WithMany()
+                        .HasForeignKey("CaducidadId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
 
             modelBuilder.Entity("CaducaRest.Models.RolTablaPermiso", b =>
                 {

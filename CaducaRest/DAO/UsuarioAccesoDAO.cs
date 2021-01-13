@@ -63,7 +63,7 @@ namespace CaducaRest.DAO
             var acceso = contexto.UsuarioAcceso.FirstOrDefault(u => u.UsuarioId == usuarioId);
             if (acceso == null)
                 return false;
-            //Revisamos si tiene un registro en otra ciduad
+            //Revisamos si tiene un registro en otra ciudad
             acceso = contexto.UsuarioAcceso.FirstOrDefault(u => u.UsuarioId == usuarioId
                                                     && u.Ciudad != datosIP.city);
             //Si ya tiene un acceso para esa ciudad regresamos false

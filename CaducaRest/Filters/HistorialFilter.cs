@@ -57,7 +57,7 @@ namespace CaducaRest.Filters
 
                     case "put":
                     case "patch":
-                        actividad = (int)ActividadEnumeration.Modficar;
+                        actividad = (int)ActividadEnumeration.Modificar;
                         break;
                     case "delete":
                         actividad = (int)ActividadEnumeration.Borrar;

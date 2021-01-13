@@ -17,7 +17,7 @@ namespace CaducaRest.Core
         /// <summary>
         /// Actualizar
         /// </summary>
-        Modficar    = 2,
+        Modificar    = 2,
         /// <summary>
         /// Autorizar
         /// </summary>

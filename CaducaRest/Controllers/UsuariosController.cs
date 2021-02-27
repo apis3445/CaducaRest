@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace CaducaRest.Controllers
 {
@@ -40,10 +41,11 @@ namespace CaducaRest.Controllers
         /// <param name="hostingEnvironment">Environment</param>
         /// <param name="accessor"></param>
         public UsuariosController(CaducaContext context,
+                                  ILogger<UsuariosController> logger,
                                   LocService localize,
                                   IConfiguration config,
                                   IWebHostEnvironment hostingEnvironment,
-                                  IHttpContextAccessor accessor) : base(context, localize)
+                                  IHttpContextAccessor accessor) : base(context, logger, localize)
         {           
             _config = config;
             _accessor = accessor;

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using CaducaRest.Core;
 using CaducaRest.DTO;
 using CaducaRest.Filters;
+using Microsoft.Extensions.Logging;
 
 namespace CaducaRest.Controllers
 {
@@ -33,9 +34,10 @@ namespace CaducaRest.Controllers
         /// <param name="localizer">Mensajes de error en varios idiomas</param>
         /// <param name="authorizationService"></param>
         public CategoriasController(CaducaContext context,
+                                    ILogger<CategoriasController> logger,
                                     LocService localizer,
                                     IAuthorizationService authorizationService)
-                                    : base(context, localizer)
+                                    : base(context, logger, localizer)
         {         
             _authorizationService = authorizationService;
             categoriaDAO = new CategoriaDAO(context, localizer);

@@ -17,7 +17,7 @@ namespace CaducaRest.Models.EntityConfigurations
         public void Configure(EntityTypeBuilder<RolTablaPermiso> builder)
         {
             builder.HasIndex(u => new { u.TablaPermisoId, u.RolId })
-                .HasName("UI_RolTablaPermiso")
+                .HasDatabaseName("UI_RolTablaPermiso")
                 .IsUnique();
 
             builder.HasOne(typeof(TablaPermiso))

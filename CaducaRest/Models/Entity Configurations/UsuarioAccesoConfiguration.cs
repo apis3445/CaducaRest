@@ -19,11 +19,11 @@ namespace CaducaRest.Models.EntityConfigurations
                 .OnDelete(DeleteBehavior.Restrict);
                        
             builder.HasIndex(u => u.RefreshToken)
-                .HasName("UI_RefreshToken")
+                .HasDatabaseName("UI_RefreshToken")
                 .IsUnique();
 
             builder.HasIndex(u => new { u.UsuarioId, u.Token })
-                .HasName("UI_Token")
+                .HasDatabaseName("UI_Token")
                 .IsUnique();
         }
     }

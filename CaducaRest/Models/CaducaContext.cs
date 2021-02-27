@@ -12,7 +12,6 @@ namespace CaducaRest.Models
     /// </summary>
     public class CaducaContext : DbContext
     {
-        private IConfiguration _configuration;
         /// <summary>
         /// Constructor
         /// </summary>

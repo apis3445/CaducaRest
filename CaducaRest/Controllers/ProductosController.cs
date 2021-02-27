@@ -6,6 +6,7 @@ using CaducaRest.Resources;
 using CaducaRest.DAO;
 using Microsoft.AspNetCore.Authorization;
 using CaducaRest.Filters;
+using Microsoft.Extensions.Logging;
 
 namespace CaducaRest.Controllers
 {
@@ -26,7 +27,8 @@ namespace CaducaRest.Controllers
         /// </summary>
         /// <param name="context"></param>
         /// <param name="localize"></param>
-        public ProductosController(CaducaContext context, LocService localize) : base( context,  localize)
+        public ProductosController(CaducaContext context, ILogger<UsuariosController> logger, LocService localize)
+                : base( context, logger, localize)
         {
             _context = context;
             productoDAO = new ProductoDAO(context, localize);

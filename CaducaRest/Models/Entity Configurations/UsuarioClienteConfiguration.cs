@@ -17,7 +17,7 @@ namespace CaducaRest.Models.EntityConfigurations
         public void Configure(EntityTypeBuilder<UsuarioCliente> builder)
         {
             builder.HasIndex(u => new { u.UsuarioId, u.ClienteId })
-               .HasName("UI_UsuarioCliente")
+               .HasDatabaseName("UI_UsuarioCliente")
                .IsUnique();
 
             builder.HasOne(typeof(Usuario))

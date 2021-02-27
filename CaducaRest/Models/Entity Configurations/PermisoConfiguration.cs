@@ -16,7 +16,7 @@ namespace CaducaRest.Models.EntityConfigurations
         {
             builder.HasIndex(e => e.Clave)
                 .IsUnique()
-                .HasName("UI_PermisoClave");
+                .HasDatabaseName("UI_PermisoClave");
         }
     }
 }

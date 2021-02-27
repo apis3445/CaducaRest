@@ -3,6 +3,7 @@ using CaducaRest.DTO;
 using CaducaRest.Models;
 using CaducaRest.Resources;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CaducaRest.Controllers
 {
@@ -37,14 +38,20 @@ namespace CaducaRest.Controllers
         public string Observaciones;
 
         /// <summary>
+        /// Objeto para guardar el log de errores
+        /// </summary>
+        protected readonly ILogger logger;
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
         /// <param name="localizer"></param>
-        public BaseController(CaducaContext context, LocService localizer)
+        public BaseController(CaducaContext context, ILogger<BaseController> logger, LocService localizer)
         {
             this._context = context;
             this._localizer = localizer;
+            this.logger = logger;
             permiso = new PermisoDTO();
         }
     }

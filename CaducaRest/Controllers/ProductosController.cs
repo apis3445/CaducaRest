@@ -108,7 +108,7 @@ namespace CaducaRest.Controllers
                                   productoDAO.customError.Message);
             }
             Id = producto.Id;
-            return CreatedAtAction("GetCategoria", new { id = producto.Id }, producto);
+            return CreatedAtAction("GetProducto", new { id = producto.Id }, producto);
         }
 
         /// <summary>

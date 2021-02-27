@@ -15,11 +15,11 @@ namespace CaducaRest.Models.Entity_Configurations
         public void Configure(EntityTypeBuilder<Cliente> builder)
         {
             builder.HasIndex(e => e.Clave)
-             .HasName("UI_ClienteCategoriaClave")
+             .HasDatabaseName("UI_ClienteCategoriaClave")
              .IsUnique();
 
             builder.HasIndex(e => e.RazonSocial)
-            .HasName("UI_ClienteCategoriaNombre")
+            .HasDatabaseName("UI_ClienteCategoriaNombre")
             .IsUnique();
 
            

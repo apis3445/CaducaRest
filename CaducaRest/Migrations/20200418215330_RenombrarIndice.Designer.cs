@@ -12,6 +12,10 @@ namespace CaducaRest.Migrations
     [Migration("20200418215330_RenombrarIndice")]
     partial class RenombrarIndice
     {
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

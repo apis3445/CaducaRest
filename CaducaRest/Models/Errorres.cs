@@ -4,7 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CaducaRest.Models
 {
-    public class Errorres
+    /// <summary>
+    /// Para guardar los errores
+    /// </summary>
+    public class Errores
     {
         /// <summary>
         /// Id
@@ -13,9 +16,15 @@ namespace CaducaRest.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Fecha del error
+        /// </summary>
         [Required(ErrorMessage = "Required")]
         public DateTime Fecha { get; set; }
 
+        /// <summary>
+        /// Mensaje
+        /// </summary>
         public string Mensaje { get; set; }
     }
 }

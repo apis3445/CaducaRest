@@ -45,7 +45,8 @@ namespace CaducaRest.Controllers
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context"></param>  
+        /// <param name="logger"></param>
         /// <param name="localizer"></param>
         public BaseController(CaducaContext context, ILogger<BaseController> logger, LocService localizer)
         {

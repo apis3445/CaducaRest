@@ -4,8 +4,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+    /// Migración
+    /// </summary>
     public partial class Update : Migration
     {
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -23,6 +30,10 @@ namespace CaducaRest.Migrations
                 });
         }
 
+        /// <summary>
+        /// Revert
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

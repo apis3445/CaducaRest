@@ -25,6 +25,10 @@ namespace CaducaRest.Core
         /// </summary>
         public string Asunto;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="configuration"></param>
         public Correo(IConfiguration configuration)
         {
             Configuration = configuration;

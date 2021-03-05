@@ -25,6 +25,7 @@ namespace CaducaRest.Rules.Categoria
         /// <summary>
         /// Valida que una cateogría no se llame igual al agregar
         /// </summary>
+        /// <param name="id">Id</param>
         /// <param name="nombre">Nombre de la categoría</param>
         /// <param name="context">Objeto para la bd</param>
         /// <param name="locService">Objeto para mensajes en varios

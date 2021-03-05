@@ -15,7 +15,6 @@ namespace CaducaRest.GraphQL.Query
         /// <summary>
         /// Constructor de la clase Query para consultar las caducidades
         /// </summary>
-        /// <param name="caducaContext">Objeto para el acceso a la bd</param>
         /// <param name="locService">Objeto para mensajes de error en varios idiomas</param>
         public CaducidadQuery( LocService locService)
         {

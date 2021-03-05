@@ -15,7 +15,7 @@ namespace CaducaRest.Models.EntityConfigurations
         public void Configure(EntityTypeBuilder<Usuario> builder)
         {
             builder.HasIndex(e => e.Clave)
-             .HasName("UI_UsuarioClave")
+             .HasDatabaseName("UI_UsuarioClave")
              .IsUnique();
         }
     }

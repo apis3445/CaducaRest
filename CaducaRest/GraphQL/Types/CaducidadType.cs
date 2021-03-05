@@ -15,7 +15,6 @@ namespace CaducaRest.GraphQL.Types
         /// <summary>
         /// Initializes a new instance of the <see cref="T:CaducaRest.GraphQL.Types.CaducidadType"/> class.
         /// </summary>
-        /// <param name="caducaContext">Caduca context.</param>
         /// <param name="locService">Location service.</param>
         public CaducidadType(LocService locService)
         {

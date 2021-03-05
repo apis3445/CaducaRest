@@ -12,6 +12,10 @@ namespace CaducaRest.Migrations
     [Migration("20200425175422_IndicePermiso")]
     partial class IndicePermiso
     {
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

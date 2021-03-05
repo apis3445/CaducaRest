@@ -520,6 +520,9 @@ namespace CaducaRest.Models
         /// </summary>
         public virtual DbSet<UsuarioRol> UsuarioRol { get; set; }
 
-        public virtual DbSet<Errorres> Errorres { get; set; }
+        /// <summary>
+        /// Errores en BD
+        /// </summary>
+        public virtual DbSet<Errores> Errorres { get; set; }
     }
 }

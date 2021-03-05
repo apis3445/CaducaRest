@@ -266,6 +266,7 @@ namespace CaducaRest
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
+        /// <param name="logger"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment() || env.IsEnvironment("Testing"))

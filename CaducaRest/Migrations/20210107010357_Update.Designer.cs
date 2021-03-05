@@ -12,6 +12,10 @@ namespace CaducaRest.Migrations
     [Migration("20210107010357_Update")]
     partial class Update
     {
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618

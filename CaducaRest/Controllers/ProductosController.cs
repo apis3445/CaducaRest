@@ -26,6 +26,7 @@ namespace CaducaRest.Controllers
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
+        /// <param name="logger"></param>
         /// <param name="localize"></param>
         public ProductosController(CaducaContext context, ILogger<UsuariosController> logger, LocService localize)
                 : base( context, logger, localize)

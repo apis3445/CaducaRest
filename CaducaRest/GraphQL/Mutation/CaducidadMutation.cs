@@ -18,7 +18,6 @@ namespace CaducaRest.GraphQL.Mutation
         /// Constructor para las operaciones de la tabla
         /// Caducidad
         /// </summary>
-        /// <param name="caducaContext">Objeto para el acceso a la bd</param>
         /// <param name="locService">Objeto para los mensjaes de error</param>
         public CaducidadMutation( LocService locService)
         {

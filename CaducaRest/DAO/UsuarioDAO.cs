@@ -40,6 +40,8 @@ namespace CaducaRest.DAO
         /// <param name="context"></param>
         /// <param name="localize"></param>
         /// <param name="path"></param>
+        /// z
+        /// <param name="configuration"></param>
         public UsuarioDAO(CaducaContext context, LocService localize, string path, IConfiguration configuration)
         {
             this.contexto = context;

@@ -36,6 +36,7 @@ namespace CaducaRest.Controllers
         /// Constructor
         /// </summary>
         /// <param name="context">Base de datos</param>
+        /// <param name="logger"></param>
         /// <param name="localize">Idiomas</param>
         /// <param name="config">Archivo de configuración</param>
         /// <param name="hostingEnvironment">Environment</param>

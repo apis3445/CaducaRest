@@ -27,6 +27,7 @@ namespace CaducaRest.Rules.Categoria
         /// Constructor para verificar que la clave no se repite
         /// en una categoría al agregar
         /// </summary>
+        /// <param name="id">Id</param>
         /// <param name="clave">Clave de la categoría</param>
         /// <param name="context">Objeto para la bd</param>
         /// <param name="locService">Objeto para traducuir a varuis idiomas</param>

@@ -24,6 +24,7 @@ namespace CaducaRest.Filters
         /// </summary>
         /// <param name="hostingEnvironment">Para saber si el ambiente es producción o desarrolo</param>
         /// <param name="modelMetadataProvider">Datos acerca del modeolo</param>
+        /// <param name="configuration"></param>
         public CustomExceptionFilter(IWebHostEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider, IConfiguration configuration)
         {
             _hostingEnvironment = hostingEnvironment;

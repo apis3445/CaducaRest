@@ -31,6 +31,7 @@ namespace CaducaRest.Controllers
         /// Constructor
         /// </summary>
         /// <param name="context">Contexto para la base de datos</param>
+        /// <param name="logger"></param>
         /// <param name="localizer">Mensajes de error en varios idiomas</param>
         /// <param name="authorizationService"></param>
         public CategoriasController(CaducaContext context,

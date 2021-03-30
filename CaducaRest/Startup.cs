@@ -302,7 +302,7 @@ namespace CaducaRest
 
             app.UseGraphQL<ISchema>();
           
-            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+            app.UseGraphQLPlayground();
 
             //Indicamos que se van a utilizar varios idiomas
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
@@ -345,7 +345,6 @@ namespace CaducaRest
         {
             try
             {
-               
                 Correo mail = new Correo(Configuration)
                 {
                     Para = "apis3445@gmail.com",

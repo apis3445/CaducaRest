@@ -2,7 +2,7 @@
 using CaducaRest.GraphQL.Mutation;
 using CaducaRest.GraphQL.Query;
 using GraphQL.Types;
-using GraphQL.Utilities;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CaducaRest.GraphQL.Schemas
 {

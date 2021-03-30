@@ -14,29 +14,29 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
     <PackageReference Include="Moq" Version="4.16.1" />
-    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.3" />
-    <PackageReference Include="SpecFlow" Version="3.7.13" />
-    <PackageReference Include="SpecFlow.MsTest" Version="3.7.13" />
-    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.7.13" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.4" />
+    <PackageReference Include="SpecFlow" Version="3.7.38" />
+    <PackageReference Include="SpecFlow.MsTest" Version="3.7.38" />
+    <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.7.38" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.4" />
     <PackageReference Include="coverlet.msbuild" Version="3.0.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,15 +45,9 @@
 
   <ItemGroup>
     <None Remove="postman\.DS_Store" />
-    <None Remove="postman\PostmanTesting.postman_collection.json" />
-    <None Remove="postman\test.bat" />
     <None Remove="postman\ResultsjunitReport3.xml" />
     <None Remove="postman\ResultsjunitReport2.xml" />
-    <None Remove="postman\test.postman_collection.json" />
     <None Remove="postman\newman\Login-2020-07-01-02-06-17-178-0.html" />
-    <None Remove="postman\Login\login.data.csv" />
-    <None Remove="postman\Login\Login.postman_collection.json" />
-    <None Remove="postman\Login\Login.Azure.postman_environment.json" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Login.feature">

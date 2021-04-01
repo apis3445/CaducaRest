@@ -37,6 +37,7 @@
     </PackageReference>
     <PackageReference Include="System.Text.Json" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
   </ItemGroup>
 
   <ItemGroup>

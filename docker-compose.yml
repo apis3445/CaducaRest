@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  caducarest:
+    image: ${DOCKER_REGISTRY-}caducarest
+    build:
+      context: .
+      dockerfile: CaducaRest/Dockerfile

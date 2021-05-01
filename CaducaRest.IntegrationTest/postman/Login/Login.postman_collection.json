@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "960357b2-b77a-41a0-9ba8-dd45aaf514ca",
+		"_postman_id": "68c2dfeb-1389-4c8f-b221-c52a7cfdccef",
 		"name": "Login",
 		"description": "#Pruebas con los diferentes casos de login\n\n## Casos correctos:\n\n* Usuario y password correctos\n\n## Casos incorrectos:\n\n* Password y usuario incorrecto\n* Usuario inactivo\n* Usuario que no exista\n* Solo enviar usuario\n* solo enviar password\n\nNota: Para los casos de bloqueo de usuario al mandar 5 veces un usuario y password se debe realizar como integration test ya que el código de desbloqueo se envia por correo y si se intenta desde postman se dejaria el usuario bloqueado",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -15,7 +15,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "dcc912ff-2489-47ec-8bbd-54c1cc01aeba",
 								"exec": [
 									"const moment = require(\"moment\")",
 									"",
@@ -46,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"Usuario\": \"Juan\",\n  \"Password\": \"zUvyvsRSCMek58eR\"\n}",
+							"raw": "{\n  \"Usuario\": \"{{Usuario}}\",\n  \"Password\": \"{{Pass}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -54,12 +53,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/api/Usuarios/Login",
+							"raw": "{{BaseURL}}/Usuarios/Login",
 							"host": [
-								"{{URL}}"
+								"{{BaseURL}}"
 							],
 							"path": [
-								"api",
 								"Usuarios",
 								"Login"
 							]
@@ -69,9 +67,7 @@
 					"response": []
 				}
 			],
-			"description": "Pruebas de login casos correctos",
-			"protocolProfileBehavior": {}
+			"description": "Pruebas de login casos correctos"
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

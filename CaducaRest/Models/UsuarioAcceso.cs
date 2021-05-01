@@ -31,7 +31,7 @@ namespace CaducaRest.Models
         /// <summary>
         /// Token de acceso
         /// </summary>
-        [Column(TypeName = "VARCHAR(400)")]
+        [Column(TypeName = "VARCHAR(500)")]
         [Required(ErrorMessage = "Required")]
         public string Token { get; set; }
 

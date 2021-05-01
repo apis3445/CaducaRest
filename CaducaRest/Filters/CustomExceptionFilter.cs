@@ -54,7 +54,7 @@ namespace CaducaRest.Filters
                 {
                     Console.WriteLine(ex1.InnerException);
                 }
-                string mensajeError;
+                string mensajeError = context.Exception.InnerException.Message;
                 if (context.RouteData.Values["controller"] != null)
                 {
                     string tabla = " el/la " + context.RouteData.Values["controller"].ToString() + " ";

@@ -100,7 +100,7 @@ namespace CaducaRest.DAO
         /// <param name="ip">Ip de la cual se conecta el usuario</param>
         /// <param name="navegador">Navegador del cual se conecta el usuario</param>
         /// <returns></returns>
-        public async Task<bool> GuardarAccesoAsync(TokenDTO tokenDTO, int usuarioId, string ip, string navegador)
+        public async Task<bool> GuardarAccesoAsync(TokenDTO token, int usuarioId, string ip, string navegador)
         {
             IPGeoLocation ipGeoLocation = new IPGeoLocation();
             if (datosIP == null)
@@ -111,10 +111,10 @@ namespace CaducaRest.DAO
             usuarioAcceso.Navegador = navegador;
             usuarioAcceso.UsuarioId = usuarioId;
             usuarioAcceso.Fecha = DateTime.Now;
-            usuarioAcceso.Token = tokenDTO.Token;
+            usuarioAcceso.Token = token.Token.Split(".")[2];
             usuarioAcceso.Activo = true;
             usuarioAcceso.SistemaOperativo = "Default";
-            usuarioAcceso.RefreshToken = tokenDTO.RefreshToken;
+            usuarioAcceso.RefreshToken = token.RefreshToken;
             usuarioAcceso.Navegador = "Default";
             contexto.UsuarioAcceso.Add(usuarioAcceso);
             contexto.SaveChanges();

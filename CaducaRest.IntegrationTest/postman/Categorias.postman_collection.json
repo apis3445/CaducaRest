@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e8ac712b-e370-4d5d-b341-ecfa044620c6",
+		"_postman_id": "5423fc7b-26df-4dec-8686-a4f45be6d3f3",
 		"name": "Categorias",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -14,7 +14,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ecea1b2c-de1c-446c-b0d2-2f1dfdbd4107",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -39,12 +38,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/api/Usuarios/Login",
+							"raw": "{{BaseURL}}/Usuarios/Login",
 							"host": [
-								"{{URL}}"
+								"{{BaseURL}}"
 							],
 							"path": [
-								"api",
 								"Usuarios",
 								"Login"
 							]
@@ -52,19 +50,17 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Categorias",
 			"item": [
 				{
-					"name": "Categorias_Valid",
+					"name": "Categorias_TokenCorrecto_RegresaCategorias",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "62d1dee0-4254-4744-830c-9e122b337a38",
 								"exec": [
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
@@ -92,7 +88,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"Usuario\": \"Carlos\",\n  \"Password\": \"DtfhkmTRQ8mNzgRY\",\n  \"Codigo\": 0\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -100,27 +96,24 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/api/Categorias",
+							"raw": "{{BaseURL}}/Categorias",
 							"host": [
-								"{{URL}}"
+								"{{BaseURL}}"
 							],
 							"path": [
-								"api",
 								"Categorias"
 							]
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "9fb2e4af-87d0-4f1c-92f4-392a71a8482f",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -130,13 +123,11 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "30e3b02a-d294-4c94-a137-d0c6624d2663",
 				"type": "text/javascript",
 				"exec": [
 					""
 				]
 			}
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

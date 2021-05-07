@@ -18,14 +18,14 @@
 								"exec": [
 									"const moment = require(\"moment\")",
 									"",
-									"pm.test(\"Status is 200\", function () {",
-									"    pm.response.to.be.ok;",
-									"});",
+									"//Convertir el Json a un objeto",
 									"var respuesta = pm.response.json();",
+									"",
 									"pm.test(\"Token no es vacío\", function() ",
 									"{",
 									"    pm.expect(respuesta.Token).not.to.be.empty;",
 									"});",
+									"",
 									"pm.test(\"Token es string\", function() ",
 									"{",
 									"    pm.expect(respuesta.Token).to.be.a('string');",
@@ -53,11 +53,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/Usuarios/Login",
+							"raw": "{{BaseURL}}/api/Usuarios/Login",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
+								"api",
 								"Usuarios",
 								"Login"
 							]
@@ -67,7 +68,29 @@
 					"response": []
 				}
 			],
-			"description": "Pruebas de login casos correctos"
+			"description": "Pruebas de login casos correctos",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});"
+						]
+					}
+				}
+			]
 		}
 	]
 }

@@ -38,11 +38,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/Usuarios/Login",
+							"raw": "{{BaseURL}}/api/Usuarios/Login",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
+								"api",
 								"Usuarios",
 								"Login"
 							]
@@ -96,16 +97,161 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/Categorias",
+							"raw": "{{BaseURL}}/api/Categorias",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
+								"api",
 								"Categorias"
 							]
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Clientes_ConOdata_RegresaDatos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Convertir el Json a un objeto",
+									"var respuesta = pm.response.json();",
+									"",
+									"pm.test(\"El servicio regresa clientes\", function() ",
+									"{",
+									"    pm.expect(respuesta.value).not.to.be.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/odata/Clientes",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"odata",
+								"Clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clientes_ODataParametros_RegresaDatosFiltrados",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Convertir el Json a un objeto",
+									"var respuesta = pm.response.json();",
+									"",
+									"pm.test(\"El servicio regresa clientes\", function() ",
+									"{",
+									"    pm.expect(respuesta.value).not.to.be.empty;",
+									"});",
+									"",
+									"pm.test(\"El servicio regresa clientes\", function() ",
+									"{",
+									"    pm.expect(respuesta.value).not.to.be.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/odata/Clientes?$select=Clave,RazonSocial&$filter=Activo eq true&$count=true&$orderby=RazonSocial desc&$top=5",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"odata",
+								"Clientes"
+							],
+							"query": [
+								{
+									"key": "$select",
+									"value": "Clave,RazonSocial"
+								},
+								{
+									"key": "$filter",
+									"value": "Activo eq true"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$orderby",
+									"value": "RazonSocial desc"
+								},
+								{
+									"key": "$top",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
 				}
 			]
 		}

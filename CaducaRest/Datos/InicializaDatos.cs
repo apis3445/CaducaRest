@@ -1,4 +1,5 @@
-﻿using CaducaRest.Models;
+﻿using System;
+using CaducaRest.Models;
 
 namespace CaducaRest.Datos
 {
@@ -27,6 +28,36 @@ namespace CaducaRest.Datos
             {
                 contexto.Categoria.Add(registro);
             }
+
+            var productos = new Producto[]
+            {
+                /*01*/ new Producto { Clave = 1, Nombre = "Producto 1"},
+            };
+            foreach (Producto registro in productos)
+            {
+                contexto.Producto.Add(registro);
+            }
+
+            var clientes = new Cliente[]
+            {
+                /*01*/ new Cliente { Clave = 1, NombreComercial="Cliente 1", Activo = true},
+            };
+            foreach (Cliente registro in clientes)
+            {
+                contexto.Cliente.Add(registro);
+            }
+
+
+            var caducidades = new Caducidad[]
+            {
+                /*01*/ new Caducidad { ClienteId=1, ProductoId=1, Cantidad=5, Fecha=DateTime.Now},
+            };
+            foreach (Caducidad registro in caducidades)
+            {
+                contexto.Caducidad.Add(registro);
+            }
+
+
             contexto.SaveChanges();
         }
     }

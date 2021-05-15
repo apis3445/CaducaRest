@@ -1,4 +1,5 @@
 ﻿using CaducaRest.DAO;
+using CaducaRest.Datos;
 using CaducaRest.GraphQL.Types;
 using CaducaRest.Models;
 using CaducaRest.Resources;
@@ -26,6 +27,7 @@ namespace CaducaRest.GraphQL.Query
                         using var scope = context.RequestServices.CreateScope();
                         var services = scope.ServiceProvider;
                         var caducaContext = services.GetRequiredService<CaducaContext>();
+                        InicializaDatos.Inicializar(caducaContext);
                         CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
                         return caducidadDAO.ObtenerTodoAsync();
                      }

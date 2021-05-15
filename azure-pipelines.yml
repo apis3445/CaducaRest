@@ -46,10 +46,6 @@ steps:
     command: build
     projects: |
       **/CaducaRest/CaducaRest.csproj
-- task: CmdLine@2
-  inputs:
-    script: 'dotnet ef migrations script -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o $(Build.ArtifactStagingDirectory)\Scripts\update_to_latest.sql'
-    workingDirectory: '$(build.SourcesDirectory)\CaducaRest\'
     
 - script: dotnet ef migrations script -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o $(Build.ArtifactStagingDirectory)\Scripts\update_to_latest.sql
   displayName: 'Generar Script'

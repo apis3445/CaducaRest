@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "5423fc7b-26df-4dec-8686-a4f45be6d3f3",
-		"name": "Categorias",
+		"name": "Regression",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -166,6 +166,10 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									" // Librería para ordenar arreglos",
+									" // Read docs: https://lodash.com/docs/4.17.10#orderBy",
+									"var _ = require('lodash');",
+									"",
 									"//Convertir el Json a un objeto",
 									"var respuesta = pm.response.json();",
 									"",
@@ -174,10 +178,28 @@
 									"    pm.expect(respuesta.value).not.to.be.empty;",
 									"});",
 									"",
-									"pm.test(\"El servicio regresa clientes\", function() ",
+									"pm.test(\"El servicio regresa solamente 5 clientes\", function() ",
 									"{",
-									"    pm.expect(respuesta.value).not.to.be.empty;",
-									"});"
+									"    pm.expect(respuesta.value).to.have.lengthOf(5);",
+									"});",
+									"",
+									"pm.test('Los clientes estan ordenados por Razón social descendente', () => {",
+									"    var clientesOrdenados = _.orderBy(respuesta.value, ['RazonSocial'],['desc']);",
+									"    pm.expect(respuesta.value).to.eql(clientesOrdenados);    ",
+									"});",
+									"",
+									"pm.test(\"Todos los clientes estan activos\",  () => {",
+									"    pm.expect(respuesta.value.filter(element => element.Activo == true)).to.have.lengthOf(5);",
+									"});",
+									"",
+									"pm.test(\"La respuesta incluye una propiedad count\",  () => {",
+									"    pm.expect(respuesta).to.have.property('@odata.count');",
+									"});",
+									"",
+									"pm.test(\"La respuesta incluye propiedades Clave,RazonSocial, Activo\",  () => {",
+									"    pm.expect(respuesta.value[0]).to.have.all.keys('Clave', 'RazonSocial', 'Activo');",
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -197,7 +219,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/odata/Clientes?$select=Clave,RazonSocial&$filter=Activo eq true&$count=true&$orderby=RazonSocial desc&$top=5",
+							"raw": "{{BaseURL}}/odata/Clientes?$select=Clave,RazonSocial,Activo&$filter=Activo eq true&$count=true&$orderby=RazonSocial desc&$top=5",
 							"host": [
 								"{{BaseURL}}"
 							],
@@ -208,7 +230,7 @@
 							"query": [
 								{
 									"key": "$select",
-									"value": "Clave,RazonSocial"
+									"value": "Clave,RazonSocial,Activo"
 								},
 								{
 									"key": "$filter",

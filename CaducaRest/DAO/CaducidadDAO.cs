@@ -40,9 +40,7 @@ namespace CaducaRest.DAO
         /// </summary>
         /// <returns></returns>
         public async Task<List<Caducidad>> ObtenerTodoAsync()
-        {
-           var test= contexto.Caducidad.OrderBy(p => p.Id).ToList();
-           
+        {          
             return await caducidadDAO.ObtenerTodoAsync();
         }
 

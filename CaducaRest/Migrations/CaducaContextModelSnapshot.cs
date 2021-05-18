@@ -272,7 +272,6 @@ namespace CaducaRest.Migrations
                         .HasColumnType("VARCHAR(80)");
 
                     b.HasKey("Id");
-
                     
                     b.HasIndex("CategoriaId")
                         .HasDatabaseName("IX_ProductoCategoria");

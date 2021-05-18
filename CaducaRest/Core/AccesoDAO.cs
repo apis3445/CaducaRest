@@ -3,6 +3,7 @@ using CaducaRest.Resources;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CaducaRest.Core
@@ -125,6 +126,15 @@ namespace CaducaRest.Core
         {
             return await contexto.Set<TEntity>().ToListAsync();
         }
-       
+
+        /// <summary>
+        /// Obtiene todos los registros
+        /// </summary>
+        /// <returns></returns>
+        public  List<TEntity> ObtenerTodo()
+        {
+            return contexto.Set<TEntity>().ToList();
+        }
+
     }
 }

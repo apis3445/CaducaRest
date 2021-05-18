@@ -226,7 +226,6 @@ namespace CaducaRest.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CaducidadId");
 
                     b.Property<int>("CategoriaId");
 
@@ -238,7 +237,6 @@ namespace CaducaRest.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CaducidadId");
 
                     b.HasIndex("CategoriaId")
                         .HasName("IX_ProductoCategoria");
@@ -875,13 +873,6 @@ namespace CaducaRest.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("CaducaRest.Models.Producto", b =>
-                {
-                    b.HasOne("CaducaRest.Models.Caducidad")
-                        .WithMany()
-                        .HasForeignKey("CaducidadId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
 
             modelBuilder.Entity("CaducaRest.Models.RolTablaPermiso", b =>
                 {

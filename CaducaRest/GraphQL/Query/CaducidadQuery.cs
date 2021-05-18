@@ -26,10 +26,9 @@ namespace CaducaRest.GraphQL.Query
                     {
                         using var scope = context.RequestServices.CreateScope();
                         var services = scope.ServiceProvider;
-                        var caducaContext = services.GetRequiredService<CaducaContext>();
-                        InicializaDatos.Inicializar(caducaContext);
+                        var caducaContext = services.GetRequiredService<CaducaContext>();                       
                         CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
-                        return caducidadDAO.ObtenerTodoAsync();
+                        return caducidadDAO.ObtenerTodo();
                      }
                 );
         }

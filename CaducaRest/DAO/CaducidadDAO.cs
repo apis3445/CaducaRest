@@ -44,6 +44,11 @@ namespace CaducaRest.DAO
             return await caducidadDAO.ObtenerTodoAsync();
         }
 
+        public List<Caducidad> ObtenerTodo()
+        {
+            return caducidadDAO.ObtenerTodo();
+        }
+
         /// <summary>
         /// Obtiene un registro de caducidad por su Id
         /// </summary>

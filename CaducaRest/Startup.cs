@@ -29,16 +29,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using GraphQL.Server;
-using GraphQL.Server.Ui.Playground;
-using Microsoft.AspNet.OData.Extensions;
-using System.Linq;
-using Microsoft.AspNet.OData.Formatter;
 using Microsoft.OData.Edm;
-using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.Logging;
 using GraphQL.Types;
+using Microsoft.OData.ModelBuilder;
+using Microsoft.AspNetCore.OData;
 
 namespace CaducaRest
 {
@@ -89,20 +85,7 @@ namespace CaducaRest
                 options.Filters.Add(new AuthorizeFilter(policy));
                 options.Filters.Add(typeof(CustomExceptionFilter));
                 
-                foreach (var formatter in options.OutputFormatters
-                            .OfType<ODataOutputFormatter>()
-                            .Where(it => !it.SupportedMediaTypes.Any()))
-                {
-                    formatter.SupportedMediaTypes.Add(
-                        new MediaTypeHeaderValue("application/prs.mock-odata"));
-                }
-                foreach (var formatter in options.InputFormatters
-                    .OfType<ODataInputFormatter>()
-                    .Where(it => !it.SupportedMediaTypes.Any()))
-                {
-                    formatter.SupportedMediaTypes.Add(
-                        new MediaTypeHeaderValue("application/prs.mock-odata"));
-                }
+               
                 
             }).SetCompatibilityVersion(CompatibilityVersion.Latest)
               .AddJsonOptions(JsonOptions =>
@@ -117,19 +100,11 @@ namespace CaducaRest
                 };
               });
             //services.AddApiVersioning(options => options.ReportApiVersions = true);
-            services.AddOData();
+            services.AddControllers().AddOData(opt => opt.AddRouteComponents("odata", GetEdmModel()));
 
             services.AddMvcCore(options =>
             {
                 options.EnableEndpointRouting = false;
-                foreach (var outputFormatter in options.OutputFormatters.OfType<ODataOutputFormatter>().Where(_ => _.SupportedMediaTypes.Count == 0))
-                {
-                    outputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
-                }
-                foreach (var inputFormatter in options.InputFormatters.OfType<ODataInputFormatter>().Where(_ => _.SupportedMediaTypes.Count == 0))
-                {
-                    inputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/prs.odatatestxx-odata"));
-                }
             });
             //La clase LocService nos permite cambiar los mensajes de error según el idioma
             services.AddSingleton<LocService>();
@@ -262,7 +237,7 @@ namespace CaducaRest
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
 
-            SetOutputFormatters(services);
+           
         }
         /// <summary>
         /// Permite configurar la aplicación
@@ -285,8 +260,7 @@ namespace CaducaRest
             app.UseCors(builder =>
               builder.WithOrigins(urlAceptadas)
                            .AllowAnyHeader()
-                           .AllowAnyMethod()
-                           );
+                           .AllowAnyMethod());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             //Habilitar swagger
@@ -294,7 +268,7 @@ namespace CaducaRest
             //indica la ruta para generar la configuración de swagger
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("./swagger/v1/swagger.json", "Api Caduca REST");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Caduca REST");
                 c.RoutePrefix = string.Empty;
                 c.DefaultModelsExpandDepth(-1);
             });
@@ -310,38 +284,21 @@ namespace CaducaRest
             //Indicamos que se van a utilizar varios idiomas
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(locOptions.Value);
-            
-            app.UseMvc(routeBuilder =>
+
+            app.UseEndpoints(endpoints =>
             {
-                routeBuilder.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
-                routeBuilder.MapODataServiceRoute("odata", "odata", GetEdmModel(app));
-                routeBuilder.EnableDependencyInjection();
-            });
+                endpoints.MapControllers();
+            }); 
             
         }
         
-        private static IEdmModel GetEdmModel(IApplicationBuilder app)
+        private static IEdmModel GetEdmModel()
         {
-            ODataConventionModelBuilder builder = new ODataConventionModelBuilder(app.ApplicationServices);
+            ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<Cliente>("Clientes");
             builder.EntitySet<ClienteCategoria>("ClientesCategorias");
             builder.EntitySet<Caducidad>("Caducidad");
             return builder.GetEdmModel();
-        }
-
-        private static void SetOutputFormatters(IServiceCollection services)
-        {
-            services.AddMvcCore(options =>
-            {
-                IEnumerable<ODataOutputFormatter> outputFormatters =
-                    options.OutputFormatters.OfType<ODataOutputFormatter>()
-                        .Where(foramtter => foramtter.SupportedMediaTypes.Count == 0);
-
-                foreach (var outputFormatter in outputFormatters)
-                {
-                    outputFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/odata"));
-                }
-            });
         }
 
         private void AgregaLog(string mensajeError)

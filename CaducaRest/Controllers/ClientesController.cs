@@ -2,11 +2,11 @@
 using CaducaRest.DAO;
 using CaducaRest.Models;
 using CaducaRest.Resources;
-using Microsoft.AspNet.OData;
-using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.OData.Formatter;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

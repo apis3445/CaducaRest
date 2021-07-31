@@ -42,6 +42,7 @@ namespace CaducaRest.Controllers
         /// <returns></returns>
         
          [EnableQuery(PageSize = 10,
+                      MaxTop = 100,
                      AllowedQueryOptions =  AllowedQueryOptions.Skip |
                                             AllowedQueryOptions.Top |
                                             AllowedQueryOptions.Count |

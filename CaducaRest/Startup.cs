@@ -84,9 +84,6 @@ namespace CaducaRest
                                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
                 options.Filters.Add(typeof(CustomExceptionFilter));
-                
-               
-                
             }).SetCompatibilityVersion(CompatibilityVersion.Latest)
               .AddJsonOptions(JsonOptions =>
                     JsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null)
@@ -100,7 +97,13 @@ namespace CaducaRest
                 };
               });
             //services.AddApiVersioning(options => options.ReportApiVersions = true);
-            services.AddControllers().AddOData(opt => opt.AddRouteComponents("odata", GetEdmModel()));
+            services.AddControllers().AddOData(opt =>
+                {
+                    opt.Select().Expand().Filter().OrderBy().SetMaxTop(100).Count();
+                    opt.AddRouteComponents("odata", GetEdmModel());
+                }
+            );
+
 
             services.AddMvcCore(options =>
             {
@@ -237,7 +240,6 @@ namespace CaducaRest
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
 
-           
         }
         /// <summary>
         /// Permite configurar la aplicación
@@ -288,8 +290,7 @@ namespace CaducaRest
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            }); 
-            
+            });
         }
         
         private static IEdmModel GetEdmModel()

@@ -270,7 +270,7 @@ namespace CaducaRest
             //indica la ruta para generar la configuración de swagger
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api Caduca REST");
+                c.SwaggerEndpoint("./swagger/v1/swagger.json", "Api Caduca REST");
                 c.RoutePrefix = string.Empty;
                 c.DefaultModelsExpandDepth(-1);
             });

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CaducaRest.IntegrationTest
 {
@@ -13,6 +14,7 @@ namespace CaducaRest.IntegrationTest
             Operaciones operaciones = new Operaciones(a, b);
             int resultado = operaciones.Sumar();
             Assert.AreEqual(total, resultado);
+            
         }
     }
 }

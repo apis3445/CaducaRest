@@ -40,7 +40,7 @@ namespace CaducaRest.Datos
 
             var clientes = new Cliente[]
             {
-                /*01*/ new Cliente { Clave = 1, NombreComercial="Cliente 1", Activo = true},
+                /*01*/ new Cliente { Clave = 1, NombreComercial="Cliente 1", Activo = true, RazonSocial="Cliente 1", Direccion= "Calle #1"},
             };
             foreach (Cliente registro in clientes)
             {

@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Playwright;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace CaducaRest.PlayWright.UITest
 {
-    [TestClass]
+    
     public class PlaywrightTest
     {
-        [TestMethod]
+        [Test]
         public async Task TraceAsync()
         {
             using var playwright = await Playwright.CreateAsync();

@@ -56,8 +56,9 @@
     <PackageReference Include="GraphQL" Version="4.7.1" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.2.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.6" />
     <PackageReference Include="Microsoft.OData.Core" Version="7.9.4" />
+    <PackageReference Include="GraphQL.MicrosoftDI" Version="4.7.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,6 +79,7 @@
   <ItemGroup>
     <None Remove="Templates\IntentosIncorrectos.html" />
     <None Remove="CaducaRest.zip" />
+    <None Remove="GraphQL.MicrosoftDI" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Templates\IntentosIncorrectos.html">

@@ -84,8 +84,7 @@ namespace CaducaRest
                                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
                 options.Filters.Add(typeof(CustomExceptionFilter));
-            }).SetCompatibilityVersion(CompatibilityVersion.Latest)
-              .AddJsonOptions(JsonOptions =>
+            }).AddJsonOptions(JsonOptions =>
                     JsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null)
               .AddDataAnnotationsLocalization(options =>
               {
@@ -226,6 +225,8 @@ namespace CaducaRest
             services.AddSingleton<ISchema,CaducidadSchema>();
             services.AddSingleton<CaducidadInputType>();
             services.AddSingleton<CaducidadMutation>();
+
+            
             services.AddGraphQL((options, provider) =>
             {
                 options.EnableMetrics = CurrentEnvironment.IsDevelopment() ;
@@ -235,8 +236,8 @@ namespace CaducaRest
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = CurrentEnvironment.IsDevelopment())
             .AddDataLoader() // Add required services for DataLoader support
             .AddGraphTypes(typeof(CaducidadSchema)); // Add all IGraphType implementors in assembly which ChatSchema exists 
+            
 
-           
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
 

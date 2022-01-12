@@ -95,7 +95,7 @@ namespace CaducaRest.DAO
         /// <summary>
         /// Guarda los datos del acceso del usuario
         /// </summary>
-        /// <param name="tokenDTO">Datos del token</param>
+        /// <param name="token">Datos del token</param>
         /// <param name="usuarioId">Id del usuario</param>
         /// <param name="ip">Ip de la cual se conecta el usuario</param>
         /// <param name="navegador">Navegador del cual se conecta el usuario</param>

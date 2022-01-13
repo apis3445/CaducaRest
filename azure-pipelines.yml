@@ -105,6 +105,15 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium'
     zipAfterPublish: false
 
+- task: DotNetCoreCLI@2
+  displayName: "Build Playwright testing"
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/CaducaRest.PlayWright.UITest/*.csproj' 
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/playwright'
+    zipAfterPublish: false
+
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts linux"
   inputs:

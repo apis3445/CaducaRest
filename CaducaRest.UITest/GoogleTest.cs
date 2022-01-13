@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools;
-using OpenQA.Selenium.DevTools.V95.Performance;
+using OpenQA.Selenium.DevTools.V96.Performance;
 
 namespace CaducaRest.UITest
 {

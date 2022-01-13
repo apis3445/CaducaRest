@@ -35,6 +35,7 @@ using Microsoft.Extensions.Logging;
 using GraphQL.Types;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.AspNetCore.OData;
+using GraphQL.MicrosoftDI;
 
 namespace CaducaRest
 {
@@ -226,7 +227,9 @@ namespace CaducaRest
             services.AddSingleton<CaducidadInputType>();
             services.AddSingleton<CaducidadMutation>();
 
+
             
+              
             services.AddGraphQL((options, provider) =>
             {
                 options.EnableMetrics = CurrentEnvironment.IsDevelopment() ;

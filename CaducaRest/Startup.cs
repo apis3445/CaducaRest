@@ -28,14 +28,15 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using GraphQL.Server;
 using Microsoft.OData.Edm;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Logging;
 using GraphQL.Types;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.AspNetCore.OData;
+using GraphQL.Execution;
 using GraphQL.MicrosoftDI;
+using GraphQL.Server;
 
 namespace CaducaRest
 {
@@ -227,9 +228,8 @@ namespace CaducaRest
             services.AddSingleton<CaducidadInputType>();
             services.AddSingleton<CaducidadMutation>();
 
-
-            
-              
+            services.AddSingleton<ISchema, CaducidadSchema>(services => new CaducidadSchema(new SelfActivatingServiceProvider(services)));
+            /*
             services.AddGraphQL((options, provider) =>
             {
                 options.EnableMetrics = CurrentEnvironment.IsDevelopment() ;
@@ -239,7 +239,7 @@ namespace CaducaRest
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = CurrentEnvironment.IsDevelopment())
             .AddDataLoader() // Add required services for DataLoader support
             .AddGraphTypes(typeof(CaducidadSchema)); // Add all IGraphType implementors in assembly which ChatSchema exists 
-            
+            */
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CaducaRest.DTO;
-using Newtonsoft.Json;
 
 namespace CaducaRest.Core
 {
@@ -24,7 +23,7 @@ namespace CaducaRest.Core
             DatosIPDTO datosIP = new DatosIPDTO(); 
 
             var respuesta = await client.GetStringAsync($"{apiUrl}/?apiKey={apiKey}&ip={ip}&fields=geo,continent_name,organization");
-            var datosGeo = JsonConvert.DeserializeObject<IPGeoLocationDTO>(respuesta);
+            var datosGeo = JsonSerializer.Deserialize<IPGeoLocationDTO>(respuesta);
             datosIP.city = datosGeo.City;
             datosIP.country = datosGeo.CountryName;
             datosIP.continent = datosGeo.ContinentName;

@@ -59,6 +59,7 @@
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.6" />
     <PackageReference Include="Microsoft.OData.Core" Version="7.9.4" />
     <PackageReference Include="GraphQL.MicrosoftDI" Version="4.7.1" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="4.7.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -80,6 +81,7 @@
     <None Remove="Templates\IntentosIncorrectos.html" />
     <None Remove="CaducaRest.zip" />
     <None Remove="GraphQL.MicrosoftDI" />
+    <None Remove="GraphQL.SystemTextJson" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Templates\IntentosIncorrectos.html">

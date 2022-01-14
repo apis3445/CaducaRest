@@ -1,8 +1,7 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CaducaRest.DTO;
-using Newtonsoft.Json;
 
 namespace CaducaRest.Core
 {
@@ -22,7 +21,7 @@ namespace CaducaRest.Core
             DatosIPDTO datosIP;
             
             var respuesta = await client.GetStringAsync("https://www.iplocate.io/api/lookup/" + ip);
-            datosIP = JsonConvert.DeserializeObject<DatosIPDTO>(respuesta);           
+            datosIP = JsonSerializer.Deserialize<DatosIPDTO>(respuesta);           
             return datosIP;
         }
     }

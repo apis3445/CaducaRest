@@ -15,7 +15,8 @@ namespace CaducaRest.Datos
         public static void Inicializar(CaducaContext contexto)
         {
             //Si no es base de datos en memoria no se agrega nada
-            if (contexto.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+             if (contexto.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory"
+                && contexto.Database.ProviderName != "Microsoft.EntityFrameworkCore.Sqlite")
                 return;
             //Te aseguras que la base de datos haya sido creada
             contexto.Database.EnsureCreated();
@@ -47,6 +48,7 @@ namespace CaducaRest.Datos
                 contexto.Cliente.Add(registro);
             }
 
+            contexto.SaveChanges();
 
             var caducidades = new Caducidad[]
             {

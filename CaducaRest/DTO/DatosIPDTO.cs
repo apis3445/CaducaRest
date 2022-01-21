@@ -28,11 +28,11 @@
         /// <summary>
         /// Latitud
         /// </summary>
-        public double latitude { get; set; }
+        public string latitude { get; set; }
         /// <summary>
         /// Longitud
         /// </summary>
-        public double longitude { get; set; }
+        public string longitude { get; set; }
         /// <summary>
         /// Zona horaria
         /// </summary>

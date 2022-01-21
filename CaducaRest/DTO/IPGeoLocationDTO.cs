@@ -61,13 +61,13 @@ namespace CaducaRest.DTO
         /// Latitud
         /// </summary>
         [JsonPropertyName("latitude")]
-        public Double Latitude { get; set; }
+        public string Latitude { get; set; }
 
         /// <summary>
         /// Longitud
         /// </summary>
         [JsonPropertyName("longitude")]
-        public Double Longitude { get; set; }
+        public string Longitude { get; set; }
 
         /// <summary>
         /// Nombre del continent

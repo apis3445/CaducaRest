@@ -37,6 +37,8 @@ using Microsoft.AspNetCore.OData;
 using GraphQL.Execution;
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
+using CaducaRest.GraphQL.HotChocolate;
+using GraphQL.Utilities;
 
 namespace CaducaRest
 {
@@ -229,7 +231,9 @@ namespace CaducaRest
             services.AddSingleton<CaducidadMutation>();
 
             services.AddSingleton<ISchema, CaducidadSchema>(services => new CaducidadSchema(new SelfActivatingServiceProvider(services)));
-            /*
+            //services.AddGraphQLServer().AddQueryType<Query>().AddProjections().AddFiltering().AddSorting();
+  
+
             services.AddGraphQL((options, provider) =>
             {
                 options.EnableMetrics = CurrentEnvironment.IsDevelopment() ;
@@ -239,7 +243,7 @@ namespace CaducaRest
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = CurrentEnvironment.IsDevelopment())
             .AddDataLoader() // Add required services for DataLoader support
             .AddGraphTypes(typeof(CaducidadSchema)); // Add all IGraphType implementors in assembly which ChatSchema exists 
-            */
+            
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
@@ -286,7 +290,7 @@ namespace CaducaRest
             app.UseGraphQL<ISchema>();
           
             app.UseGraphQLPlayground();
-
+            
             //Indicamos que se van a utilizar varios idiomas
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(locOptions.Value);
@@ -294,6 +298,7 @@ namespace CaducaRest
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                //endpoints.MapGraphQL("/graphql");
             });
         }
         

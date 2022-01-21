@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using HotChocolate;
+using HotChocolate.Data;
 
 namespace CaducaRest.Models
 {
@@ -48,6 +50,7 @@ namespace CaducaRest.Models
         /// Gets or sets the clientes categorias.
         /// </summary>
         /// <value>The clientes categorias.</value>
+        [UseSorting]
         public virtual ICollection<ClienteCategoria> ClientesCategorias { get; set; }
     }
 }

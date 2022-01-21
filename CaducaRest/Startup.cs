@@ -34,10 +34,8 @@ using Microsoft.Extensions.Logging;
 using GraphQL.Types;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.AspNetCore.OData;
-using GraphQL.Execution;
 using GraphQL.MicrosoftDI;
 using GraphQL.Server;
-using CaducaRest.GraphQL.HotChocolate;
 using GraphQL.Utilities;
 
 namespace CaducaRest

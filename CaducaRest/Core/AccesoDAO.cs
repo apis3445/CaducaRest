@@ -134,9 +134,14 @@ namespace CaducaRest.Core
         public  List<TEntity> ObtenerTodo()
         {
             List<int> a = new List<int>();
-            var total = a.Count;
             return contexto.Set<TEntity>().ToList();
         }
+
+        public IQueryable ObtenerIQueryable()
+        {
+            return contexto.Set<TEntity>();
+        }
+
 
     }
 }

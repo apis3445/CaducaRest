@@ -53,6 +53,11 @@ namespace CaducaRest.DAO
             return caducidadDAO.ObtenerTodo();
         }
 
+        public IQueryable ObtenerIQueryable()
+        {
+            return caducidadDAO.ObtenerIQueryable();
+        }
+
         /// <summary>
         /// Obtiene un registro de caducidad por su Id
         /// </summary>

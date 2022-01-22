@@ -245,7 +245,9 @@ namespace CaducaRest
             .AddDataLoader() // Add required services for DataLoader support
             .AddGraphTypes(typeof(CaducidadSchema)); // Add all IGraphType implementors in assembly which ChatSchema exists 
             */
-            services.AddGraphQLServer().AddQueryType<QueryType>().AddProjections().AddFiltering().AddSorting();
+            services.AddGraphQLServer()
+                .AddQueryType<QueryType>().AddProjections().AddFiltering().AddSorting()
+                .AddMutationType<GraphQL.HotChocolate.CaducidadMutation>();
             
                 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

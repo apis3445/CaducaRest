@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using CaducaRest.DAO;
 using CaducaRest.Models;
+using CaducaRest.Resources;
 using HotChocolate;
 using HotChocolate.Data;
 using HotChocolate.Types;
@@ -14,7 +16,10 @@ namespace CaducaRest.GraphQL.HotChocolate
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Caducidad> GetCaducidad([Service] CaducaContext contexto) => contexto.Caducidad;
+        public IQueryable<Caducidad> GetCaducidad([Service] CaducaContext caducaContext, [Service] LocService locService) {
+            CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
+            return (IQueryable<Caducidad>)caducidadDAO.ObtenerIQueryable();
+        }
 
         [UseProjection]
         [UseFiltering]
@@ -33,7 +38,6 @@ namespace CaducaRest.GraphQL.HotChocolate
 
     }
 
-   
     public class QueryType : ObjectType<Query>
     {
         protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
@@ -77,6 +81,12 @@ namespace CaducaRest.GraphQL.HotChocolate
             descriptor
                 .Field(f => f.Nombre)
                 .Type<StringType>();
+            descriptor
+                .Field(f=> f.ClientesCategorias).UseDbContext<CaducaContext>()
+                .Resolve((ctx) =>
+                {
+                    return ctx.DbContext<CaducaContext>().ClienteCategoria;
+                });
         }
     }
 }

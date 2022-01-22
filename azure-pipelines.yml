@@ -114,6 +114,13 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/playwright'
     zipAfterPublish: false
 
+- task: CopyFiles@2
+  displayName: Copy powerhsell
+  inputs:
+    SourceFolder: '$(Build.ArtifactStagingDirectory)/playwright/playwright.ps1'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/playwright'
+
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts linux"
   inputs:

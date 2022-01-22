@@ -41,6 +41,20 @@ steps:
     script: 'dotnet tool install --global dotnet-ef'
 
 - task: DotNetCoreCLI@2
+  displayName: 'build playwright'
+  inputs:
+    command: build
+    projects: |
+      '**/CaducaRest.PlayWright.UITest/*.csproj' 
+
+- task: CopyFiles@2
+  displayName: Copy powerhsell
+  inputs:
+    SourceFolder: '$(build.SourcesDirectory)/CaducaRest/CaducaRest.PlayWright.UITest/bin/playwright.ps1'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/playwright'
+
+- task: DotNetCoreCLI@2
   displayName: 'dotnet build'
   inputs:
     command: build
@@ -104,22 +118,6 @@ steps:
     projects: '**/CaducaRest.UITest/*.csproj' 
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium'
     zipAfterPublish: false
-
-- task: DotNetCoreCLI@2
-  displayName: "Build Playwright testing"
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    projects: '**/CaducaRest.PlayWright.UITest/*.csproj' 
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/playwright'
-    zipAfterPublish: false
-
-- task: CopyFiles@2
-  displayName: Copy powerhsell
-  inputs:
-    SourceFolder: '$(Build.ArtifactStagingDirectory)/playwright/playwright.ps1'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/playwright'
 
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts linux"

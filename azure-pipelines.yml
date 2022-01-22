@@ -35,14 +35,6 @@ steps:
     projects: |
       **/CaducaRest.PlayWright.UITest/*.csproj
 
-- task: CopyFiles@2
-  displayName: Copy powerhsell
-  inputs:
-    SourceFolder: '$(Pipeline.Workspace)/s/CaducaRest.PlayWright.UITest/bin/Debug/net6.0/'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/playwright'
-
-
 - task: FileTransform@2
   displayName: "Transformar appsettings"
   inputs:
@@ -119,6 +111,14 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium'
     zipAfterPublish: false
 
+
+- task: CopyFiles@2
+  displayName: Copy Playwright
+  inputs:
+    SourceFolder: '$(Pipeline.Workspace)/s/CaducaRest.PlayWright.UITest/bin/Debug/net6.0/'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/playwright'
+
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts linux"
   inputs:
@@ -142,12 +142,6 @@ steps:
   inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/selenium' 
         artifactName: 'seleniumTesting' 
-
-- task: PublishBuildArtifacts@1
-  displayName: "Upload Artifacts playwright"
-  inputs:
-        pathtoPublish: '$(Build.ArtifactStagingDirectory)/playwright' 
-        artifactName: 'playwrightTesting' 
 
 - task: PublishBuildArtifacts@1
   displayName: "Upload Artifacts MySQL"

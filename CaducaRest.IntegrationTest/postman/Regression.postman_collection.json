@@ -287,10 +287,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									""
+									"var respuesta = pm.response.json();",
+									"",
+									"pm.test(\"Graphql query corecto\", function() ",
+									"{",
+									"    pm.expect(respuesta.data.caducidad.length).to.be.above(2);",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -302,13 +304,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query TestQuery\n{\n  caducidades\n  {\n    id\n    fecha\n    producto \n    {\n      id\n      nombre\n    }\n    cliente\n    {\n      id\n      nombreComercial\n    }\n  }\n}",
+								"query": "query TestQuery\n{\n  caducidad (order: {fecha: ASC})\n  { \n    id\n    fecha\n    producto \n    {\n      nombre\n    }\n    cliente\n    {\n      id\n      nombreComercial\n    }\n  }\n}",
 								"variables": ""
-							},
-							"options": {
-								"raw": {
-									"language": "json"
-								}
 							}
 						},
 						"url": {
@@ -330,10 +327,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									""
+									"var respuesta = pm.response.json();",
+									"",
+									"pm.test(\"Graphql addCaducidad corecto\", function() ",
+									"{",
+									"    pm.expect(respuesta.data.addCaducidad.id).to.eq(2);",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -345,13 +344,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation\n{\n    createCaducidad(caducidad:\n    {\n        id:2,\n        cantidad:2,\n        productoId:1,\n        clienteId:1,\n        fecha: \"2020-03-04\"\n    })\n    {\n        id\n        fecha\n    }\n}",
+								"query": "mutation\n{\n    addCaducidad(caducidad:\n    {\n        id:2,\n        cantidad:2,\n        productoId:3,\n        clienteId:3,\n        fecha: \"2020-03-04\"\n    })\n    {\n        id\n        fecha\n    }\n}",
 								"variables": ""
-							},
-							"options": {
-								"raw": {
-									"language": "json"
-								}
 							}
 						},
 						"url": {
@@ -373,10 +367,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									""
+									"var respuesta = pm.response.json();",
+									"",
+									"pm.test(\"Graphql addCaducidad corecto\", function() ",
+									"{",
+									"    pm.expect(respuesta.data.addCaducidad.cantidad).to.eq(5);",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -388,13 +384,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation\n{\n    updateCaducidad(caducidad:\n    {\n        id:2,\n        productoId:1,\n        clienteId:1,\n        cantidad:5,\n        fecha: \"2020-03-05\"\n    },\n    id:2)\n    {\n        id\n        cantidad\n        fecha\n    }\n}",
+								"query": "mutation\n{\n    updateCaducidad(caducidad:\n    {\n        id:2,\n        productoId:3,\n        clienteId:3,\n        cantidad:5,\n        fecha: \"2020-03-05\"\n    },\n    id:2)\n    {\n        id\n        cantidad\n        fecha\n    }\n}",
 								"variables": ""
-							},
-							"options": {
-								"raw": {
-									"language": "json"
-								}
 							}
 						},
 						"url": {
@@ -416,8 +407,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
+									"//Convertir el Json a un objeto",
+									"var respuesta = pm.response.json();",
+									"",
+									"pm.test(\"Graphql deleteCaducidad corecto\", function() ",
+									"{",
+									"    pm.expect(respuesta.data.deleteCaducidad).to.eq(\"La caducidad con el id: 2 fue borrada correctamente\");",
 									"});",
 									""
 								],
@@ -433,11 +428,6 @@
 							"graphql": {
 								"query": "mutation\n{\n    deleteCaducidad(id:2)\n}",
 								"variables": ""
-							},
-							"options": {
-								"raw": {
-									"language": "json"
-								}
 							}
 						},
 						"url": {
@@ -459,7 +449,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code is 200\", function () {",
+									"pm.test(\"Status code ees 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									""
@@ -479,11 +469,6 @@
 							"graphql": {
 								"query": "",
 								"variables": ""
-							},
-							"options": {
-								"raw": {
-									"language": "json"
-								}
 							}
 						},
 						"url": {
@@ -503,6 +488,28 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code es 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
 				}
 			]
 		}

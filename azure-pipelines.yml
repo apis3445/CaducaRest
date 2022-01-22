@@ -40,7 +40,7 @@ steps:
   inputs:
     command: build
     projects: |
-      '**/*.csproj' 
+      **/CaducaRest.PlayWright.UITest/*.csproj
 
 - task: FileTransform@2
   displayName: "Transformar appsettings"

@@ -63,7 +63,6 @@
     <PackageReference Include="GraphQL.SystemTextJson" Version="4.7.1" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="12.5.0" />
     <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.5.0" />
-    <PackageReference Include="HotChocolate.Types.Selections" Version="10.5.5" />
   </ItemGroup>
 
   <ItemGroup>

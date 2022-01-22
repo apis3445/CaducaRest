@@ -31,12 +31,17 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.OData.Edm;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Logging;
-using GraphQL.Types;
+
 using Microsoft.OData.ModelBuilder;
 using Microsoft.AspNetCore.OData;
-using GraphQL.MicrosoftDI;
-using GraphQL.Server;
-using GraphQL.Utilities;
+//using GraphQL.MicrosoftDI;
+//using GraphQL.Server;
+//using GraphQL.Types;
+//using GraphQL.Utilities;
+using CaducaRest.GraphQL.HotChocolate;
+using HotChocolate.Execution.Configuration;
+using HotChocolate;
+using HotChocolate.AspNetCore;
 
 namespace CaducaRest
 {
@@ -199,7 +204,7 @@ namespace CaducaRest
                     //ya que entre windows y linux cambian las rutas de los archivos
                     //En windows es por ejemplo c:/Uusuarios con / y en linux es \usr
                     // con \
-                    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                    var xmlPath = System.IO.Path.Combine(AppContext.BaseDirectory, xmlFile);
                     c.IncludeXmlComments(xmlPath);
                 }
                 
@@ -223,15 +228,13 @@ namespace CaducaRest
                 });
                 
             });
-            
-            services.AddSingleton<ISchema,CaducidadSchema>();
+
+            /*
+             * services.AddSingleton<ISchema,CaducidadSchema>();
             services.AddSingleton<CaducidadInputType>();
             services.AddSingleton<CaducidadMutation>();
-
             services.AddSingleton<ISchema, CaducidadSchema>(services => new CaducidadSchema(new SelfActivatingServiceProvider(services)));
-            //services.AddGraphQLServer().AddQueryType<Query>().AddProjections().AddFiltering().AddSorting();
-  
-
+        
             services.AddGraphQL((options, provider) =>
             {
                 options.EnableMetrics = CurrentEnvironment.IsDevelopment() ;
@@ -241,8 +244,10 @@ namespace CaducaRest
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = CurrentEnvironment.IsDevelopment())
             .AddDataLoader() // Add required services for DataLoader support
             .AddGraphTypes(typeof(CaducidadSchema)); // Add all IGraphType implementors in assembly which ChatSchema exists 
+            */
+            services.AddGraphQLServer().AddQueryType<QueryType>().AddProjections().AddFiltering().AddSorting();
             
-
+                
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthorizationHandler, PermisoEditHandler>();
 
@@ -285,9 +290,9 @@ namespace CaducaRest
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseGraphQL<ISchema>();
+            //app.UseGraphQL<ISchema>();
           
-            app.UseGraphQLPlayground();
+            //app.UseGraphQLPlayground();
             
             //Indicamos que se van a utilizar varios idiomas
             var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
@@ -296,7 +301,7 @@ namespace CaducaRest
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //endpoints.MapGraphQL("/graphql");
+                endpoints.MapGraphQL("/graphql");
             });
         }
         

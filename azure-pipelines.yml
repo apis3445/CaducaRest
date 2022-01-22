@@ -42,6 +42,12 @@ steps:
     projects: |
       **/CaducaRest.PlayWright.UITest/*.csproj
 
+- task: CopyFiles@2
+  displayName: Copy powerhsell
+  inputs:
+    SourceFolder: '$(build.SourcesDirectory)/CaducaRest.PlayWright.UITest/bin/Debug/net6.0/playwright.ps1'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/playwright'
 - task: FileTransform@2
   displayName: "Transformar appsettings"
   inputs:

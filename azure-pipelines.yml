@@ -38,7 +38,7 @@ steps:
 - task: CopyFiles@2
   displayName: Copy powerhsell
   inputs:
-    SourceFolder: '$(Pipeline.Workspace)/s/CaducaRest.PlayWright.UITest/bin/Debug/net6.0/CaducaRest.PlayWright.UITest.dll'
+    SourceFolder: '$(Pipeline.Workspace)/s/CaducaRest.PlayWright.UITest/bin/Debug/net6.0/'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/playwright'
 

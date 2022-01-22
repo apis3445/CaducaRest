@@ -45,7 +45,7 @@ steps:
   inputs:
     command: build
     projects: |
-      '**/CaducaRest.PlayWright.UITest/CaducaRest.PlayWright.UITest.csproj' 
+      '**/*.PlayWright.UITest.csproj' 
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'

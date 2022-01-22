@@ -30,6 +30,12 @@ steps:
         packageType: sdk
 
 - task: DotNetCoreCLI@2
+  displayName: 'build CaducaRest'
+  inputs:
+    command: build
+    projects: |
+      **/CaducaRest/CaducaRest.csproj
+- task: DotNetCoreCLI@2
   displayName: 'build playwright'
   inputs:
     command: build

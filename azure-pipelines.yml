@@ -29,6 +29,13 @@ steps:
         performMultiLevelLookup: true
         packageType: sdk
 
+- task: DotNetCoreCLI@2
+  displayName: 'build playwright'
+  inputs:
+    command: build
+    projects: |
+      '**/CaducaRest.PlayWright.UITest/*.csproj' 
+
 - task: FileTransform@2
   displayName: "Transformar appsettings"
   inputs:
@@ -39,13 +46,6 @@ steps:
   displayName: "Instalar .NET Global"
   inputs:
     script: 'dotnet tool install --global dotnet-ef'
-
-- task: DotNetCoreCLI@2
-  displayName: 'build playwright'
-  inputs:
-    command: build
-    projects: |
-      '**/*.PlayWright.UITest.csproj' 
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'

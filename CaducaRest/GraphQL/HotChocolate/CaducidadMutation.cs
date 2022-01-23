@@ -7,6 +7,9 @@ using HotChocolate;
 
 namespace CaducaRest.GraphQL.HotChocolate
 {
+    /// <summary>
+    /// Functiones para agregar, borrar o modificar
+    /// </summary>
     public class CaducidadMutation
     {
         public async Task<Caducidad> AddCaducidad([Service] CaducaContext caducaContext, [Service] LocService locService, Caducidad caducidad)

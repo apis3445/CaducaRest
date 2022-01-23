@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CaducaRest.DAO;
 using CaducaRest.Models;
 using CaducaRest.Resources;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CaducaRest.IntegrationTest
@@ -13,8 +11,6 @@ namespace CaducaRest.IntegrationTest
     {
         CaducaContext contexto;
         LocService locService;
-
-        
 
         /// <summary>
         /// Revisar que se pueda agregar una nueva categoría

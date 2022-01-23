@@ -449,9 +449,6 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Status code ees 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
 									""
 								],
 								"type": "text/javascript"
@@ -472,7 +469,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/graphql?query={caducidades{id productoId}}",
+							"raw": "{{BaseURL}}/graphql?query={caducidad{id productoId}}",
 							"host": [
 								"{{BaseURL}}"
 							],
@@ -482,7 +479,7 @@
 							"query": [
 								{
 									"key": "query",
-									"value": "{caducidades{id productoId}}"
+									"value": "{caducidad{id productoId}}"
 								}
 							]
 						}

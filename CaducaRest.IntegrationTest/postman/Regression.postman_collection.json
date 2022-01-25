@@ -369,9 +369,9 @@
 								"exec": [
 									"var respuesta = pm.response.json();",
 									"",
-									"pm.test(\"Graphql addCaducidad corecto\", function() ",
+									"pm.test(\"Graphql updateCaducidad corecto\", function() ",
 									"{",
-									"    pm.expect(respuesta.data.addCaducidad.cantidad).to.eq(5);",
+									"    pm.expect(respuesta.data.updateCaducidad.cantidad).to.eq(5);",
 									"});"
 								],
 								"type": "text/javascript"

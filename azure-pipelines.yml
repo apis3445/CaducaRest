@@ -41,7 +41,7 @@ steps:
     script: 'dotnet tool install --global dotnet-ef'
 
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet build'
+  displayName: 'Build CaducaRest'
   inputs:
     command: build
     projects: |
@@ -75,7 +75,7 @@ steps:
     summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
 
 - task: DotNetCoreCLI@2
-  displayName: 'build playwright'
+  displayName: 'Build playwright'
   inputs:
     command: build
     projects: |

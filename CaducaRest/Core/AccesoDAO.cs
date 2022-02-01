@@ -137,7 +137,11 @@ namespace CaducaRest.Core
             return contexto.Set<TEntity>().ToList();
         }
 
-        public IQueryable ObtenerIQueryable()
+        /// <summary>
+        /// Regresa todos los registros como IQueryable
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<TEntity> ObtenerIQueryable()
         {
             return contexto.Set<TEntity>();
         }

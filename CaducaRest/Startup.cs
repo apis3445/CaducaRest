@@ -110,7 +110,6 @@ namespace CaducaRest
                 }
             );
 
-
             services.AddMvcCore(options =>
             {
                 options.EnableEndpointRouting = false;
@@ -246,7 +245,7 @@ namespace CaducaRest
             .AddGraphTypes(typeof(CaducidadSchema)); // Add all IGraphType implementors in assembly which ChatSchema exists 
             */
             services.AddGraphQLServer()
-                .AddQueryType<QueryType>().AddProjections().AddFiltering().AddSorting()
+                .AddQueryType<Query>().AddProjections().AddFiltering().AddSorting()
                 .AddMutationType<GraphQL.HotChocolate.CaducidadMutation>();
             
                 

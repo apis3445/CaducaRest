@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CaducaRest.DAO;
 using CaducaRest.Models;
 using CaducaRest.Resources;
@@ -8,7 +7,7 @@ using HotChocolate;
 namespace CaducaRest.GraphQL.HotChocolate
 {
     /// <summary>
-    /// Functiones para agregar, borrar o modificar
+    /// Funciones para agregar, borrar o modificar
     /// </summary>
     public class CaducidadMutation
     {

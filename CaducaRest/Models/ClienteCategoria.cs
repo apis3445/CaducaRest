@@ -32,6 +32,7 @@ namespace CaducaRest.Models
         /// </summary>
         [Required(ErrorMessage = "Required")]
         public int CategoriaId { get; set; }
+
         /// <summary>
         /// Datos de la Categoría
         /// </summary>

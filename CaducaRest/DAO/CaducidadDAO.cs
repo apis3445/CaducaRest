@@ -53,7 +53,11 @@ namespace CaducaRest.DAO
             return caducidadDAO.ObtenerTodo();
         }
 
-        public IQueryable ObtenerIQueryable()
+        /// <summary>
+        /// Obtiene todas las caducidades como IQueryable
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Caducidad> ObtenerIQueryable()
         {
             return caducidadDAO.ObtenerIQueryable();
         }

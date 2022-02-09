@@ -23,7 +23,7 @@ namespace CaducaRest.PlayWright.UITest
             await page.GotoAsync("https://www.google.com/?gl=us&hl=en");
             var searchButtonText = await page.GetAttributeAsync("input[name='btnK']","value");
             Assert.AreEqual("Google Search", searchButtonText);
-            await TakeScreenShootAsync ("google.png");
+            await TakeScreenShootAsync("google.png");
 
         }
 

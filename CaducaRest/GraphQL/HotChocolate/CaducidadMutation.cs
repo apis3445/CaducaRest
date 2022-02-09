@@ -11,6 +11,13 @@ namespace CaducaRest.GraphQL.HotChocolate
     /// </summary>
     public class CaducidadMutation
     {
+        /// <summary>
+		/// Add caducidad with hotchocolate
+		/// </summary>
+		/// <param name="caducaContext">Caduca Context</param>
+		/// <param name="locService">Servicio para localization</param>
+		/// <param name="caducidad">Objeto caducidad a agregar</param>
+		/// <returns></returns>
         public async Task<Caducidad> AddCaducidad([Service] CaducaContext caducaContext, [Service] LocService locService, Caducidad caducidad)
         {
             CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
@@ -21,6 +28,13 @@ namespace CaducaRest.GraphQL.HotChocolate
                 return new Caducidad();
         }
 
+        /// <summary>
+		/// Delete caducidsad
+		/// </summary>
+		/// <param name="caducaContext">Caduca Contexto</param>
+		/// <param name="locService">Servicio para localization</param>
+		/// <param name="id">Id a borrar</param>
+		/// <returns></returns>
         public async Task<string> DeleteCaducidad([Service] CaducaContext caducaContext, [Service] LocService locService, int id)
         {
             CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
@@ -31,6 +45,14 @@ namespace CaducaRest.GraphQL.HotChocolate
                 return caducidadDAO.customError.Message;
         }
 
+        /// <summary>
+		/// Update caducidad
+		/// </summary>
+		/// <param name="caducaContext">Caduca Contexto</param>
+		/// <param name="locService">Servicio para localization</param>
+		/// <param name="caducidad">Datos de caducidad a modificar</param>
+		/// <param name="id">Id a actualizar</param>
+		/// <returns></returns>
         public async Task<Caducidad> UpdateCaducidad([Service] CaducaContext caducaContext,
                                                   [Service] LocService locService,
                                                   Caducidad caducidad,

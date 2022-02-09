@@ -13,6 +13,12 @@ namespace CaducaRest.GraphQL.HotChocolate
     /// </summary>
     public class Query
     {
+        /// <summary>
+		/// 
+		/// </summary>
+		/// <param name="caducaContext"></param>
+		/// <param name="locService"></param>
+		/// <returns></returns>
         [UseProjection]
         [UseFiltering]
         [UseSorting]
@@ -21,16 +27,31 @@ namespace CaducaRest.GraphQL.HotChocolate
             return (IQueryable<Caducidad>)caducidadDAO.ObtenerIQueryable();
         }
 
+        /// <summary>
+		/// Obtener Clientes
+		/// </summary>
+		/// <param name="contexto">Caduca context</param>
+		/// <returns></returns>
         [UseProjection]
         [UseFiltering]
         [UseSorting]
         public IQueryable<Cliente> GetCliente([Service] CaducaContext contexto) => contexto.Cliente;
 
+        /// <summary>
+		/// Obtener Categorias
+		/// </summary>
+		/// <param name="contexto"></param>
+		/// <returns></returns>
         [UseProjection]
         [UseFiltering]
         [UseSorting]
         public IQueryable<Categoria> GetCategoria([Service] CaducaContext contexto) => contexto.Categoria;
 
+        /// <summary>
+		/// Obtener ClientesCategoria
+		/// </summary>
+		/// <param name="contexto"></param>
+		/// <returns></returns>
         [UseProjection]
         [UseFiltering]
         [UseSorting]
@@ -38,8 +59,15 @@ namespace CaducaRest.GraphQL.HotChocolate
 
     }
 
+    /// <summary>
+	/// Objeto para los métodos disponibles
+	/// </summary>
     public class QueryType : ObjectType<Query>
     {
+        /// <summary>
+		/// 
+		/// </summary>
+		/// <param name="descriptor"></param>
         protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
         {
             /*descriptor
@@ -55,6 +83,9 @@ namespace CaducaRest.GraphQL.HotChocolate
         }
     }
 
+    /// <summary>
+	/// Cliente Type
+	/// </summary>
     public class ClienteType : ObjectType<Cliente>
     {
         protected override void Configure(IObjectTypeDescriptor<Cliente> descriptor)
@@ -68,6 +99,9 @@ namespace CaducaRest.GraphQL.HotChocolate
         }
     }
 
+    /// <summary>
+	/// 
+	/// </summary>
     public class CategoriaType : ObjectType<Categoria>
     {
         protected override void Configure(IObjectTypeDescriptor<Categoria> descriptor)

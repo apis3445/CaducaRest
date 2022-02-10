@@ -10,6 +10,7 @@ namespace CaducaRest.IntegrationTest
     public class CategoriaTest
     {
         CaducaContext contexto;
+        LocService locService;
 
         /// <summary>
         /// Revisar que se pueda agregar una nueva categoría

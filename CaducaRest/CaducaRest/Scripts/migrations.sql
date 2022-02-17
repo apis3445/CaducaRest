@@ -668,7 +668,7 @@ CREATE PROCEDURE MigrationsScript()
 BEGIN
     IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20190612032258_TablasSeguridad') THEN
 
-    CREATE INDEX `IX_HistorialTabla` ON `Historial` (`TabladId`);
+    CREATE INDEX `IX_HistorialTabla` ON `Historial` (`TablaId`);
 
     END IF;
 END //
@@ -698,7 +698,7 @@ CREATE PROCEDURE MigrationsScript()
 BEGIN
     IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20190612032258_TablasSeguridad') THEN
 
-    CREATE INDEX `IX_Actividad` ON `Historial` (`Actividad`, `TabladId`, `FechaHora`);
+    CREATE INDEX `IX_Actividad` ON `Historial` (`Actividad`, `TablaId`, `FechaHora`);
 
     END IF;
 END //
@@ -713,7 +713,7 @@ CREATE PROCEDURE MigrationsScript()
 BEGIN
     IF NOT EXISTS(SELECT 1 FROM `__EFMigrationsHistory` WHERE `MigrationId` = '20190612032258_TablasSeguridad') THEN
 
-    CREATE INDEX `IX_Historial` ON `Historial` (`TabladId`, `OrigenId`, `Actividad`);
+    CREATE INDEX `IX_Historial` ON `Historial` (`TablaId`, `OrigenId`, `Actividad`);
 
     END IF;
 END //

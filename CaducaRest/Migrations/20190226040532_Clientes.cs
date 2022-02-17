@@ -14,27 +14,14 @@ namespace CaducaRest.Migrations
         /// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            //migrationBuilder.AlterColumn<int>(
-            //    name: "Id",
-            //    table: "Producto",
-            //    nullable: false,
-            //    oldClrType: typeof(int))
-            //    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            //migrationBuilder.AlterColumn<int>(
-            //    name: "Id",
-            //    table: "Categoria",
-            //    nullable: false,
-            //    oldClrType: typeof(int))
-            //    .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             migrationBuilder.CreateTable(
                 name: "Cliente",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                    //  .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                      .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    //.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Clave = table.Column<int>(nullable: false),
                     RFC = table.Column<string>(type: "VARCHAR(15)", nullable: true),
                     RazonSocial = table.Column<string>(type: "VARCHAR(250)", nullable: false),

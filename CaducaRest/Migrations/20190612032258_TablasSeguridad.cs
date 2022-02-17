@@ -20,7 +20,8 @@ namespace CaducaRest.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        //.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nombre = table.Column<string>(type: "VARCHAR(40)", maxLength: 40, nullable: false),
                     Descripción = table.Column<string>(type: "VARCHAR(200)", maxLength: 40, nullable: false)
                 },
@@ -34,7 +35,8 @@ namespace CaducaRest.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        //.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Clave = table.Column<string>(type: "VARCHAR(15)", maxLength: 15, nullable: false),
                     Password = table.Column<string>(type: "VARCHAR(255)", maxLength: 255, nullable: false),
                     Activo = table.Column<bool>(nullable: false),
@@ -52,7 +54,8 @@ namespace CaducaRest.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        //.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     TablaId = table.Column<int>(nullable: false),
                     OrigenId = table.Column<int>(nullable: false),
                     Actividad = table.Column<int>(nullable: false),
@@ -76,13 +79,23 @@ namespace CaducaRest.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
+            migrationBuilder.CreateIndex(
+                name: "IX_Actividad",
+                table: "Historial",
+                columns: new[] { "Actividad", "TablaId", "FechaHora" });
+           
+            migrationBuilder.CreateIndex(
+                name: "IX_Historial",
+                table: "Historial",
+                columns: new[] { "TablaId", "OrigenId", "Actividad" });
+            
             migrationBuilder.CreateTable(
                 name: "UsuarioAcceso",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                          .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    //    .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UsuarioId = table.Column<int>(nullable: false),
                     Fecha = table.Column<DateTime>(nullable: false),
                     Token = table.Column<string>(type: "VARCHAR(300)", nullable: false),
@@ -111,7 +124,8 @@ namespace CaducaRest.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                           .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    //    .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UsuarioId = table.Column<int>(nullable: false),
                     ClienteId = table.Column<int>(nullable: false)
                 },
@@ -137,7 +151,8 @@ namespace CaducaRest.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        //.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UsuarioId = table.Column<int>(nullable: false),
                     RolId = table.Column<int>(nullable: false)
                 },
@@ -164,24 +179,11 @@ namespace CaducaRest.Migrations
                 column: "TablaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HistorialTabla",
-                table: "Historial",
-                column: "TabladId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ctrUsuario",
                 table: "Historial",
                 column: "UsuarioId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Actividad",
-                table: "Historial",
-                columns: new[] { "Actividad", "TabladId", "FechaHora" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Historial",
-                table: "Historial",
-                columns: new[] { "TabladId", "OrigenId", "Actividad" });
+            
 
             migrationBuilder.CreateIndex(
                 name: "UI_UsuarioClave",

@@ -6,5 +6,31 @@ services:
     build:
       context: .
       dockerfile: CaducaRest/Dockerfile
+    depends_on:
+      - migrations
+      - db
     ports:
       - 80:80
+    networks:
+      - caduca_network
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "Password%1#29"
+      ACCEPT_EULA: "Y"
+    container_name: sqlserver
+    hostname: sqlserver
+    ports:
+        - "1433:1433"
+    networks:
+        - caduca_network
+  migrations:
+    build:
+        context: .
+        dockerfile: CaducaRest/Migrations.Dockerfile
+    depends_on:
+        - db
+    networks:
+        - caduca_network
+networks: 
+   caduca_network:

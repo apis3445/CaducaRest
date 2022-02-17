@@ -160,25 +160,23 @@ namespace CaducaRest.Migrations
 
                     b.Property<int?>("TablaId");
 
-                    b.Property<int>("TabladId");
 
                     b.Property<int?>("UsuarioId")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TablaId");
 
-                    b.HasIndex("TabladId")
+                    b.HasIndex("TablaId")
                         .HasName("IX_HistorialTabla");
 
                     b.HasIndex("UsuarioId")
                         .HasName("IX_ctrUsuario");
 
-                    b.HasIndex("Actividad", "TabladId", "FechaHora")
+                    b.HasIndex("Actividad", "TablaId", "FechaHora")
                         .HasName("IX_Actividad");
 
-                    b.HasIndex("TabladId", "OrigenId", "Actividad")
+                    b.HasIndex("TablaId", "OrigenId", "Actividad")
                         .HasName("IX_Historial");
 
                     b.ToTable("Historial");

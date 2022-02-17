@@ -3,31 +3,34 @@ using System;
 using CaducaRest.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+#nullable disable
 
 namespace CaducaRest.Migrations
 {
     [DbContext(typeof(CaducaContext))]
-    [Migration("20210107010357_Update")]
-    partial class Update
+    [Migration("20220215042054_errores")]
+    partial class errores
     {
-        /// <summary>
-        /// Update
-        /// </summary>
-        /// <param name="modelBuilder"></param>
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "6.0.2")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("CaducaRest.Models.Caducidad", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
@@ -36,7 +39,7 @@ namespace CaducaRest.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<int>("ProductoId")
                         .HasColumnType("int");
@@ -57,6 +60,8 @@ namespace CaducaRest.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Clave")
                         .HasColumnType("int");
@@ -85,8 +90,10 @@ namespace CaducaRest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<bool>("Activo")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("bit");
 
                     b.Property<string>("Celular")
                         .HasColumnType("VARCHAR(20)");
@@ -137,6 +144,8 @@ namespace CaducaRest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
@@ -154,17 +163,19 @@ namespace CaducaRest.Migrations
                     b.ToTable("ClienteCategoria");
                 });
 
-            modelBuilder.Entity("CaducaRest.Models.Errorres", b =>
+            modelBuilder.Entity("CaducaRest.Models.Errores", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Mensaje")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -177,11 +188,13 @@ namespace CaducaRest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<int>("Actividad")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaHora")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Observa")
                         .HasMaxLength(250)
@@ -219,6 +232,8 @@ namespace CaducaRest.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Clave")
                         .HasColumnType("int");
@@ -267,6 +282,10 @@ namespace CaducaRest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CaducidadId")
+                        .HasColumnType("int");
 
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
@@ -280,6 +299,7 @@ namespace CaducaRest.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CaducidadId");
 
                     b.HasIndex("CategoriaId")
                         .HasDatabaseName("IX_ProductoCategoria");
@@ -300,6 +320,8 @@ namespace CaducaRest.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -338,6 +360,8 @@ namespace CaducaRest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<int>("RolId")
                         .HasColumnType("int");
 
@@ -345,7 +369,7 @@ namespace CaducaRest.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("TienePermiso")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -485,10 +509,12 @@ namespace CaducaRest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<string>("Descripción")
                         .IsRequired()
                         .HasMaxLength(40)
-                        .HasColumnType("VARCHAR(200)");
+                        .HasColumnType("VARCHAR(40)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -579,6 +605,8 @@ namespace CaducaRest.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("PermisoId")
                         .HasColumnType("int");
@@ -677,12 +705,14 @@ namespace CaducaRest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<bool>("Activo")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("bit");
 
                     b.Property<string>("Adicional1")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Clave")
                         .IsRequired()
@@ -763,8 +793,10 @@ namespace CaducaRest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<bool>("Activo")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("bit");
 
                     b.Property<string>("Ciudad")
                         .IsRequired()
@@ -777,13 +809,13 @@ namespace CaducaRest.Migrations
                         .HasColumnType("VARCHAR(300)");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("FechaRefresh")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime");
 
                     b.Property<bool>("MantenerSesion")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("bit");
 
                     b.Property<string>("Navegador")
                         .IsRequired()
@@ -799,7 +831,7 @@ namespace CaducaRest.Migrations
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasColumnType("VARCHAR(400)");
+                        .HasColumnType("VARCHAR(500)");
 
                     b.Property<int>("UsuarioId")
                         .HasColumnType("int");
@@ -822,6 +854,8 @@ namespace CaducaRest.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
@@ -846,6 +880,8 @@ namespace CaducaRest.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
@@ -868,6 +904,8 @@ namespace CaducaRest.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("RolId")
                         .HasColumnType("int");
@@ -957,6 +995,14 @@ namespace CaducaRest.Migrations
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CaducaRest.Models.Producto", b =>
+                {
+                    b.HasOne("CaducaRest.Models.Caducidad", null)
+                        .WithMany()
+                        .HasForeignKey("CaducidadId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("CaducaRest.Models.RolTablaPermiso", b =>

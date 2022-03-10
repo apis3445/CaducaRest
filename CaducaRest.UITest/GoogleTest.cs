@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools;
 using OpenQA.Selenium.DevTools.V96.Performance;
+using Network = OpenQA.Selenium.DevTools.V96.Network;
 
 namespace CaducaRest.UITest
 {
@@ -48,6 +49,23 @@ namespace CaducaRest.UITest
             {
                 Console.WriteLine("{0} = {1}", metric.Name, metric.Value);
             }
+
+
+        }
+
+        [Test]
+        public void SetAddionalHeaders()
+        {
+            IDevTools devTools = _driver as IDevTools;
+            DevToolsSession session = devTools.GetDevToolsSession();
+            var extraHeader = new Network.Headers();
+            extraHeader.Add("headerName", "executeHacked");
+            session.SendCommand(new Network.SetExtraHTTPHeadersCommandSettings()
+            {
+                Headers = extraHeader
+            });
+
+            _driver.Url = "https://www.executeautomation.com";
         }
 
         public void TakeScreenShoot()

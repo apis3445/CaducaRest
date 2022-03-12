@@ -25,6 +25,7 @@ services:
     networks:
         - caduca_network
   migrations:
+    image: ${DOCKER_REGISTRY-}caducarest_migrations
     build:
         context: .
         dockerfile: CaducaRest/Migrations.Dockerfile

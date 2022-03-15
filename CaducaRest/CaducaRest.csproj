@@ -61,8 +61,8 @@
     <PackageReference Include="Microsoft.OData.Core" Version="7.10.0" />
     <PackageReference Include="GraphQL.MicrosoftDI" Version="4.7.1" />
     <PackageReference Include="GraphQL.SystemTextJson" Version="4.7.1" />
-    <PackageReference Include="HotChocolate.AspNetCore" Version="12.6.2" />
-    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.6.2" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="12.7.0" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.7.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -97,5 +97,8 @@
     <Content Include="Templates\NuevoAcceso.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CaducaRest.csproj" />
   </ItemGroup>
 </Project>

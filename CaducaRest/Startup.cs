@@ -261,15 +261,15 @@ namespace CaducaRest
         /// <param name="logger"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            if (env.IsDevelopment() || env.IsEnvironment("Testing"))
-            {
+            //if (env.IsDevelopment() || env.IsEnvironment("Testing"))
+            //{
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //    app.UseHsts();
+            //}
             var urlAceptadas = Configuration.GetSection("AllowedOrigins").Value.Split(",");
             app.UseCors(builder =>
               builder.WithOrigins(urlAceptadas)

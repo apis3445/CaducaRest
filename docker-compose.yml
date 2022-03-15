@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}caducarest
     build:
       context: .
-      dockerfile: CaducaRest/Dockerfile
+      dockerfile: Dockerfile
     depends_on:
       - migrations
       - db
@@ -28,7 +28,7 @@ services:
     image: ${DOCKER_REGISTRY-}caducarest_migrations
     build:
         context: .
-        dockerfile: CaducaRest/Migrations.Dockerfile
+        dockerfile: Migrations.Dockerfile
     depends_on:
         - db
     networks:

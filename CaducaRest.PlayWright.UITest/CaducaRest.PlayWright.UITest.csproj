@@ -21,4 +21,7 @@
     <None Remove="NUnit" />
     <None Remove="NUnit3TestAdapter" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="CaducaRest.PlayWright.UITest.csproj" />
+  </ItemGroup>
 </Project>

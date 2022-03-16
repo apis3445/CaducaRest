@@ -8,12 +8,12 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - migrations
-      - db
+      - sqlserver
     ports:
       - 80:80
     networks:
       - caduca_network
-  db:
+  sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
       SA_PASSWORD: "Password%1#29"
@@ -30,7 +30,7 @@ services:
         context: .
         dockerfile: Migrations.Dockerfile
     depends_on:
-        - db
+        - sqlserver
     networks:
         - caduca_network
 networks: 

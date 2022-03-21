@@ -14,7 +14,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   system.debug: false
-  ConnectionStrings.DefaultConnection: $(Mysql)
+  ConnectionStrings.DefaultConnection: $(SQL)
   Tokens.Key: $(key)
   Tokens.Issuer: $(issuer)
   Tokens.Audience: $(issuer)
@@ -150,7 +150,7 @@ steps:
         artifactName: 'playwrightTesting' 
 
 - task: PublishBuildArtifacts@1
-  displayName: "Upload Artifacts MySQL"
+  displayName: "Upload Artifacts SQL"
   inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/Scripts' 
         artifactName: 'Scripts' 

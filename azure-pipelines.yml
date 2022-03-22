@@ -40,11 +40,18 @@ steps:
   inputs:
     script: 'dotnet tool install --global dotnet-ef'
 
-#- script: dotnet ef migrations script -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o $(Build.ArtifactStagingDirectory)\Scripts\update_to_latest.sql
-#  displayName: 'Generar Script'
+- task: DotNetCoreCLI@2
+  displayName: 'Build CaducaRest'
+  inputs:
+    command: build
+    projects: |
+      **/CaducaRest/CaducaRest.csproj
 
-- script: dotnet ef migrations bundle -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj --verbose --configuration --force
-  displayName: 'Generar Bundle'
+- script: dotnet ef migrations script -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o $(Build.ArtifactStagingDirectory)\Scripts\update_to_latest.sql
+  displayName: 'Generar Script'
+
+#- script: dotnet ef migrations bundle -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj --verbose --configuration --force
+#  displayName: 'Generar Bundle'
 
 - task: DotNetCoreCLI@2
   displayName: Testing Unit Test

@@ -50,7 +50,7 @@ steps:
 - script: dotnet ef migrations script -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o $(Build.ArtifactStagingDirectory)\Scripts\update_to_latest.sql
   displayName: 'Generar Script'
 
-- script: dotnet ef migrations bundle -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj --connection $(SQL)
+- script: dotnet ef migrations bundle -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj
   displayName: 'Generar Bundle'
 
 - task: DotNetCoreCLI@2

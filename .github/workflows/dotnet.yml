@@ -27,3 +27,7 @@ jobs:
       run: playwright install
     - name: Test
       run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj -l html
+    - uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/TestResults/

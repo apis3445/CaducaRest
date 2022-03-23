@@ -14,8 +14,9 @@ namespace CaducaRest.PlayWright.UITest
         public async Task TestGooglePlaywright()
         {
             using var playwright = await Playwright.CreateAsync();
-            
-            BrowserTypeLaunchOptions launchOptions = new BrowserTypeLaunchOptions { Headless = true };
+            bool isDebuggerAttached = System.Diagnostics.Debugger.IsAttached;
+
+            BrowserTypeLaunchOptions launchOptions = new BrowserTypeLaunchOptions { Headless = isDebuggerAttached };
             await using var browser = await playwright.Chromium.LaunchAsync(launchOptions);
             await using var context = await browser.NewContextAsync();
 

@@ -21,5 +21,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Install Playwright
+      run: install --global Microsoft.Playwright.CLI
     - name: Test
       run: dotnet test --no-build --verbosity normal

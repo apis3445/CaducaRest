@@ -26,4 +26,4 @@ jobs:
     - name: Install playwright
       run: playwright install
     - name: Test
-      run: dotnet test **/CaducaRest.PlayWright.UITest/*.csproj
+      run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj

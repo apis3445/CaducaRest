@@ -11,11 +11,11 @@ namespace CaducaRest.PlayWright.UITest
     {
         IPage page;
         [Test]
-        public async Task TestGoogle()
+        public async Task TestGooglePlaywright()
         {
             using var playwright = await Playwright.CreateAsync();
             
-            BrowserTypeLaunchOptions launchOptions = new BrowserTypeLaunchOptions { Headless = false };
+            BrowserTypeLaunchOptions launchOptions = new BrowserTypeLaunchOptions { Headless = true };
             await using var browser = await playwright.Chromium.LaunchAsync(launchOptions);
             await using var context = await browser.NewContextAsync();
 

@@ -49,8 +49,6 @@ namespace CaducaRest.UITest
             {
                 Console.WriteLine("{0} = {1}", metric.Name, metric.Value);
             }
-
-
         }
 
         [Test]

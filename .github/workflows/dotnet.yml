@@ -26,8 +26,8 @@ jobs:
     - name: Install playwright
       run: playwright install
     - name: Test
-      run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj -l html
+      run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj ---logger "html;logfilename=testResults.html"
     - uses: actions/upload-artifact@v3
       with:
         name: my-artifact
-        path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/
+        path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html

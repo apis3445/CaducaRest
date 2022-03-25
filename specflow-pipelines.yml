@@ -27,17 +27,17 @@ steps:
   inputs:
     command: build
     projects: |
-     $(Build.SourcesDirectory)/CaducaRest/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
+     $(Build.SourcesDirectory)/CaducaRest.IntegrationTest\CaducaRest.IntegrationTest.csproj
 
 - task: DotNetCoreCLI@2
   displayName: 'Test'
   inputs:
     command: 'test'
     projects: |
-      $(Build.SourcesDirectory)/CaducaRest/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
+      $(Build.SourcesDirectory)/CaducaRest.IntegrationTest\CaducaRest.IntegrationTest.csproj
 
 - task: SpecFlowPlus@0
   inputs:
-    projectFilePath: '$(Build.SourcesDirectory)/CaducaRest/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj'
+    projectFilePath: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest\CaducaRest.IntegrationTest.csproj'
     projectName: 'Caduca'
     projectLanguage: 'es'

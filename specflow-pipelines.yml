@@ -27,7 +27,7 @@ steps:
   inputs:
     command: build
     projects: |
-      **/CaducaRest/CaducaRest.csproj
+     $(Build.SourcesDirectory)/CaducaRest/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
 
 - task: DotNetCoreCLI@2
   displayName: 'Test'

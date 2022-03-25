@@ -21,6 +21,7 @@ steps:
         version: '6.0.x'
         performMultiLevelLookup: true
         packageType: sdk
+        installationPath: $(Agent.ToolsDirectory)/dotnet
 
 - task: DotNetCoreCLI@2
   displayName: 'Build CaducaRest Speclow'

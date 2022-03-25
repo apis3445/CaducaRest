@@ -1,0 +1,43 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: UseDotNet@2 
+  displayName: "Instalar .NET Core 6.0.x"
+  inputs:
+        version: '6.0.x'
+        performMultiLevelLookup: true
+        packageType: sdk
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build CaducaRest'
+  inputs:
+    command: build
+    projects: |
+      **/CaducaRest/CaducaRest.csproj
+
+- task: DotNetCoreCLI@2
+  displayName: 'Test'
+  inputs:
+    command: 'test'
+    projects: |
+      **/CaducaRest/CaducaRest.csproj
+
+- task: SpecFlowPlus@0
+  inputs:
+    projectFilePath: '**/CaducaRest/CaducaRest.csproj'
+    projectName: 'Caduca'
+    projectLanguage: 'es'

@@ -44,5 +44,6 @@ steps:
       $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
 
 - task: CmdLine@2
+  displayName: 'Generate living doc'
   inputs:
-    script: 'livingdoc test-assembly $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.dll -t $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/TestExecution.json'
+    script: 'livingdoc test-assembly $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/bin/Debug/net6.0/CaducaRest.IntegrationTest.dll -t $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/bin/Debug/net6.0/TestExecution.json'

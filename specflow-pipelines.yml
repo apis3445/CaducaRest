@@ -28,7 +28,7 @@ steps:
   inputs:
     command: 'custom'
     custom: 'tool'
-    arguments: 'tool install --global SpecFlow.Plus.LivingDoc.CLI'
+    arguments: 'install --global SpecFlow.Plus.LivingDoc.CLI'
 - task: DotNetCoreCLI@2
   displayName: 'Build CaducaRest Speclow'
   inputs:

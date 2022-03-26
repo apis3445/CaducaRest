@@ -51,7 +51,7 @@ steps:
 - task: CopyFiles@2
   displayName: Copy postman scripts
   inputs:
-    SourceFolder: '$(Build.ArtifactStagingDirectory)'
+    SourceFolder: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest/bin/Debug/net6.0/'
     Contents: '*.html'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/specflow'
 - task: PublishBuildArtifacts@1

@@ -43,6 +43,18 @@ steps:
     projects: |
       $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
 
+- task: SpecFlowPlus@0
+  displayName: 'LivingDoc with TestAssembly generatorSource'
+  inputs:
+    generatorSource: 'TestAssembly'
+    testAssemblyFilePath: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest/bin/Debug/net6.0/CaducaRest.IntegrationTest.dll'
+    projectName: 'CaducaREst'
+    testExecutionJson: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest/bin/Debug/net6.0/TestExecution.json'
+    projectLanguage: 'es'
+  enabled: false
+  continueOnError: true
+  condition: always()
+
 - task: CmdLine@2
   displayName: 'Generate living doc'
   inputs:

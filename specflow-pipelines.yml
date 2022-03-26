@@ -47,3 +47,15 @@ steps:
   displayName: 'Generate living doc'
   inputs:
     script: 'livingdoc test-assembly $(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Debug\net6.0\CaducaRest.IntegrationTest.dll -t $(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Debug\net6.0\TestExecution.json'
+
+- task: CopyFiles@2
+  displayName: Copy postman scripts
+  inputs:
+    SourceFolder: '$(Build.ArtifactStagingDirectory)'
+    Contents: '*.html'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/specflow'
+- task: PublishBuildArtifacts@1
+  displayName: "Publish report"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/specflow' 
+        artifactName: 'livingdoc' 

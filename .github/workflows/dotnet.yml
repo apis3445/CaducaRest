@@ -37,3 +37,8 @@ jobs:
       with:
         name: my-artifact
         path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/

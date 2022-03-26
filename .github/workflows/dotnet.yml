@@ -40,7 +40,7 @@ jobs:
         name: my-artifact
         path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html
     - name: Generate livind doc
-      run: livingdoc test-assembly **/CaducaRest.IntegrationTest.dll -t TestExecution.json
+      run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest\bin\Debug\net6.0\CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest\bin\Debug\net6.0\TestExecution.json
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:

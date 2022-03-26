@@ -1,4 +1,5 @@
-﻿Característica: Login
+﻿# language: es
+Característica: Login
 	Dado que ya existen los siguientes usuarios:
 	Carlos DtfhkmTRQ8mNzgRY Administrador
 	Maria 8cYyY8paESGbzC5E  Vendedor

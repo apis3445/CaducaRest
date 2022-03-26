@@ -48,7 +48,7 @@ namespace CaducaRest.IntegrationTest
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("es-MX"), "", "Login", "\tDado que ya existen los siguientes usuarios:\n\tCarlos DtfhkmTRQ8mNzgRY Administra" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("es"), "", "Login", "\tDado que ya existen los siguientes usuarios:\n\tCarlos DtfhkmTRQ8mNzgRY Administra" +
                     "dor\n\tMaria 8cYyY8paESGbzC5E  Vendedor\n\tJuan zUvyvsRSCMek58eR   Cliente", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -102,7 +102,7 @@ namespace CaducaRest.IntegrationTest
                     "Login"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Login con uusuario Administrador", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 8
+#line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -112,16 +112,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 9
+#line 10
  testRunner.Given("El usuario administrador tiene la clave Carlos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 10
+#line 11
  testRunner.And("Y tiene el password DtfhkmTRQ8mNzgRY", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Y ");
 #line hidden
-#line 11
+#line 12
  testRunner.When("Yo ejecuto el servicio Usuarios/Login con esos datos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Cuando ");
 #line hidden
-#line 12
+#line 13
  testRunner.Then("El resultado deberia ser Ok", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entonces ");
 #line hidden
             }
@@ -136,7 +136,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Login con uusuario Vendedor", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 14
+#line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -152,13 +152,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "Maria",
                             "8cYyY8paESGbzC5E"});
-#line 15
+#line 16
  testRunner.Given("Tecleo los siguientes datos del usuario", ((string)(null)), table1, "Dado ");
 #line hidden
-#line 18
+#line 19
  testRunner.When("Yo ejecuto el servicio Usuarios/Login con esos datos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Cuando ");
 #line hidden
-#line 19
+#line 20
  testRunner.Then("El resultado deberia ser Ok", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entonces ");
 #line hidden
             }

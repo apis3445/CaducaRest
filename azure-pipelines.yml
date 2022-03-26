@@ -1,0 +1,159 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  system.debug: false
+  ConnectionStrings.DefaultConnection: $(SQL)
+  Tokens.Key: $(key)
+  Tokens.Issuer: $(issuer)
+  Tokens.Audience: $(issuer)
+  Logging.LogLevel.Default: "Error"
+
+steps:
+
+- task: UseDotNet@2 
+  displayName: "Instalar .NET Core 6.0.x"
+  inputs:
+        version: '6.0.x'
+        performMultiLevelLookup: true
+        packageType: sdk
+
+- task: FileTransform@2
+  displayName: "Transformar appsettings"
+  inputs:
+    folderPath: '$(build.SourcesDirectory)/CaducaRest/'
+    jsonTargetFiles: '**/appsettings.json'
+
+- task: CmdLine@2
+  displayName: "Instalar .NET Global"
+  inputs:
+    script: 'dotnet tool install --global dotnet-ef'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build CaducaRest'
+  inputs:
+    command: build
+    projects: |
+      **/CaducaRest/CaducaRest.csproj
+
+- script: dotnet ef migrations script -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o $(Build.ArtifactStagingDirectory)\Scripts\update_to_latest.sql
+  displayName: 'Generar Script'
+
+#- script: dotnet ef migrations bundle -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj --verbose --configuration --force
+#  displayName: 'Generar Bundle'
+
+- task: DotNetCoreCLI@2
+  displayName: Testing Unit Test
+  inputs:
+    command: 'test'
+    projects: '**/CaducaRest.UnitTest/*.csproj'
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    publishTestResults: true
+    testRunTitle: 'Unit Test'
+
+- task: DotNetCoreCLI@2
+  displayName: Testing Integration Test
+  inputs:
+    command: 'test'
+    projects: '**/CaducaRest.IntegrationTest/*.csproj'
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    publishTestResults: true
+    testRunTitle: 'Integration Test'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage report'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build playwright'
+  inputs:
+    command: build
+    projects: |
+      **/CaducaRest.PlayWright.UITest/*.csproj
+
+- task: CopyFiles@2
+  displayName: Copy postman scripts
+  inputs:
+    SourceFolder: 'CaducaRest.IntegrationTest/postman'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
+
+- task: DotNetCoreCLI@2
+  displayName: "Publish Linux"
+  inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/linux'
+        zipAfterPublish: true
+
+- task: DotNetCoreCLI@2
+  displayName: "Publish Win"
+  inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/win'
+        zipAfterPublish: true
+- task: DotNetCoreCLI@2
+  displayName: "Build Selenium testing"
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/CaducaRest.UITest/*.csproj' 
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium'
+    zipAfterPublish: false
+
+- task: CopyFiles@2
+  displayName: Copy Playwright
+  inputs:
+    SourceFolder: '$(Pipeline.Workspace)/s/CaducaRest.PlayWright.UITest/bin/Debug/net6.0/'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/playwright'
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts linux"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/linux' 
+        artifactName: 'restLinux' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts win"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/win' 
+        artifactName: 'restWin' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts postman"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/postman' 
+        artifactName: 'postmanTesting' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts selenium"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/selenium' 
+        artifactName: 'seleniumTesting' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts playwright"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/playwright' 
+        artifactName: 'playwrightTesting' 
+
+- task: PublishBuildArtifacts@1
+  displayName: "Upload Artifacts SQL"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/Scripts' 
+        artifactName: 'Scripts' 

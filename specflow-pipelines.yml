@@ -1,0 +1,73 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: UseDotNet@2 
+  displayName: "Instalar .NET Core 6.0.x"
+  inputs:
+        version: '6.0.x'
+        performMultiLevelLookup: true
+        packageType: sdk
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+- task: DotNetCoreCLI@2
+  displayName: 'Install Living doc'
+  inputs:
+    command: 'custom'
+    custom: 'tool'
+    arguments: 'install --global SpecFlow.Plus.LivingDoc.CLI'
+- task: DotNetCoreCLI@2
+  displayName: 'Build CaducaRest Speclow'
+  inputs:
+    command: build
+    projects: |
+     $(Build.SourcesDirectory)/CaducaRest.IntegrationTest\CaducaRest.IntegrationTest.csproj
+
+- task: DotNetCoreCLI@2
+  displayName: 'Test'
+  inputs:
+    command: 'test'
+    projects: |
+      $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
+
+- task: SpecFlowPlus@0
+  displayName: 'LivingDoc with TestAssembly generatorSource'
+  inputs:
+    generatorSource: 'TestAssembly'
+    testAssemblyFilePath: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest/bin/Debug/net6.0/CaducaRest.IntegrationTest.dll'
+    projectName: 'CaducaREst'
+    testExecutionJson: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest/bin/Debug/net6.0/TestExecution.json'
+    projectLanguage: 'es'
+  enabled: false
+  continueOnError: true
+  condition: always()
+
+- task: CmdLine@2
+  displayName: 'Generate living doc'
+  inputs:
+    script: 'livingdoc test-assembly $(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Debug\net6.0\CaducaRest.IntegrationTest.dll -t $(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Debug\net6.0\TestExecution.json'
+
+- task: CopyFiles@2
+  displayName: Copy specflow
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '*.html'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/specflow'
+- task: PublishBuildArtifacts@1
+  displayName: "Publish report"
+  inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/specflow' 
+        artifactName: 'livingdoc' 

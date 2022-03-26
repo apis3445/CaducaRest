@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  caducarest:
+    image: ${DOCKER_REGISTRY-}caducarest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - migrations
+      - sqlserver
+    ports:
+      - 80:80
+    networks:
+      - caduca_network
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "Password%1#29"
+      ACCEPT_EULA: "Y"
+    container_name: sqlserver
+    hostname: sqlserver
+    ports:
+        - "1433:1433"
+    networks:
+        - caduca_network
+  migrations:
+    image: ${DOCKER_REGISTRY-}caducarest_migrations
+    build:
+        context: .
+        dockerfile: Migrations.Dockerfile
+    depends_on:
+        - sqlserver
+    networks:
+        - caduca_network
+networks: 
+   caduca_network:

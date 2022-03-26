@@ -32,12 +32,6 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: my-artifact
-        path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html
-    - name: Test
-      run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj --logger "html;logfilename=testResults.html"
-    - uses: actions/upload-artifact@v3
-      with:
-        name: my-artifact
         path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html  
     - name: Test Integration
       run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
@@ -51,4 +45,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/
+        publish_dir: ${{ github.workspace }}/CaducaRest/LivingDoc.html

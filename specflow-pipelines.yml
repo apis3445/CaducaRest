@@ -41,8 +41,8 @@ steps:
   inputs:
     command: 'test'
     projects: |
-      $(Build.SourcesDirectory)/CaducaRest.IntegrationTest\CaducaRest.IntegrationTest.csproj
+      $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
 
 - task: CmdLine@2
   inputs:
-    script: 'livingdoc test-assembly **/CaducaRest.IntegrationTest.dll -t TestExecution.json'
+    script: 'livingdoc test-assembly $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.dll -t $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/TestExecution.json'

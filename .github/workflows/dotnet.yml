@@ -26,7 +26,7 @@ jobs:
     - name: Install playwright
       run: playwright install
     - name: Install Lving Doc
-      run: dotnet tool --global SpecFlow.Plus.LivingDoc.CLI
+      run: dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
     - name: Test
       run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj --logger "html;logfilename=testResults.html"
     - uses: actions/upload-artifact@v3

@@ -40,7 +40,7 @@ jobs:
         name: my-artifact
         path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html  
     - name: Test Integration
-      run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest.UITest/*.csproj
+      run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest.UITest/CaducaRest.IntegrationTest.csproj
     - uses: actions/upload-artifact@v3
       with:
         name: my-report

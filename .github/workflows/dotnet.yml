@@ -25,6 +25,8 @@ jobs:
       run: dotnet tool install --global Microsoft.Playwright.CLI
     - name: Install playwright
       run: playwright install
+    - name: Install Lving Doc
+      run: dotnet tool --global SpecFlow.Plus.LivingDoc.CLI
     - name: Test
       run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj --logger "html;logfilename=testResults.html"
     - uses: actions/upload-artifact@v3
@@ -37,6 +39,8 @@ jobs:
       with:
         name: my-artifact
         path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html
+    - name: Generate livind doc
+      run: livingdoc test-assembly **/CaducaRest.IntegrationTest.dll -t TestExecution.json
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:

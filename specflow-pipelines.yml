@@ -61,7 +61,7 @@ steps:
     script: 'livingdoc test-assembly $(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Debug\net6.0\CaducaRest.IntegrationTest.dll -t $(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Debug\net6.0\TestExecution.json'
 
 - task: CopyFiles@2
-  displayName: Copy postman scripts
+  displayName: Copy specflow
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '*.html'

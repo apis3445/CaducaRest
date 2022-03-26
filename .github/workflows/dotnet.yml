@@ -13,36 +13,36 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Setup .NET 6
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
     - name: Install Playwright CLI
       run: dotnet tool install --global Microsoft.Playwright.CLI
     - name: Install playwright
       run: playwright install
-    - name: Install Lving Doc
+    - name: Install Lving Doc CLI
       run: dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
-    - name: Test
+    - name: Test Playwright
       run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj --logger "html;logfilename=testResults.html"
     - uses: actions/upload-artifact@v3
+      name: Upload artifact plahywright
       with:
-        name: my-artifact
+        name: playwright_report
         path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html  
     - name: Test Integration
       run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
-    - uses: actions/upload-artifact@v3
-      with:
-        name: my-report
-        path: ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/
     - name: Generate living doc
       run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/TestExecution.json
-    - name: Deploy
+    - uses: actions/upload-artifact@v3
+      name: Uplodad artifact specflow
+      with:
+        name: specflow
+        path: ${{ github.workspace }}/LivingDoc.html
+    - name: Deploy Github pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ${{ github.workspace }}/CaducaRest/LivingDoc.html
+        publish_dir: ${{ github.workspace }}/LivingDoc.html

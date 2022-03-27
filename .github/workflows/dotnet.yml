@@ -28,7 +28,7 @@ jobs:
     - name: Install Lving Doc
       run: dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
     - name: Test
-      run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj --logger "html;logfilename=testResults.html"
+      run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj --logger "html;logfilename=testResults.html" 
     - uses: actions/upload-artifact@v3
       with:
         name: playwright
@@ -36,13 +36,13 @@ jobs:
     - name: Test Integration
       run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
     - name: Generate living doc
-      run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/TestExecution.json
+      run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/TestExecution.json --output ${GITHUB_WORKSPACE}/TestResults/index.html
     - uses: actions/upload-artifact@v3
       with:
         name: specflow
-        path: ${{ github.workspace }}/LivingDoc.html
+        path: ${{ github.workspace }}/TestResults/index.html
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ${{ github.workspace }}/*.html
+        github_token: ${{ secrets.GITHUB_TOKEN }}/TestResults/
+        publish_dir: ${{ github.workspace }}/TestResults/

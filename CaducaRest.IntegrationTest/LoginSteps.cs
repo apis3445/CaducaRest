@@ -1,6 +1,4 @@
 ﻿using CaducaRest.DTO;
-using CaducaRest.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;

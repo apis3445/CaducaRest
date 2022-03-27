@@ -36,7 +36,7 @@ jobs:
     - name: Test Integration
       run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
     - name: Generate living doc
-      run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/TestExecution.json --output ${GITHUB_WORKSPACE}/TestResults/index.html
+      run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/TestExecution.json --output ${{ github.workspace }}/TestResults/index.html
     - uses: actions/upload-artifact@v3
       with:
         name: specflow

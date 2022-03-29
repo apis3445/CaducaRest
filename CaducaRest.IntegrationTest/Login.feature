@@ -15,6 +15,6 @@ Escenario: Login con usuario Administrador
 Escenario: Login con usuario Vendedor
 	Dado Tecleo los siguientes datos del usuario
 	| Usuario		| Password			|
-	| Maria			| 8cYyY8paESGbzC5E	|
+	| Maria			| 	|
 	Cuando Yo ejecuto el servicio Usuarios/Login con esos datos
 	Entonces El resultado deberia ser Ok 

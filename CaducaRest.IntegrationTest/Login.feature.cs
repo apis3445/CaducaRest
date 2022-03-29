@@ -151,7 +151,7 @@ this.ScenarioInitialize(scenarioInfo);
                             "Password"});
                 table1.AddRow(new string[] {
                             "Maria",
-                            "8cYyY8paESGbzC5E"});
+                            ""});
 #line 16
  testRunner.Given("Tecleo los siguientes datos del usuario", ((string)(null)), table1, "Dado ");
 #line hidden

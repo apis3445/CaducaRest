@@ -48,8 +48,8 @@ namespace CaducaRest.IntegrationTest
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("es"), "", "Login", "\tDado que ya existen los siguientes usuarios:\n\tCarlos DtfhkmTRQ8mNzgRY Administra" +
-                    "dor\n\tMaria 8cYyY8paESGbzC5E  Vendedor\n\tJuan zUvyvsRSCMek58eR   Cliente", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("es"), "", "Login", "\tDado que ya existen los siguientes usuarios:\n\tCarlos  Administrador\n\tMaria   Ven" +
+                    "dedor\n\tJuan    Cliente", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -116,7 +116,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("El usuario administrador tiene la clave Carlos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 11
- testRunner.And("Y tiene el password DtfhkmTRQ8mNzgRY", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Y ");
+ testRunner.And("Y tiene el password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Y ");
 #line hidden
 #line 12
  testRunner.When("Yo ejecuto el servicio Usuarios/Login con esos datos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Cuando ");

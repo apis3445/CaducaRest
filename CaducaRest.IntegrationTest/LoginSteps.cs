@@ -13,20 +13,22 @@ namespace CaducaRest.IntegrationTest
         private bool correcto;
        
         [Given(@"El usuario administrador tiene la clave (.*)")]
-        public void GivenElUsuarioAdministradorTieneLaClaveCarlos(string usuario)
+        public void GivenElUsuarioAdministradorTieneLaClave(string usuario)
         {
             loginDTO.Usuario = usuario;
         }
 
-        [Given(@"Y tiene el password (.*)")]
-        public void GivenYTieneElPasswordDtfhkmTRQmNzgRY(string password)
+        [Given(@"Y tiene el password")]
+        public void GivenYTieneElPassword()
         {
-            loginDTO.Password = password;
+            loginDTO.Password = "DtfhkmTRQmNzgRY";
         }
+
         [Given(@"Tecleo los siguientes datos del usuario")]
         public void DadoTecleoLosSiguientesDatosDelUsuario(Table table)
         {
             loginDTO = table.CreateInstance<LoginDTO>();
+            loginDTO.Password = "8cYyY8paESGbzC5E";
         }
 
         [When(@"Yo ejecuto el servicio (.*) con esos datos")]

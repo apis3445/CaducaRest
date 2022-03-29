@@ -1,14 +1,14 @@
 ﻿# language: es
 Característica: Login
 	Dado que ya existen los siguientes usuarios:
-	Carlos DtfhkmTRQ8mNzgRY Administrador
-	Maria 8cYyY8paESGbzC5E  Vendedor
-	Juan zUvyvsRSCMek58eR   Cliente
+	Carlos  Administrador
+	Maria   Vendedor
+	Juan    Cliente
 
 @Login
 Escenario: Login con usuario Administrador
 	Dado El usuario administrador tiene la clave Carlos
-	Y Y tiene el password DtfhkmTRQ8mNzgRY	
+	Y Y tiene el password  	
 	Cuando Yo ejecuto el servicio Usuarios/Login con esos datos
 	Entonces El resultado deberia ser Ok 
 

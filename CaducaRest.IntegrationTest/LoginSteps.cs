@@ -11,15 +11,15 @@ namespace CaducaRest.IntegrationTest
     [Binding]
     public class LoginSteps
     {
-        private LoginDTO loginDTO = new LoginDTO();
+        private LoginDTO login = new LoginDTO();
         private Usuarios usuarios = new Usuarios();
         private TokenDTO token;
 
         [Given(@"Que Existe un usuario con la clave (.*)")]
         public void GivenQueExisteUnUsarioConLaClave(string usuario)
         {
-            loginDTO.Usuario = usuario;
-            loginDTO.Password = "DtfhkmTRQmNzgRY";
+            login.Usuario = usuario;
+            login.Password = "DtfhkmTRQmNzgRY";
         }
 
 
@@ -27,15 +27,15 @@ namespace CaducaRest.IntegrationTest
         public void DadoTecleoLosSiguientesDatosDelUsuario(Table table)
         {
             usuarios = table.CreateInstance<Usuarios>();
-            loginDTO.Usuario = usuarios.Nombre;
-            loginDTO.Password = "8cYyY8paESGbzC5E";
+            login.Usuario = usuarios.Nombre;
+            login.Password = "8cYyY8paESGbzC5E";
         }
 
         [When(@"Yo ejecuto el servicio (.*)")]
         public async Task WhenYoEjecutoElServicioAsync(string nombreServicio)
         {
             Servicios.Inicializa();
-            token = JsonSerializer.Deserialize<TokenDTO>(await Servicios.PostAsync(nombreServicio, usuarios));
+            token = JsonSerializer.Deserialize<TokenDTO>(await Servicios.PostAsync(nombreServicio, login));
         }
 
         [Then(@"Obtengo el nombre (.*)")]

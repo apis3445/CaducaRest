@@ -14,8 +14,11 @@ Escenario: Login con un usuario
 
 Escenario: Login con usuarios en Tabla
 	Dado Tecleo los siguientes datos del usuario
-	| Usuario		| Nombre		|
+	| Usuario		| Nombre		| 
 	| Maria			| Maria Lopez	|
-	| Juan			| Juan Peréz	|
 	Cuando Yo ejecuto el servicio Usuarios/Login
 	Entonces Obtengo el nombre <Nombre>
+
+Ejemplos: 
+	| Usuario		| Nombre		|
+	| Maria			| Maria Lopez	|

@@ -27,7 +27,7 @@ namespace CaducaRest.IntegrationTest
         public void DadoTecleoLosSiguientesDatosDelUsuario(Table table)
         {
             usuarios = table.CreateInstance<Usuarios>();
-            login.Usuario = usuarios.Nombre;
+            login.Usuario = usuarios.Usuario;
             login.Password = "8cYyY8paESGbzC5E";
         }
 

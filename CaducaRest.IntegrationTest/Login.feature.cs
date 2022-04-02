@@ -125,13 +125,12 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Login con usuarios en Tabla")]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Login")]
-        public void LoginConUsuariosEnTabla()
+        public virtual void LoginConUsuariosEnTabla(string usuario, string nombre, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("Usuario", usuario);
+            argumentsOfScenario.Add("Nombre", nombre);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Login con usuarios en Tabla", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 15
 this.ScenarioInitialize(scenarioInfo);
@@ -149,20 +148,30 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "Maria",
                             "Maria Lopez"});
-                table1.AddRow(new string[] {
-                            "Juan",
-                            "Juan Peréz"});
 #line 16
  testRunner.Given("Tecleo los siguientes datos del usuario", ((string)(null)), table1, "Dado ");
 #line hidden
-#line 20
+#line 19
  testRunner.When("Yo ejecuto el servicio Usuarios/Login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Cuando ");
 #line hidden
-#line 21
- testRunner.Then("Obtengo el nombre <Nombre>", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entonces ");
+#line 20
+ testRunner.Then(string.Format("Obtengo el nombre {0}", nombre), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entonces ");
 #line hidden
             }
             this.ScenarioCleanup();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Login con usuarios en Tabla: Maria")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Login")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Maria")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Usuario", "Maria")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Nombre", "Maria Lopez")]
+        public void LoginConUsuariosEnTabla_Maria()
+        {
+#line 15
+this.LoginConUsuariosEnTabla("Maria", "Maria Lopez", ((string[])(null)));
+#line hidden
         }
     }
 }

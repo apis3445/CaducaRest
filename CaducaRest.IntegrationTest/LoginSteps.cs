@@ -13,7 +13,7 @@ namespace CaducaRest.IntegrationTest
     {
         private LoginDTO login = new LoginDTO();
         private Usuarios usuarios = new Usuarios();
-        private TokenDTO token;
+        private TokenDTO token = new TokenDTO();
 
         [Given(@"Que Existe un usuario con la clave (.*)")]
         public void GivenQueExisteUnUsarioConLaClave(string usuario)
@@ -35,7 +35,9 @@ namespace CaducaRest.IntegrationTest
         public async Task WhenYoEjecutoElServicioAsync(string nombreServicio)
         {
             Servicios.Inicializa();
-            token = JsonSerializer.Deserialize<TokenDTO>(await Servicios.PostAsync(nombreServicio, login));
+            var response = await Servicios.PostAsync(nombreServicio, login);
+            if (!string.IsNullOrEmpty(response))
+                token = JsonSerializer.Deserialize<TokenDTO>(response);
         }
 
         [Then(@"Obtengo el nombre (.*)")]

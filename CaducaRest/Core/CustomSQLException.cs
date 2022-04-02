@@ -1,4 +1,4 @@
-﻿using MySqlConnector;
+﻿using Microsoft.Data.SqlClient;
 using System;
 
 namespace CaducaRest.Core
@@ -6,17 +6,17 @@ namespace CaducaRest.Core
     /// <summary>
     /// Mensajes personalizados para mysql
     /// </summary>
-    public class CustomMySQLException
+    public class CustomSQLException : ICustomSQLException
     {
         /// <summary>
         /// Definción de los mensajes de acuerdo a los códigos de error que arroje MySql cuando encuentre error.
         /// </summary>
-        /// <param name="mysqlError">Excpeción del MySql.</param>
+        /// <param name="sqlError">Excpeción del Sql.</param>
         /// <param name="tablaActual">Nombre de la tabla en donde se este haciendo la transacción es solo para
         /// complementar el mensaje de error.</param>
         /// <example>" el usuario " ó " la página "</example>
         /// <param name="claseOrigen">Clase en donde se este haciendo la transacción.</param>
-        public string MuestraErrorMYSQL(MySqlException mysqlError, string tablaActual, string claseOrigen)
+        public string MuestraErrorMYSQL(SqlException sqlError, string tablaActual, string claseOrigen)
         {
 
             try
@@ -24,20 +24,20 @@ namespace CaducaRest.Core
                 //Por el momento no se está usando la variable mensajeInicial
                 //string mensajeTitulo = "Ha ocurrido un error interno.";
                 string mensajeInicial = "Error interno en la base de datos";
-                string mensajeDetalle = "Intente nuevamente si continua el error por favor comuníquese con el Administrador del Sistema he infórmele sobre el error ocurrido" + System.Environment.NewLine + System.Environment.NewLine + "(" + mysqlError.Message.ToString() + ") en " + mysqlError.Source.ToString();
+                string mensajeDetalle = "Intente nuevamente si continua el error por favor comuníquese con el Administrador del Sistema he infórmele sobre el error ocurrido" + System.Environment.NewLine + System.Environment.NewLine + "(" + sqlError.Message.ToString() + ") en " + sqlError.Source.ToString();
 
                 string tablaUno;
                 string tablaDos;
                 Nullable<Decimal> a = new decimal(1);
                 string ab = $"a{a - 0}";
-                switch (mysqlError.Number)
+                switch (sqlError.Number)
                 {
                     //Se verifica el número de un posible error y se evalúa
                     case 1370:
                         mensajeInicial = "El usuario no tiene permiso para realizar esta acción ";
                         break;
                     case 1451:
-                        string[] cadena = mysqlError.Message.ToString().Split(Convert.ToChar("`"));
+                        string[] cadena = sqlError.Message.ToString().Split(Convert.ToChar("`"));
                         tablaUno = cadena[3];
                         tablaDos = cadena[9];
                         mensajeInicial = "No es posible borrar o actualizar (el/la) " + tablaDos + " seleccionado(a) debido a que ya encuentran " + tablaUno + "(s) asociados a este(a) " + tablaDos;
@@ -46,7 +46,7 @@ namespace CaducaRest.Core
 
                         break;
                     case 1452:
-                        string[] cadenas = mysqlError.Message.Split(Convert.ToChar("`"));
+                        string[] cadenas = sqlError.Message.Split(Convert.ToChar("`"));
                         tablaUno = cadenas[3];
                         //se obtiene el nombre/descripción de la tabla
                         tablaDos = cadenas[9];
@@ -58,7 +58,7 @@ namespace CaducaRest.Core
                         break;
                     case 1062:
                         tablaUno = tablaActual;
-                        string[] erroers = mysqlError.Message.Split(Convert.ToChar("'"));
+                        string[] erroers = sqlError.Message.Split(Convert.ToChar("'"));
                         mensajeInicial = "No es posible agregar " + tablaUno + "ya existe";
                         break;
                     case 1014:
@@ -139,7 +139,7 @@ namespace CaducaRest.Core
                     case 2003:
                     case 2002:
                         //mensajeTitulo = "Acceso denegado al sistema";
-                        mensajeInicial = "El servicio de MYSQL Server no se inicio, debe iniciar el servicio de MYSQL para que el sistema funcione.";
+                        mensajeInicial = "El servicio de sql Server no se inicio, debe iniciar el servicio de sql para que el sistema funcione.";
 
                         break;
                     case 1146:
@@ -201,7 +201,7 @@ namespace CaducaRest.Core
                         break;
                     case 1217:
                         mensajeInicial = "Se está intentando eliminar una fila padre que tiene filas hijas, lo que hace que una restricción de clave foránea falle. Se deben eliminar primero las filas hijas";
-                        
+
                         break;
                     case 2013:
                         mensajeInicial = "La consulta a la base de datos a tardado mucho tiempo";

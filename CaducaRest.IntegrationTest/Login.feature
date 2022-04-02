@@ -1,20 +1,21 @@
 ﻿# language: es
 Característica: Login
 	Dado que ya existen los siguientes usuarios:
-	Carlos  Administrador
-	Maria   Vendedor
-	Juan    Cliente
+    Usuario  Nombre
+	Carlos   Carlos Hernández 
+	Maria    Maria Lopez
+	Juan     Juan Peréz
 
 @Login
-Escenario: Login con usuario Administrador
-	Dado El usuario administrador tiene la clave Carlos
-	Y Y tiene el password  	
-	Cuando Yo ejecuto el servicio Usuarios/Login con esos datos
-	Entonces El resultado deberia ser Ok 
+Escenario: Login con un usuario
+	Dado Que Existe un usuario con la clave Carlos
+	Cuando Yo ejecuto el servicio Usuarios/Login 
+	Entonces Obtengo el nombre Carlos Hernández
 
-Escenario: Login con usuario Vendedor
+Escenario: Login con usuarios en Tabla
 	Dado Tecleo los siguientes datos del usuario
-	| Usuario		| Password			|
-	| Maria			| 	|
-	Cuando Yo ejecuto el servicio Usuarios/Login con esos datos
-	Entonces El resultado deberia ser Ok 
+	| Usuario		| Nombre		|
+	| Maria			| Maria Lopez	|
+	| Juan			| Juan Peréz	|
+	Cuando Yo ejecuto el servicio Usuarios/Login
+	Entonces Obtengo el nombre <Nombre>

@@ -174,9 +174,6 @@ namespace CaducaRest
                     services.AddDbContext<CaducaContext>(opt => opt.UseSqlite(connection));
                     break;
                 default:
-                    //services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caduca")
-                    //                                                       .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
-
                     //services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(Configuration.GetConnectionString("DefaultConnection"))));
                     //Conexión SQL Server
                     services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLServerConnection")));

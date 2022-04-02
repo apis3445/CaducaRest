@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using MySqlConnector;
 using System;
@@ -38,7 +39,7 @@ namespace CaducaRest.Filters
         /// <param name="context">Datos de la excepción</param>
         public override void OnException(ExceptionContext context)
         {
-            if (context.Exception.InnerException != null && context.Exception.InnerException is MySqlException)
+            if (context.Exception.InnerException != null && context.Exception.InnerException is SqlException)
             {
                 Correo mail = new Correo(Configuration)
                 {
@@ -58,9 +59,9 @@ namespace CaducaRest.Filters
                 if (context.RouteData.Values["controller"] != null)
                 {
                     string tabla = " el/la " + context.RouteData.Values["controller"].ToString() + " ";
-                    MySqlException exMySql = (MySqlException)context.Exception.InnerException;
-                    CustomMySQLException mySqlCustomError = new CustomMySQLException();
-                    mensajeError = mySqlCustomError.MuestraErrorMYSQL(exMySql, tabla, this.GetType().Name);                  
+                    SqlException exSql = (SqlException)context.Exception.InnerException;
+                    CustomSQLException mySqlCustomError = new CustomSQLException();
+                    mensajeError = mySqlCustomError.MuestraErrorMYSQL(exSql, tabla, this.GetType().Name);                  
                 }
                 else
                 {

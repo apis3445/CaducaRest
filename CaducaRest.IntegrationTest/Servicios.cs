@@ -42,13 +42,13 @@ namespace CaducaRest.IntegrationTest
             httpCliente = servidorPruebas.CreateClient();
         }
 
-        public static async Task<bool> PostAsync(string servicio, object datos)
+        public static async Task<string> PostAsync(string servicio, object datos)
         {
             var contenido = new StringContent(JsonSerializer.Serialize(datos), Encoding.UTF8, "application/json");
             var response = await httpCliente.PostAsync("api/" + servicio, contenido);
             if (response.StatusCode == HttpStatusCode.OK)
-                return true;
-            return false;
+                return await response.Content.ReadAsStringAsync();
+            return string.Empty;
         }
     }
 }

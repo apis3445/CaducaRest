@@ -59,7 +59,6 @@ namespace CaducaRest.Datos
                 contexto.Caducidad.Add(registro);
             }
 
-
             contexto.SaveChanges();
         }
     }

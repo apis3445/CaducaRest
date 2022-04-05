@@ -23,11 +23,11 @@ namespace CaducaRest.IntegrationTest
         }
 
 
-        [Given(@"Tecleo los siguientes datos del usuario")]
-        public void DadoTecleoLosSiguientesDatosDelUsuario(Table table)
+        [Given(@"Tecleo los siguientes datos del (.*)")]
+        public void DadoTecleoLosSiguientesDatosDelUsuario(string usuario)
         {
-            usuarios = table.CreateInstance<Usuarios>();
-            login.Usuario = usuarios.Usuario;
+           
+            login.Usuario = usuario;
             login.Password = "8cYyY8paESGbzC5E";
         }
 

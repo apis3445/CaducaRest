@@ -142,22 +142,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "Usuario",
-                            "Nombre"});
-                table1.AddRow(new string[] {
-                            "Maria",
-                            "Maria Lopez"});
-                table1.AddRow(new string[] {
-                            "Juan",
-                            "Juan Peréz"});
 #line 16
-                testRunner.Given("Tecleo los siguientes datos del usuario", ((string)(null)), table1, "Dado ");
+ testRunner.Given(string.Format("Tecleo los siguientes datos del {0}", usuario), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
-#line 19
+#line 17
  testRunner.When("Yo ejecuto el servicio Usuarios/Login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Cuando ");
 #line hidden
-#line 20
+#line 18
  testRunner.Then(string.Format("Obtengo el nombre {0}", nombre), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Entonces ");
 #line hidden
             }

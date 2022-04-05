@@ -99,7 +99,7 @@ namespace CaducaRest.DAO
             if (!usuario.Activo)
             {
                 customError = new CustomError(403,
-                            this.localizacion.GetLocalizedHtmlString("UsuarioInactivo"));
+                this.localizacion.GetLocalizedHtmlString("UsuarioInactivo"));
                 return false;
             }
 
@@ -174,6 +174,7 @@ namespace CaducaRest.DAO
                         customError = new CustomError(400,
                             this.localizacion.GetLocalizedHtmlString("PasswordIncorrecto"));
                     }
+                    return false;
                 }
             }
             return true;

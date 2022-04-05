@@ -148,8 +148,11 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "Maria",
                             "Maria Lopez"});
+                table1.AddRow(new string[] {
+                            "Juan",
+                            "Juan Peréz"});
 #line 16
- testRunner.Given("Tecleo los siguientes datos del usuario", ((string)(null)), table1, "Dado ");
+                testRunner.Given("Tecleo los siguientes datos del usuario", ((string)(null)), table1, "Dado ");
 #line hidden
 #line 19
  testRunner.When("Yo ejecuto el servicio Usuarios/Login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Cuando ");

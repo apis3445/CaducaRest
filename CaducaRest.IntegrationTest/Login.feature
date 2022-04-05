@@ -22,3 +22,4 @@ Escenario: Login con usuarios en Tabla
 Ejemplos: 
 	| Usuario		| Nombre		|
 	| Maria			| Maria Lopez	|
+    | Juan			| Juan Peréz	|

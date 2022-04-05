@@ -173,6 +173,19 @@ this.ScenarioInitialize(scenarioInfo);
 this.LoginConUsuariosEnTabla("Maria", "Maria Lopez", ((string[])(null)));
 #line hidden
         }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Login con usuarios en Tabla: Juan")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Login")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("VariantName", "Juan")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Usuario", "Juan")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("Parameter:Nombre", "Juan Peréz")]
+        public void LoginConUsuariosEnTabla_Juan()
+        {
+#line 15
+this.LoginConUsuariosEnTabla("Juan", "Juan Peréz", ((string[])(null)));
+#line hidden
+        }
     }
 }
 #pragma warning restore

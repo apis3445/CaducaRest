@@ -38,6 +38,7 @@ steps:
       $(Build.SourcesDirectory)/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
 - task: SpecFlowPlus@0
   displayName: Specflow plus
+  condition: always()
   inputs:
     generatorSource: 'TestAssembly'
     testAssemblyFilePath: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest/bin/Debug/net6.0/CaducaRest.IntegrationTest.dll'

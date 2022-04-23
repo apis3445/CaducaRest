@@ -23,7 +23,10 @@ namespace CaducaRest.IntegrationTest
         public void DadoTecleoLosSiguientesDatosDelUsuario(string usuario)
         {
             login.Usuario = usuario;
-            login.Password = "8cYyY8paESGbzC5E";
+            if (usuario == "Maria")
+                login.Password = "8cYyY8paESGbzC5E";
+            else
+                login.Password = "zUvyvsRSCMek58eR";
         }
 
         [When(@"Yo ejecuto el servicio (.*)")]

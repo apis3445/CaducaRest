@@ -1,5 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
-using System;
+﻿using System;
+using System.Data.Common;
+using Microsoft.Data.SqlClient;
 
 namespace CaducaRest.Core
 {

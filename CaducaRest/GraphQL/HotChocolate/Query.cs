@@ -88,6 +88,10 @@ namespace CaducaRest.GraphQL.HotChocolate
 	/// </summary>
     public class ClienteType : ObjectType<Cliente>
     {
+        /// <summary>
+		/// 
+		/// </summary>
+		/// <param name="descriptor"></param>
         protected override void Configure(IObjectTypeDescriptor<Cliente> descriptor)
         {
             descriptor

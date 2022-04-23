@@ -5,8 +5,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CaducaRest.Migrations
 {
+    /// <summary>
+	/// 
+	/// </summary>
     public partial class errores : Migration
     {
+        /// <summary>
+		/// 
+		/// </summary>
+		/// <param name="migrationBuilder"></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
            
@@ -137,6 +144,10 @@ namespace CaducaRest.Migrations
                 onDelete: ReferentialAction.Restrict);
         }
 
+        /// <summary>
+		/// 
+		/// </summary>
+		/// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(

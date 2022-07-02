@@ -1,13 +1,12 @@
-﻿namespace CaducaRest.DTO
+﻿namespace CaducaRest.DTO;
+
+/// <summary>
+/// Clase para refrescar el token
+/// </summary>
+public class RefreshTokenDTO
 {
     /// <summary>
-    /// Clase para refrescar el token
+    /// Código para refrescar el token
     /// </summary>
-    public class RefreshTokenDTO
-    {
-        /// <summary>
-        /// Código para refrescar el token
-        /// </summary>
-        public string RefreshToken { get; set; }
-    }
+    public string RefreshToken { get; set; }
 }

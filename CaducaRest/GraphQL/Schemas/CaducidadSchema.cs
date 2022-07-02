@@ -4,24 +4,23 @@ using CaducaRest.GraphQL.Query;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CaducaRest.GraphQL.Schemas
+namespace CaducaRest.GraphQL.Schemas;
+
+/// <summary>
+/// Los objetos Schema contienen los métodos disponibles
+/// </summary>
+public class CaducidadSchema : Schema
 {
     /// <summary>
-    /// Los objetos Schema contienen los métodos disponibles
+    /// Esquema para la caducidad
+    /// Contiene métodos para consultar y modificar registros
+    /// de caducidad de productos
     /// </summary>
-    public class CaducidadSchema : Schema
+    /// <param name="provider"></param>
+    public CaducidadSchema(IServiceProvider provider) : base(provider)
     {
-        /// <summary>
-        /// Esquema para la caducidad
-        /// Contiene métodos para consultar y modificar registros
-        /// de caducidad de productos
-        /// </summary>
-        /// <param name="provider"></param>
-        public CaducidadSchema(IServiceProvider provider) : base(provider)
-        {
-            Query = provider.GetRequiredService<CaducidadQuery>();
+        Query = provider.GetRequiredService<CaducidadQuery>();
 
-            Mutation = provider.GetRequiredService<CaducidadMutation>();
-        }
+        Mutation = provider.GetRequiredService<CaducidadMutation>();
     }
 }

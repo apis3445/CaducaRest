@@ -6,74 +6,72 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using MySqlConnector;
 using System;
 
-namespace CaducaRest.Filters
+namespace CaducaRest.Filters;
+
+/// <summary>
+/// Filtro para errores persomnalizados
+/// </summary>
+public class CustomExceptionFilter : ExceptionFilterAttribute
 {
+    private readonly IWebHostEnvironment _hostingEnvironment;
+    private readonly IModelMetadataProvider _modelMetadataProvider;
+    private IConfiguration Configuration { get; }
+
     /// <summary>
-    /// Filtro para errores persomnalizados
+    /// Filtro para controlar todas las excepciones ocurridas en el sistema
     /// </summary>
-    public class CustomExceptionFilter : ExceptionFilterAttribute
+    /// <param name="hostingEnvironment">Para saber si el ambiente es producción o desarrolo</param>
+    /// <param name="modelMetadataProvider">Datos acerca del modeolo</param>
+    /// <param name="configuration"></param>
+    public CustomExceptionFilter(IWebHostEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider, IConfiguration configuration)
     {
-        private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IModelMetadataProvider _modelMetadataProvider;
-        private IConfiguration Configuration { get; }
+        _hostingEnvironment = hostingEnvironment;
+        _modelMetadataProvider = modelMetadataProvider;
+        Configuration = configuration;
+    }
 
-        /// <summary>
-        /// Filtro para controlar todas las excepciones ocurridas en el sistema
-        /// </summary>
-        /// <param name="hostingEnvironment">Para saber si el ambiente es producción o desarrolo</param>
-        /// <param name="modelMetadataProvider">Datos acerca del modeolo</param>
-        /// <param name="configuration"></param>
-        public CustomExceptionFilter(IWebHostEnvironment hostingEnvironment, IModelMetadataProvider modelMetadataProvider, IConfiguration configuration)
+    /// <summary>
+    /// Acciones a realizar cuando ocurre una excepción
+    /// </summary>
+    /// <param name="context">Datos de la excepción</param>
+    public override void OnException(ExceptionContext context)
+    {
+        if (context.Exception.InnerException != null && context.Exception.InnerException is SqlException)
         {
-            _hostingEnvironment = hostingEnvironment;
-            _modelMetadataProvider = modelMetadataProvider;
-            Configuration = configuration;
-        }
-
-        /// <summary>
-        /// Acciones a realizar cuando ocurre una excepción
-        /// </summary>
-        /// <param name="context">Datos de la excepción</param>
-        public override void OnException(ExceptionContext context)
-        {
-            if (context.Exception.InnerException != null && context.Exception.InnerException is SqlException)
+            Correo mail = new Correo(Configuration)
             {
-                Correo mail = new Correo(Configuration)
-                {
-                    Para = "abigail_armijo@yahoo.com",
-                    Mensaje = context.Exception.InnerException.ToString(),
-                    Asunto = "Error en Caduca Rest"
-                };
-                try
-                {
-                    mail.Enviar();
-                }
-                catch (Exception ex1)
-                {
-                    Console.WriteLine(ex1.InnerException);
-                }
-                string mensajeError = context.Exception.InnerException.Message;
-                if (context.RouteData.Values["controller"] != null)
-                {
-                    string tabla = " el/la " + context.RouteData.Values["controller"].ToString() + " ";
-                    SqlException exSql = (SqlException)context.Exception.InnerException;
-                    CustomSQLException mySqlCustomError = new CustomSQLException();
-                    mensajeError = mySqlCustomError.MuestraErrorMYSQL(exSql, tabla, this.GetType().Name);                  
-                }
-                else
-                {
-                    mensajeError = "Ocurrio un error y ha sido registrado";
-                }
-                BadRequestObjectResult badRequest = new BadRequestObjectResult(new CustomError(400, mensajeError));
-                context.Result = badRequest;
-            }    
+                Para = "abigail_armijo@yahoo.com",
+                Mensaje = context.Exception.InnerException.ToString(),
+                Asunto = "Error en Caduca Rest"
+            };
+            try
+            {
+                mail.Enviar();
+            }
+            catch (Exception ex1)
+            {
+                Console.WriteLine(ex1.InnerException);
+            }
+            string mensajeError = context.Exception.InnerException.Message;
+            if (context.RouteData.Values["controller"] != null)
+            {
+                string tabla = " el/la " + context.RouteData.Values["controller"].ToString() + " ";
+                SqlException exSql = (SqlException)context.Exception.InnerException;
+                CustomSQLException mySqlCustomError = new CustomSQLException();
+                mensajeError = mySqlCustomError.MuestraErrorMYSQL(exSql, tabla, this.GetType().Name);
+            }
             else
             {
-                context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                mensajeError = "Ocurrio un error y ha sido registrado";
             }
+            BadRequestObjectResult badRequest = new BadRequestObjectResult(new CustomError(400, mensajeError));
+            context.Result = badRequest;
+        }
+        else
+        {
+            context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
         }
     }
 }

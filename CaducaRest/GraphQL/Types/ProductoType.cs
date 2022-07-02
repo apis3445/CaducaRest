@@ -2,26 +2,25 @@
 using CaducaRest.Resources;
 using GraphQL.Types;
 
-namespace CaducaRest.GraphQL.Types
+namespace CaducaRest.GraphQL.Types;
+
+/// <summary>
+/// Clase para mapear los campos del producto
+/// a los manejados por GraphQL
+/// </summary>
+public class ProductoType : ObjectGraphType<Producto>
 {
     /// <summary>
-    /// Clase para mapear los campos del producto
-    /// a los manejados por GraphQL
+    /// Constructor que permite mapear campos
     /// </summary>
-    public class ProductoType : ObjectGraphType<Producto>
+    /// <param name="locService">Objeto para mensajes en varios idiomas</param>
+    public ProductoType(LocService locService)
     {
-        /// <summary>
-        /// Constructor que permite mapear campos
-        /// </summary>
-        /// <param name="locService">Objeto para mensajes en varios idiomas</param>
-        public ProductoType(LocService locService)
-        {         
-            Name = "Producto";
-            Field(c => c.Id).Description("Id");
-            Field(c => c.Clave).Description("Clave del producto");
-            Field(c => c.Nombre).Description("Nombre del cliente");
-            Field(c => c.CategoriaId).Description("Categoria");
-           
-        }
+        Name = "Producto";
+        Field(c => c.Id).Description("Id");
+        Field(c => c.Clave).Description("Clave del producto");
+        Field(c => c.Nombre).Description("Nombre del cliente");
+        Field(c => c.CategoriaId).Description("Categoria");
+
     }
 }

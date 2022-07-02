@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace CaducaRest.DAO;
+
 /// <summary>
 /// Funciones de acceso a datos para la tabla usuario
 /// </summary>

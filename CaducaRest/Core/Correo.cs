@@ -3,70 +3,68 @@ using System.Net;
 using System.Net.Mail;
 using Microsoft.Extensions.Configuration;
 
-namespace CaducaRest.Core
+namespace CaducaRest.Core;
+
+/// <summary>
+/// Funciones para enviar correos
+/// </summary>
+public class Correo
 {
+    private IConfiguration Configuration { get; }
+    /// <summary>
+    /// Mensaje del correo
+    /// </summary>
+    public string Mensaje;
+    /// <summary>
+    /// Correos a quien se enviara el correo
+    /// </summary>
+    public string Para;
+    /// <summary>
+    /// Asunto del correo
+    /// </summary>
+    public string Asunto;
 
     /// <summary>
-    /// Funciones para enviar correos
+    /// Constructor
     /// </summary>
-    public class Correo
+    /// <param name="configuration"></param>
+    public Correo(IConfiguration configuration)
     {
-        private IConfiguration Configuration { get; }
-        /// <summary>
-        /// Mensaje del correo
-        /// </summary>
-        public string Mensaje;
-        /// <summary>
-        /// Correos a quien se enviara el correo
-        /// </summary>
-        public string Para;
-        /// <summary>
-        /// Asunto del correo
-        /// </summary>
-        public string Asunto;
+        Configuration = configuration;
+    }
+    /// <summary>
+    /// Permite enviar un correo
+    /// </summary>
+    public void Enviar()
+    {
+        string smtpAddress, usuarioCorreo, passwordCorreo;
+        int puerto = 587;
+        smtpAddress = Configuration["Correo:smtp"];
+        usuarioCorreo = Configuration["Correo:correo"];
+        passwordCorreo = Configuration["Correo:pass"];
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="configuration"></param>
-        public Correo(IConfiguration configuration)
+        SmtpClient client = new SmtpClient(smtpAddress, puerto)
         {
-            Configuration = configuration;
+            Credentials = new NetworkCredential(usuarioCorreo, passwordCorreo),
+            EnableSsl = true,
+            DeliveryMethod = SmtpDeliveryMethod.Network,
+            UseDefaultCredentials = false,
+        };
+        MailMessage mailMessage = new MailMessage
+        {
+            From = new MailAddress(usuarioCorreo)
+        };
+        mailMessage.To.Add(Para);
+        mailMessage.IsBodyHtml = true;
+        mailMessage.Body = Mensaje;
+        mailMessage.Subject = Asunto;
+        try
+        {
+            client.Send(mailMessage);
         }
-        /// <summary>
-        /// Permite enviar un correo
-        /// </summary>
-        public void Enviar()
+        catch (Exception ex)
         {
-            string smtpAddress, usuarioCorreo, passwordCorreo;
-            int puerto = 587;
-            smtpAddress = Configuration["Correo:smtp"];
-            usuarioCorreo = Configuration["Correo:correo"];
-            passwordCorreo = Configuration["Correo:pass"];
-
-            SmtpClient client = new SmtpClient(smtpAddress, puerto)
-            {
-                Credentials = new NetworkCredential(usuarioCorreo, passwordCorreo),
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-            };
-            MailMessage mailMessage = new MailMessage
-            {
-                From = new MailAddress(usuarioCorreo)
-            };
-            mailMessage.To.Add(Para);
-            mailMessage.IsBodyHtml = true;
-            mailMessage.Body = Mensaje;
-            mailMessage.Subject = Asunto;
-            try
-            {
-                client.Send(mailMessage);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.InnerException);
-            }
+            Console.WriteLine(ex.InnerException);
         }
     }
 }

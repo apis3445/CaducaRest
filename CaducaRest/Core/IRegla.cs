@@ -1,19 +1,19 @@
-﻿namespace CaducaRest.Core
+﻿namespace CaducaRest.Core;
+
+/// <summary>
+/// Permite agregar reglas
+/// </summary>
+public interface IRegla
 {
     /// <summary>
-    /// Permite agregar reglas
+    /// Mensaje de error
     /// </summary>
-    public interface IRegla
-    {
-        /// <summary>
-        /// Mensaje de error
-        /// </summary>
-        CustomError customError { get; set; }
+    CustomError customError { get; set; }
 
-        /// <summary>
-        /// Permite validar una regla
-        /// </summary>
-        /// <returns></returns>
-        bool EsCorrecto();
-    }
+    /// <summary>
+    /// Permite validar una regla
+    /// </summary>
+    /// <returns></returns>
+    bool EsCorrecto();
 }
+

@@ -4,8 +4,8 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools;
-using OpenQA.Selenium.DevTools.V96.Performance;
-using Network = OpenQA.Selenium.DevTools.V96.Network;
+using OpenQA.Selenium.DevTools.V103.Performance;
+using Network = OpenQA.Selenium.DevTools.V103.Network;
 
 namespace CaducaRest.UITest
 {
@@ -25,7 +25,7 @@ namespace CaducaRest.UITest
         [Test]
         public void TestGoogle()
         {
-            _driver.Navigate().GoToUrl("http://www.google.com?gl=us");
+            _driver.Navigate().GoToUrl("https://www.google.com/?gl=us&hl=en&pws=0&gws_rd=cr");
             Assert.AreEqual("Google Search", _driver.FindElement(By.Name("btnK")).GetAttribute("value"));
             TakeScreenShoot();
         }

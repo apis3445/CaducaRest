@@ -109,6 +109,10 @@ public class ClienteType : ObjectType<Cliente>
 /// </summary>
 public class CategoriaType : ObjectType<Categoria>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="descriptor"></param>
     protected override void Configure(IObjectTypeDescriptor<Categoria> descriptor)
     {
         descriptor

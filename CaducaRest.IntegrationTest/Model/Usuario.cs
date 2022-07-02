@@ -1,9 +1,6 @@
-﻿using System;
-namespace CaducaRest.IntegrationTest.Model
+﻿namespace CaducaRest.IntegrationTest.Model;
+public class Usuarios
 {
-    public class Usuarios
-    {
-        public string Usuario { get; set; }
-        public string Nombre { get; set; }
-    }
+    public string Usuario { get; set; }
+    public string Nombre { get; set; }
 }

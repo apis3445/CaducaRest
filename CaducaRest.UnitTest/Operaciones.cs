@@ -1,19 +1,18 @@
-﻿namespace CaducaRest.UnitTest
+﻿namespace CaducaRest.UnitTest;
+
+public class Operaciones
 {
-    public class Operaciones
+    private int _a;
+    private int _b;
+
+    public Operaciones(int a, int b)
     {
-        private int _a;
-        private int _b;
+        this._a = a;
+        this._b = b;
+    }
 
-        public Operaciones(int a, int b)
-        {
-            this._a = a;
-            this._b = b;
-        }
-
-        public int Sumar()
-        {
-            return _a + _b;
-        }
+    public int Sumar()
+    {
+        return _a + _b;
     }
 }

@@ -19,6 +19,8 @@ public class Tests : IDisposable
             _driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));
         else
             _driver = new ChromeDriver();
+       
+
     }
 
     [Test]

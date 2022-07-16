@@ -76,9 +76,9 @@ steps:
   condition: always()
   inputs:
     generatorSource: 'TestAssembly'
-    testAssemblyFilePath: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest/bin/Debug/net6.0/CaducaRest.IntegrationTest.dll'
+    testAssemblyFilePath: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest/**/CaducaRest.IntegrationTest.dll'
     projectName: 'Integration'
-    testExecutionJson: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest/bin/Debug/net6.0/TestExecution.json'
+    testExecutionJson: '$(Build.SourcesDirectory)/CaducaRest.IntegrationTest/**/TestExecution.json'
     projectLanguage: 'es'
 
 - task: PublishCodeCoverageResults@1

@@ -11,7 +11,7 @@
 - [x] Compilación correcta
 - [x] Documentación actualizada 
 - [x] Se agregaron unit test
-- [ ] Unit test pasados estan correctos
+- [x] Unit test estan correctos
 
 ## Notas
 

@@ -71,6 +71,16 @@ steps:
     publishTestResults: true
     testRunTitle: 'Integration Test'
 
+- task: SpecFlowPlus@0
+  displayName: Specflow plus
+  condition: always()
+  inputs:
+    generatorSource: 'TestAssembly'
+    testAssemblyFilePath: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net6.0\CaducaRest.IntegrationTest.dll'
+    projectName: 'Integration'
+    testExecutionJson: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net6.0\TestExecution.json'
+    projectLanguage: 'es'
+
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage report'
   inputs:

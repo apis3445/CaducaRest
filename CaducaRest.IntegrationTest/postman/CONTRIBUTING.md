@@ -18,7 +18,7 @@ To test your services you can follow the following recommendations:
 
 # Collections and Code
 
-- You can structure your collections by module -> Sevice
+- You can structure your collections by Module -> Sevice. If you have complex or different test scenarios you can add another level by status code 
 - Use environment variables to test with different servers QA, State, Prod
 - Try to reuse function 
 - Use CSV data when you need to test the same service with different values

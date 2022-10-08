@@ -90,7 +90,6 @@ public class Startup
                 return factory.Create("SharedResource", assemblyName.Name);
             };
           });
-        //services.AddApiVersioning(options => options.ReportApiVersions = true);
         services.AddControllers().AddOData(opt =>
             {
                 opt.Select().Expand().Filter().OrderBy().SetMaxTop(100).Count();

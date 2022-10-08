@@ -4,8 +4,8 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools;
-using OpenQA.Selenium.DevTools.V103.Performance;
-using Network = OpenQA.Selenium.DevTools.V103.Network;
+using OpenQA.Selenium.DevTools.V106.Performance;
+using Network = OpenQA.Selenium.DevTools.V106.Network;
 
 namespace CaducaRest.UITest;
 public class Tests : IDisposable

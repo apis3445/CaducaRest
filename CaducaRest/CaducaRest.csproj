@@ -29,7 +29,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />
-    <Folder Include="GraphQL\Mutation\" />
     <Folder Include="DTO\" />
     <Folder Include="Templates\" />
     <Folder Include="Datos\" />
@@ -51,16 +50,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="7.1.1" />
-    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="7.1.1" />
     <PackageReference Include="System.Text.Json" Version="6.0.6" />
-    <PackageReference Include="GraphQL" Version="7.1.1" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.2.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.11" />
     <PackageReference Include="Microsoft.OData.Core" Version="7.12.3" />
-    <PackageReference Include="GraphQL.MicrosoftDI" Version="7.1.1" />
-    <PackageReference Include="GraphQL.SystemTextJson" Version="7.1.1" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="12.14.0" />
     <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.14.0" />
   </ItemGroup>

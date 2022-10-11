@@ -20,10 +20,15 @@ public class CaducidadMutation
     /// <returns></returns>
     public async Task<Caducidad> AddCaducidad([Service] CaducaContext caducaContext, [Service] LocService locService, Caducidad caducidad)
     {
+        Caducidad nuevo = new Caducidad();
+        nuevo.Cantidad = caducidad.Cantidad;
+        nuevo.ClienteId = caducidad.ClienteId;
+        nuevo.ProductoId = caducidad.ProductoId;
+        nuevo.Fecha = caducidad.Fecha;
         CaducidadDAO caducidadDAO = new CaducidadDAO(caducaContext, locService);
-        var correcto = await caducidadDAO.AgregarAsync(caducidad);
+        var correcto = await caducidadDAO.AgregarAsync(nuevo);
         if (correcto)
-            return caducidad;
+            return nuevo;
         else
             return new Caducidad();
     }

@@ -54,8 +54,8 @@
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.11" />
     <PackageReference Include="Microsoft.OData.Core" Version="7.12.3" />
-    <PackageReference Include="HotChocolate.AspNetCore" Version="12.14.0" />
-    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.14.0" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="12.15.0" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.15.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "5423fc7b-26df-4dec-8686-a4f45be6d3f3",
 		"name": "Regression",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1273809"
 	},
 	"item": [
 		{
@@ -15,11 +16,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Login Status Code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"pm.environment.set(\"Token\", pm.response.json().Token);"
+									"var response = pm.response.json();",
+									"pm.environment.set(\"Token\", response.Token);"
 								],
 								"type": "text/javascript"
 							}
@@ -30,7 +28,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"Usuario\": \"Carlos\",\n  \"Password\": \"DtfhkmTRQ8mNzgRY\",\n  \"Codigo\": 0\n}",
+							"raw": "{\n    \"Usuario\": \"{{Usuario}}\",\n    \"Password\": \"{{Pass}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -124,10 +122,10 @@
 									"//Convertir el Json a un objeto",
 									"var respuesta = pm.response.json();",
 									"",
-									"pm.test(\"El servicio regresa clientes\", function() ",
-									"{",
+									"pm.test(\"El servicio regresa clientes\", function() {",
 									"    pm.expect(respuesta.value).not.to.be.empty;",
-									"});"
+									"});",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -304,7 +302,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query TestQuery\n{\n  caducidad (order: {fecha: ASC})\n  { \n    id\n    fecha\n    producto \n    {\n      nombre\n    }\n    cliente\n    {\n      id\n      nombreComercial\n    }\n  }\n}",
+								"query": "query TestQuery\n{\n  caducidad\n  { \n    id\n    fecha\n    producto \n    {\n        nombre\n    }\n    cliente\n    {\n        ...clienteFragment\n    }\n  }\n}\n\nfragment clienteFragment on Cliente{\n      id\n      nombreComercial\n}",
 								"variables": ""
 							}
 						},
@@ -328,10 +326,12 @@
 							"script": {
 								"exec": [
 									"var respuesta = pm.response.json();",
-									"",
+									"var caducidadId = + respuesta.data.addCaducidad.id",
+									"pm.environment.set(\"CaducidadId\",caducidadId);",
 									"pm.test(\"Graphql addCaducidad corecto\", function() ",
 									"{",
-									"    pm.expect(respuesta.data.addCaducidad.id).to.eq(2);",
+									"    pm.expect(caducidadId).to.above(0);",
+									"    ",
 									"});"
 								],
 								"type": "text/javascript"
@@ -344,7 +344,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation\n{\n    addCaducidad(caducidad:\n    {\n        id:2,\n        cantidad:2,\n        productoId:3,\n        clienteId:3,\n        fecha: \"2020-03-04\"\n    })\n    {\n        id\n        fecha\n    }\n}",
+								"query": "mutation\n{\n    addCaducidad(caducidad:\n    {\n        id:2,\n        cantidad:2,\n        productoId:2,\n        clienteId:6,\n        fecha: \"2023-03-04\"\n    })\n    {\n        id\n        fecha\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -384,7 +384,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation\n{\n    updateCaducidad(caducidad:\n    {\n        id:2,\n        productoId:3,\n        clienteId:3,\n        cantidad:5,\n        fecha: \"2020-03-05\"\n    },\n    id:2)\n    {\n        id\n        cantidad\n        fecha\n    }\n}",
+								"query": "mutation\n{\n    updateCaducidad(caducidad:\n    {\n        id: {{CaducidadId}},\n        productoId:3,\n        clienteId:5,\n        cantidad:5,\n        fecha: \"2020-03-05\"\n    },\n    id:{{CaducidadId}})\n    {\n        id\n        cantidad\n        fecha\n    }\n}",
 								"variables": ""
 							}
 						},
@@ -409,10 +409,10 @@
 								"exec": [
 									"//Convertir el Json a un objeto",
 									"var respuesta = pm.response.json();",
-									"",
+									"var caducidadId = +pm.environment.get(\"CaducidadId\");",
 									"pm.test(\"Graphql deleteCaducidad corecto\", function() ",
 									"{",
-									"    pm.expect(respuesta.data.deleteCaducidad).to.eq(\"La caducidad con el id: 2 fue borrada correctamente\");",
+									"    pm.expect(respuesta.data.deleteCaducidad).to.eq(\"La caducidad con el id: \"+ caducidadId +\" fue borrada correctamente\");",
 									"});",
 									""
 								],
@@ -426,8 +426,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "mutation\n{\n    deleteCaducidad(id:2)\n}",
-								"variables": ""
+								"query": "mutation($idCad: Int!)\n{\n    deleteCaducidad(id:$idCad)\n}",
+								"variables": "{\n    \"idCad\": {{CaducidadId}}\n}"
 							}
 						},
 						"url": {

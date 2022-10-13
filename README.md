@@ -14,4 +14,4 @@ desarrollo: Contiene cambios que estan siendo desarrollados
 
 <img src="https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg" alt="StandWithUkraine" style="max-width: 100%;">
 
-Help Ukraine https://redcross.org.ua/en/donate/
+#StandWithUkraine https://redcross.org.ua/en/donate/

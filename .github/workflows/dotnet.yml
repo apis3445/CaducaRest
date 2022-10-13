@@ -44,8 +44,8 @@ jobs:
         if: always()
         path: ${{ github.workspace }}/TestResults/index.html
     - name: Deploy
-      if: always()
       uses: peaceiris/actions-gh-pages@v3
       with:
+        if: always()
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ${{ github.workspace }}/TestResults/

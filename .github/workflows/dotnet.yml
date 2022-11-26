@@ -37,7 +37,7 @@ jobs:
       run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
     - name: Generate living doc
       if: always()
-      run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net7.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net6.0/TestExecution.json --output ${{ github.workspace }}/TestResults/index.html
+      run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net7.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net7.0/TestExecution.json --output ${{ github.workspace }}/TestResults/index.html
     - uses: actions/upload-artifact@v3
       with:
         name: specflow

@@ -76,9 +76,9 @@ steps:
   condition: always()
   inputs:
     generatorSource: 'TestAssembly'
-    testAssemblyFilePath: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net6.0\CaducaRest.IntegrationTest.dll'
+    testAssemblyFilePath: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net7.0\CaducaRest.IntegrationTest.dll'
     projectName: 'Integration'
-    testExecutionJson: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net6.0\TestExecution.json'
+    testExecutionJson: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net7.0\TestExecution.json'
     projectLanguage: 'es'
 
 - task: PublishCodeCoverageResults@1
@@ -128,7 +128,7 @@ steps:
 - task: CopyFiles@2
   displayName: Copy Playwright
   inputs:
-    SourceFolder: '$(Pipeline.Workspace)/s/CaducaRest.PlayWright.UITest/bin/Debug/net6.0/'
+    SourceFolder: '$(Pipeline.Workspace)/s/CaducaRest.PlayWright.UITest/bin/Debug/net7.0/'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/playwright'
 

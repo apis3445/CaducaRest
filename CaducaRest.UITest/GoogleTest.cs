@@ -23,7 +23,7 @@ public class Tests : IDisposable
 
     }
 
-    [Test]
+    [Test, Property("Priority", 1), Category("CategoryA")]
     public void TestGoogle()
     {
         _driver.Navigate().GoToUrl("https://www.google.com/?gl=us&hl=en&pws=0&gws_rd=cr");

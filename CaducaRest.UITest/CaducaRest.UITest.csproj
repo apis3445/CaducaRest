@@ -12,8 +12,8 @@
 <PrivateAssets>all</PrivateAssets>
 </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.8.1" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="111.0.5563.6400" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.9.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="112.0.5615.4900" />
   </ItemGroup>
 
   <ItemGroup>

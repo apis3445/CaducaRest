@@ -42,8 +42,17 @@ public class Token
                                                         claims,
                                                         expires: fechaExpiracion,
                                                         signingCredentials: creds);
-        string token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
-        return token;
+        try
+        {
+            string token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
+            return token;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return "";
+        }
+       
     }
 
     /// <summary>

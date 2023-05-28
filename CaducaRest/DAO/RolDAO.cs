@@ -31,11 +31,12 @@ public class RolDAO
     /// <returns></returns>
     public List<string> ObtenerRolesPorUsuarios(int usuarioId)
     {
-        return (from usuarioRol in contexto.UsuarioRol
-                join rol in contexto.Rol
-                    on usuarioRol.RolId equals rol.Id
-                where usuarioRol.UsuarioId == usuarioId
-                select rol.Nombre).ToList();
+        var roles = (from usuarioRol in contexto.UsuarioRol
+                    join rol in contexto.Rol
+                        on usuarioRol.RolId equals rol.Id
+                    where usuarioRol.UsuarioId == usuarioId
+                    select rol.Nombre).ToList();
+        return roles;
     }
 
     /// <summary>

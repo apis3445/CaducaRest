@@ -260,11 +260,11 @@ public class UsuarioDAO
         }
 
         DateTime fechaExpiracion = DateTime.Now.AddDays(15).ToLocalTime();
-        tokenDTO.Token = token.GenerarToken(claims.ToArray(), fechaExpiracion);
+        tokenDTO.Nombre = nombre;
         tokenDTO.TokenExpiration = fechaExpiracion;
         tokenDTO.UsuarioId = usuarioId;
         tokenDTO.RefreshToken = token.RefrescarToken();
-        tokenDTO.Nombre = nombre;
+        tokenDTO.Token = token.GenerarToken(claims.ToArray(), fechaExpiracion);
         return tokenDTO;
     }
 

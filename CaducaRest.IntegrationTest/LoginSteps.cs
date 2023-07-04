@@ -1,5 +1,6 @@
 ﻿using CaducaRest.DTO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
@@ -40,6 +41,7 @@ public class LoginSteps
     [Then(@"Obtengo el nombre (.*)")]
     public void ThenObtengoElNombre(string nombreUsuario)
     {
+        Console.WriteLine(token);
         Assert.AreEqual(nombreUsuario, token.Nombre, "El nombre del usuario no coincide");
     }
 }

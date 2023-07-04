@@ -4,8 +4,8 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.DevTools;
-using OpenQA.Selenium.DevTools.V112.Performance;
-using Network = OpenQA.Selenium.DevTools.V112.Network;
+using OpenQA.Selenium.DevTools.V114.Performance;
+using Network = OpenQA.Selenium.DevTools.V114.Network;
 
 namespace CaducaRest.UITest;
 public class Tests : IDisposable
@@ -15,12 +15,7 @@ public class Tests : IDisposable
     [SetUp]
     public void Setup()
     {
-        if (Environment.GetEnvironmentVariable("ChromeWebDriver") != null)
-            _driver = new ChromeDriver(Environment.GetEnvironmentVariable("ChromeWebDriver"));
-        else
-            _driver = new ChromeDriver();
-       
-
+        _driver = new ChromeDriver();
     }
 
     [Test, Property("Priority", 1), Category("CategoryA")]

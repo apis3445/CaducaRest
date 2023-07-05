@@ -3,7 +3,9 @@ using CaducaRest.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -38,7 +40,8 @@ public class Servicios
         caducaContext = servidorPruebas.Host.Services.GetService(typeof(CaducaContext)) as CaducaContext;
         //Inicializamos la bd con datos de prueba
         InicializaDatos.Inicializar(caducaContext);
-        //var total =caducaContext.Usuario.Count();
+        var total = caducaContext.Usuario.Count();
+        Console.WriteLine("Total usuarios:" + total); 
         httpCliente = servidorPruebas.CreateClient();
     }
 

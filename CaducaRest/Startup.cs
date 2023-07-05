@@ -149,6 +149,7 @@ public class Startup
 
                 options.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider());
             });
+        Console.WriteLine("Environment: " + CurrentEnvironment.EnvironmentName);
         switch (CurrentEnvironment.EnvironmentName)
         {
             case "Testing":
@@ -160,6 +161,7 @@ public class Startup
                 var connection = new SqliteConnection("DataSource=:memory:");
                 connection.Open();
                 services.AddDbContext<CaducaContext>(opt => opt.UseSqlite(connection));
+                Console.WriteLine("Environment case: integration");
                 break;
             default:
                 //services.AddDbContext<CaducaContext>(options => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(Configuration.GetConnectionString("DefaultConnection"))));

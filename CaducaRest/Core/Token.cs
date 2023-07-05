@@ -36,6 +36,7 @@ public class Token
     public string GenerarToken(Claim[] claims, DateTime fechaExpiracion)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config["Tokens:Key"]));
+        Console.WriteLine(key);
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         JwtSecurityToken jwtToken = new JwtSecurityToken(Config["Tokens:Issuer"],
                                                         Config["Tokens:Audience"],

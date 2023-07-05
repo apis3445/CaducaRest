@@ -212,12 +212,15 @@ public class UsuarioDAO
     public async Task<TokenDTO> LoginAsync(LoginDTO loginDTO, IConfiguration config, string ip, string navegador)
     {
         var usuario = await ObtenerPorClave(loginDTO.Usuario);
+        Console.Write(usuario.Nombre);
         if (usuario == null)
             return tokenDTO;
         if (!EsUsuarioActivo(usuario))
             return tokenDTO;
+        Console.Write("Es Activo");
         if (!EsPasswordValido(usuario, loginDTO.Password, loginDTO.Codigo))
             return tokenDTO;
+        Console.Write("Es Password valido");
         tokenDTO = GenerarToken(config, usuario.Id, usuario.Nombre);
 
         UsuarioAccesoDAO usuarioAccesoDAO = new UsuarioAccesoDAO(contexto, localizacion);
@@ -258,12 +261,13 @@ public class UsuarioDAO
                     claims.Add(new Claim("Categorias", totalCategorias.ToString()));
             }
         }
-
+        Console.WriteLine("roles:" + roles.Count());
         DateTime fechaExpiracion = DateTime.Now.AddDays(15).ToLocalTime();
         tokenDTO.Nombre = nombre;
         tokenDTO.TokenExpiration = fechaExpiracion;
         tokenDTO.UsuarioId = usuarioId;
         tokenDTO.RefreshToken = token.RefrescarToken();
+        Console.Write("Refrescar Token");
         tokenDTO.Token = token.GenerarToken(claims.ToArray(), fechaExpiracion);
         return tokenDTO;
     }

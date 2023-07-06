@@ -1,4 +1,5 @@
 ﻿using CaducaRest.DTO;
+using CaducaRest.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Text.Json;
@@ -33,10 +34,18 @@ public class LoginSteps
     public async Task WhenYoEjecutoElServicioAsync(string nombreServicio)
     {
         Servicios.Inicializa();
-        var response = await Servicios.PostAsync(nombreServicio, login);
-        Console.WriteLine(response);
-        if (!string.IsNullOrEmpty(response))
-            token = JsonSerializer.Deserialize<TokenDTO>(response);
+        try
+        {
+            var response = await Servicios.PostAsync(nombreServicio, login);
+            Console.WriteLine("Reponse:" + response);
+            if (!string.IsNullOrEmpty(response))
+                token = JsonSerializer.Deserialize<TokenDTO>(response);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
     }
 
     [Then(@"Obtengo el nombre (.*)")]

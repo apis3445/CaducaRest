@@ -49,6 +49,8 @@ public class Servicios
     {
         var contenido = new StringContent(JsonSerializer.Serialize(datos), Encoding.UTF8, "application/json");
         var response = await httpCliente.PostAsync("api/" + servicio, contenido);
+        Console.Write("Post response:" + response);
+        Console.Write("Post status:" + response.StatusCode);
         if (response.StatusCode == HttpStatusCode.OK)
             return await response.Content.ReadAsStringAsync();
         return string.Empty;

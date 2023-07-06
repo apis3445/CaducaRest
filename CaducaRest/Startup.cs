@@ -113,6 +113,8 @@ public class Startup
         })
                 .AddJwtBearer(cfg =>
                 {
+                    Console.WriteLine("Audience:" + Configuration["Tokens:Audience"]);
+                    Console.WriteLine("Key:" + new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])));
                     cfg.Audience = Configuration["Tokens:Audience"];
                     cfg.ClaimsIssuer = Configuration["Tokens:Issuer"];
                     cfg.TokenValidationParameters = new TokenValidationParameters()
@@ -183,8 +185,8 @@ public class Startup
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api Caduca REST", Version = "v1" });
 
-                //Obtenemos el nombre de la dll por medio de reflexión
-                var assemblyName = Assembly.GetEntryAssembly().GetName().Name;
+            //Obtenemos el nombre de la dll por medio de reflexión
+            var assemblyName = Assembly.GetEntryAssembly().GetName().Name;
             if (assemblyName != "testhost")
             {
                     //Al nombre del assembly le agregamos la extensión xml
@@ -236,7 +238,7 @@ public class Startup
         */
         services.AddGraphQLServer()
             .AddQueryType<Query>().AddProjections().AddFiltering().AddSorting()
-            .AddMutationType<GraphQL.HotChocolate.CaducidadMutation>();
+            .AddMutationType<CaducidadMutation>();
 
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

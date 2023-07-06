@@ -34,6 +34,7 @@ public class LoginSteps
     {
         Servicios.Inicializa();
         var response = await Servicios.PostAsync(nombreServicio, login);
+        Console.WriteLine(response);
         if (!string.IsNullOrEmpty(response))
             token = JsonSerializer.Deserialize<TokenDTO>(response);
     }
@@ -41,7 +42,7 @@ public class LoginSteps
     [Then(@"Obtengo el nombre (.*)")]
     public void ThenObtengoElNombre(string nombreUsuario)
     {
-        Console.WriteLine(token);
+        Console.WriteLine("Token: " + token);
         Assert.AreEqual(nombreUsuario, token.Nombre, "El nombre del usuario no coincide");
     }
 }

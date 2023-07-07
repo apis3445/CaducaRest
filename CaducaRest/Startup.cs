@@ -172,6 +172,7 @@ public class Startup
                 //Conexión SQL Server Azure
                 //services.AddDbContext<CaducaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureSQLConnection")));
                 //In memory
+                Console.WriteLine("Environment case: default");
                 services.AddDbContext<CaducaContext>(opt => opt.UseInMemoryDatabase("Caduca")
                                                         .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)));
                 break;

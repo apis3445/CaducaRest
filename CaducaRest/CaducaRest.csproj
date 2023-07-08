@@ -34,6 +34,7 @@
     <Folder Include="Datos\" />
     <Folder Include="Models\Data\" />
     <Folder Include="GraphQL\HotChocolate\" />
+    <Folder Include="logs\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -86,6 +87,7 @@
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="MySql.EntityFrameworkCore" />
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="logs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Templates\IntentosIncorrectos.html">
@@ -97,5 +99,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CaducaRest.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="logs\readme.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

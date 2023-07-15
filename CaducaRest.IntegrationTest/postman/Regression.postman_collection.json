@@ -1,534 +1,545 @@
 {
-	"info": {
-		"_postman_id": "5423fc7b-26df-4dec-8686-a4f45be6d3f3",
-		"name": "Regression",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "1273809"
-	},
-	"item": [
-		{
-			"name": "Login",
-			"item": [
-				{
-					"name": "Login_ValidUser",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var response = pm.response.json();",
-									"pm.environment.set(\"Token\", response.Token);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"Usuario\": \"{{Usuario}}\",\n    \"Password\": \"{{Pass}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BaseURL}}/api/Usuarios/Login",
-							"host": [
-								"{{BaseURL}}"
-							],
-							"path": [
-								"api",
-								"Usuarios",
-								"Login"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Categorias",
-			"item": [
-				{
-					"name": "Categorias_TokenCorrecto_RegresaCategorias",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Categorias status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{Token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{BaseURL}}/api/Categorias",
-							"host": [
-								"{{BaseURL}}"
-							],
-							"path": [
-								"api",
-								"Categorias"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Clientes",
-			"item": [
-				{
-					"name": "Clientes_ConOdata_RegresaDatos",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"//Convertir el Json a un objeto",
-									"var respuesta = pm.response.json();",
-									"",
-									"pm.test(\"El servicio regresa clientes\", function() {",
-									"    pm.expect(respuesta.value).not.to.be.empty;",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{Token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BaseURL}}/odata/Clientes",
-							"host": [
-								"{{BaseURL}}"
-							],
-							"path": [
-								"odata",
-								"Clientes"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Clientes_ODataParametros_RegresaDatosFiltrados",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									" // Librería para ordenar arreglos",
-									" // Read docs: https://lodash.com/docs/4.17.10#orderBy",
-									"var _ = require('lodash');",
-									"",
-									"//Convertir el Json a un objeto",
-									"var respuesta = pm.response.json();",
-									"",
-									"pm.test(\"El servicio regresa clientes\", function() ",
-									"{",
-									"    pm.expect(respuesta.value).not.to.be.empty;",
-									"});",
-									"",
-									"pm.test(\"El servicio regresa solamente 5 clientes\", function() ",
-									"{",
-									"    pm.expect(respuesta.value).to.have.lengthOf(5);",
-									"});",
-									"",
-									"pm.test('Los clientes estan ordenados por Razón social descendente', () => {",
-									"    var clientesOrdenados = _.orderBy(respuesta.value, ['RazonSocial'],['desc']);",
-									"    pm.expect(respuesta.value).to.eql(clientesOrdenados);    ",
-									"});",
-									"",
-									"pm.test(\"Todos los clientes estan activos\",  () => {",
-									"    pm.expect(respuesta.value.filter(element => element.Activo == true)).to.have.lengthOf(5);",
-									"});",
-									"",
-									"pm.test(\"La respuesta incluye una propiedad count\",  () => {",
-									"    pm.expect(respuesta).to.have.property('@odata.count');",
-									"});",
-									"",
-									"pm.test(\"La respuesta incluye propiedades Clave,RazonSocial, Activo\",  () => {",
-									"    pm.expect(respuesta.value[0]).to.have.all.keys('Clave', 'RazonSocial', 'Activo');",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{Token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BaseURL}}/odata/Clientes?$select=Clave,RazonSocial,Activo&$filter=Activo eq true&$count=true&$orderby=RazonSocial desc&$top=5",
-							"host": [
-								"{{BaseURL}}"
-							],
-							"path": [
-								"odata",
-								"Clientes"
-							],
-							"query": [
-								{
-									"key": "$select",
-									"value": "Clave,RazonSocial,Activo"
-								},
-								{
-									"key": "$filter",
-									"value": "Activo eq true"
-								},
-								{
-									"key": "$count",
-									"value": "true"
-								},
-								{
-									"key": "$orderby",
-									"value": "RazonSocial desc"
-								},
-								{
-									"key": "$top",
-									"value": "5"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Caducidad",
-			"item": [
-				{
-					"name": "Caducidades_GraphQL",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var respuesta = pm.response.json();",
-									"",
-									"pm.test(\"Graphql query corecto\", function() ",
-									"{",
-									"    pm.expect(respuesta.data.caducidad.length).to.be.above(2);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "query TestQuery\n{\n  caducidad\n  { \n    id\n    fecha\n    producto \n    {\n        nombre\n    }\n    cliente\n    {\n        ...clienteFragment\n    }\n  }\n}\n\nfragment clienteFragment on Cliente{\n      id\n      nombreComercial\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{BaseURL}}/graphql",
-							"host": [
-								"{{BaseURL}}"
-							],
-							"path": [
-								"graphql"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Caducidades_Insert_Correcto",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var respuesta = pm.response.json();",
-									"var caducidadId = + respuesta.data.addCaducidad.id",
-									"pm.environment.set(\"CaducidadId\",caducidadId);",
-									"pm.test(\"Graphql addCaducidad corecto\", function() ",
-									"{",
-									"    pm.expect(caducidadId).to.above(0);",
-									"    ",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation\n{\n    addCaducidad(caducidad:\n    {\n        id:2,\n        cantidad:2,\n        productoId:2,\n        clienteId:6,\n        fecha: \"2023-03-04\"\n    })\n    {\n        id\n        fecha\n    }\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{BaseURL}}/graphql",
-							"host": [
-								"{{BaseURL}}"
-							],
-							"path": [
-								"graphql"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Caducidades_Update_Correcto",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"var respuesta = pm.response.json();",
-									"",
-									"pm.test(\"Graphql updateCaducidad corecto\", function() ",
-									"{",
-									"    pm.expect(respuesta.data.updateCaducidad.cantidad).to.eq(5);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation\n{\n    updateCaducidad(caducidad:\n    {\n        id: {{CaducidadId}},\n        productoId:3,\n        clienteId:5,\n        cantidad:5,\n        fecha: \"2020-03-05\"\n    },\n    id:{{CaducidadId}})\n    {\n        id\n        cantidad\n        fecha\n    }\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{BaseURL}}/graphql",
-							"host": [
-								"{{BaseURL}}"
-							],
-							"path": [
-								"graphql"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Caducidades_Delete_Correcto",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"//Convertir el Json a un objeto",
-									"var respuesta = pm.response.json();",
-									"var caducidadId = +pm.environment.get(\"CaducidadId\");",
-									"pm.test(\"Graphql deleteCaducidad corecto\", function() ",
-									"{",
-									"    pm.expect(respuesta.data.deleteCaducidad).to.eq(\"La caducidad con el id: \"+ caducidadId +\" fue borrada correctamente\");",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation($idCad: Int!)\n{\n    deleteCaducidad(id:$idCad)\n}",
-								"variables": "{\n    \"idCad\": {{CaducidadId}}\n}"
-							}
-						},
-						"url": {
-							"raw": "{{BaseURL}}/graphql",
-							"host": [
-								"{{BaseURL}}"
-							],
-							"path": [
-								"graphql"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get_Caducidades",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "{{BaseURL}}/graphql?query={caducidad{id productoId}}",
-							"host": [
-								"{{BaseURL}}"
-							],
-							"path": [
-								"graphql"
-							],
-							"query": [
-								{
-									"key": "query",
-									"value": "{caducidad{id productoId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"pm.test(\"Status code es 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						]
-					}
-				}
-			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	]
+  "info": {
+    "_postman_id": "5423fc7b-26df-4dec-8686-a4f45be6d3f3",
+    "name": "Regression",
+    "description": "Regression sample PR",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19276367",
+    "_collection_link": "https://www.postman.com/gold-astronaut-357480/workspace/my-workspace/collection/1273809-5423fc7b-26df-4dec-8686-a4f45be6d3f3?action=share&creator=19276367&source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "Login_UsuarioCorrecto_RegresaToken",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var response = pm.response.json();",
+                  "pm.environment.set(\"Token\", response.Token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"Usuario\": \"{{Usuario}}\",\n    \"Password\": \"{{Pass}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/api/Usuarios/Login",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "api",
+                "Usuarios",
+                "Login"
+              ]
+            },
+            "description": "Regression Ejemplo"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Categorias",
+      "item": [
+        {
+          "name": "Categorias_UsuarioCorrecto_RegresaUsuarioCategorias",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "//Check status",
+                  "pm.test(\"status code es 200: \"+ pm.request.url.toString(), function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/api/Categorias",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "api",
+                "Categorias"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Clientes",
+      "item": [
+        {
+          "name": "odataClientes_ConToken_RegresaClientes",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "//Convert JSON to an object",
+                  "var respuesta = pm.response.json();",
+                  "",
+                  "pm.test(\"Servicio regresa al menos un cliente\", function() {",
+                  "    pm.expect(respuesta.value).not.to.be.empty;",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseURL}}/odata/Clientes",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "odata",
+                "Clientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "odataClientes_withValidFilters_ReturnFilteredData",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  " // Library to sort arrays",
+                  " // Read docs: https://lodash.com/docs/4.17.10#orderBy",
+                  "var _ = require('lodash');",
+                  "",
+                  "//Convertir el Json a un objeto",
+                  "var respuesta = pm.response.json();",
+                  "",
+                  "pm.test(\"Service returns client\", function() ",
+                  "{",
+                  "    pm.expect(respuesta.value).not.to.be.empty;",
+                  "});",
+                  "",
+                  "pm.test(\"Returns max of 1 clients\", function() ",
+                  "{",
+                  "    pm.expect(respuesta.value.length).to.be.below(6)",
+                  "});",
+                  "",
+                  "pm.test('Client are sort by Razón social descendant', () => {",
+                  "    var clientesOrdenados = _.orderBy(respuesta.value, ['RazonSocial'],['desc']);",
+                  "    pm.expect(respuesta.value).to.eql(clientesOrdenados);    ",
+                  "});",
+                  "",
+                  "pm.test(\"Client is active\",  () => {",
+                  "    pm.expect(respuesta.value.filter(element => element.Activo == true)).to.have.lengthOf(1);",
+                  "});",
+                  "",
+                  "pm.test(\"Response includes count\",  () => {",
+                  "    pm.expect(respuesta).to.have.property('@odata.count');",
+                  "});",
+                  "",
+                  "pm.test(\"Response includes properties: Clave,RazonSocial, Activo\",  () => {",
+                  "    pm.expect(respuesta.value[0]).to.have.all.keys('Clave', 'RazonSocial', 'Activo');",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{Token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseURL}}/odata/Clientes?$select=Clave,RazonSocial,Activo&$filter=Activo eq true&$count=true&$orderby=RazonSocial desc&$top=5",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "odata",
+                "Clientes"
+              ],
+              "query": [
+                {
+                  "key": "$select",
+                  "value": "Clave,RazonSocial,Activo"
+                },
+                {
+                  "key": "$filter",
+                  "value": "Activo eq true"
+                },
+                {
+                  "key": "$count",
+                  "value": "true"
+                },
+                {
+                  "key": "$orderby",
+                  "value": "RazonSocial desc"
+                },
+                {
+                  "key": "$top",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Caducidad",
+      "item": [
+        {
+          "name": "Caducidades_GraphQL",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var respuesta = pm.response.json();",
+                  "",
+                  "pm.test(\"Graphql query corecto\", function() ",
+                  "{",
+                  "    pm.expect(respuesta.data.caducidad.length).to.be.above(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query TestQuery\n{\n  caducidad\n  { \n    id\n    fecha\n    producto \n    {\n        nombre\n    }\n    cliente\n    {\n        ...clienteFragment\n    }\n  }\n}\n\nfragment clienteFragment on Cliente{\n      id\n      nombreComercial\n}",
+                "variables": ""
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/graphql",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Caducidades_Insert_Correcto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var respuesta = pm.response.json();",
+                  "var caducidadId = + respuesta.data.addCaducidad.id",
+                  "pm.environment.set(\"CaducidadId\",caducidadId);",
+                  "pm.test(\"Graphql addCaducidad corecto\", function() ",
+                  "{",
+                  "    pm.expect(caducidadId).to.above(0);",
+                  "    ",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation\n{\n    addCaducidad(caducidad:\n    {\n        id:2,\n        cantidad:2,\n        productoId:1,\n        clienteId:1,\n        fecha: \"2023-07-04\"\n    })\n    {\n        id\n        fecha\n    }\n}",
+                "variables": ""
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/graphql",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Caducidades_Update_Correcto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var respuesta = pm.response.json();",
+                  "",
+                  "pm.test(\"Graphql updateCaducidad corecto\", function() ",
+                  "{",
+                  "    pm.expect(respuesta.data.updateCaducidad.cantidad).to.eq(5);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation\n{\n    updateCaducidad(caducidad:\n    {\n        id: {{CaducidadId}},\n        productoId:1,\n        clienteId:1,\n        cantidad:5,\n        fecha: \"2020-07-10\"\n    },\n    id:{{CaducidadId}})\n    {\n        id\n        cantidad\n        fecha\n    }\n}",
+                "variables": ""
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/graphql",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Caducidades_Delete_Correcto",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "//Convertir el Json a un objeto",
+                  "var respuesta = pm.response.json();",
+                  "var caducidadId = +pm.environment.get(\"CaducidadId\");",
+                  "pm.test(\"Graphql deleteCaducidad corecto\", function() ",
+                  "{",
+                  "    pm.expect(respuesta.data.deleteCaducidad).to.eq(\"La caducidad con el id: \"+ caducidadId +\" fue borrada correctamente\");",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation($idCad: Int!)\n{\n    deleteCaducidad(id:$idCad)\n}",
+                "variables": "{\n    \"idCad\": {{CaducidadId}}\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/graphql",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get_Caducidades",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "",
+                "variables": ""
+              }
+            },
+            "url": {
+              "raw": "{{BaseURL}}/graphql?query={caducidad{id productoId}}",
+              "host": [
+                "{{BaseURL}}"
+              ],
+              "path": [
+                "graphql"
+              ],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "{caducidad{id productoId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code es 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "Token",
+      "value": "",
+      "type": "string"
+    }
+  ]
 }

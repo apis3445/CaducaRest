@@ -162,7 +162,7 @@
           "response": []
         },
         {
-          "name": "odataClientes_withValidFilters_ReturnFilteredData",
+          "name": "odataClientes_conFiltros_RegresaDatosFiltrados",
           "event": [
             {
               "listen": "test",
@@ -175,30 +175,30 @@
                   "//Convertir el Json a un objeto",
                   "var respuesta = pm.response.json();",
                   "",
-                  "pm.test(\"Service returns client\", function() ",
+                  "pm.test(\"Servicio regresa al menos un cliente\", function() ",
                   "{",
                   "    pm.expect(respuesta.value).not.to.be.empty;",
                   "});",
                   "",
-                  "pm.test(\"Returns max of 1 clients\", function() ",
+                  "pm.test(\"Regresa menos de 6 clientes\", function() ",
                   "{",
                   "    pm.expect(respuesta.value.length).to.be.below(6)",
                   "});",
                   "",
-                  "pm.test('Client are sort by Razón social descendant', () => {",
+                  "pm.test('Clientes se ordenan por Razón social descendente', () => {",
                   "    var clientesOrdenados = _.orderBy(respuesta.value, ['RazonSocial'],['desc']);",
                   "    pm.expect(respuesta.value).to.eql(clientesOrdenados);    ",
                   "});",
                   "",
-                  "pm.test(\"Client is active\",  () => {",
+                  "pm.test(\"Cliente es activo\",  () => {",
                   "    pm.expect(respuesta.value.filter(element => element.Activo == true)).to.have.lengthOf(1);",
                   "});",
                   "",
-                  "pm.test(\"Response includes count\",  () => {",
+                  "pm.test(\"Respuesta incluye el total de clientes\",  () => {",
                   "    pm.expect(respuesta).to.have.property('@odata.count');",
                   "});",
                   "",
-                  "pm.test(\"Response includes properties: Clave,RazonSocial, Activo\",  () => {",
+                  "pm.test(\"Response incluye propiedades: Clave,RazonSocial, Activo\",  () => {",
                   "    pm.expect(respuesta.value[0]).to.have.all.keys('Clave', 'RazonSocial', 'Activo');",
                   "});",
                   ""
@@ -271,7 +271,7 @@
           "script": {
             "type": "text/javascript",
             "exec": [
-              "pm.test(\"Status code is 200\", function () {",
+              "pm.test(\"Estatus code es 200\", function () {",
               "    pm.response.to.have.status(200);",
               "});"
             ]

@@ -10,18 +10,15 @@ public class Operaciones
     private int _a;
     private int _b;
 
-    private readonly TestContext _testContext;
 
-    public Operaciones(int a, int b, TestContext testContext)
+    public Operaciones(int a, int b)
     {
         this._a = a;
         this._b = b;
-        _testContext = testContext;
     }
 
     public int Sumar()
     {
-        _testContext.AddResultFile("");
         return _a + _b;
     }
 }

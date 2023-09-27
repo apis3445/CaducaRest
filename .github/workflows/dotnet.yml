@@ -10,7 +10,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      MARIA: ${{secrets.MARIA}}
+      JUAN: ${{secrets.JUAN}}
+      CARLOS: ${{secrets.CARLOS}}
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET

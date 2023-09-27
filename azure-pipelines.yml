@@ -28,7 +28,7 @@ steps:
   env:
     JUAN: $(JUAN)
 - bash: |
-    echo "My second secret variable: $JUAN"
+    echo "My second secret variable: $(JUAN)"
 - task: UseDotNet@2 
   displayName: "Instalar .NET Core 7.0.x"
   inputs:

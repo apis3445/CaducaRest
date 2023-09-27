@@ -80,7 +80,7 @@ steps:
       Write-Host "My first secret variable is $env:MARIA"
       $env:MARIA -eq "foo"
   env:
-    FOO_ONE: $(MARIA)
+    JUAN: $(JUAN)
 - bash: |
     echo "My second secret variable: $JUAN"
 - task: SpecFlowPlus@0

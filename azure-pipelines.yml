@@ -26,7 +26,7 @@ steps:
       Write-Host "My first secret variable is ${env:MARIA}"
       ${env:MARIA} -eq "foo"
   env:
-    JUAN: $(JUAN)
+    MARIA: $(MARIA)
 - bash: |
     echo "My second secret variable: $(JUAN)"
 - task: UseDotNet@2 

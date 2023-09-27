@@ -1,5 +1,4 @@
 ﻿using CaducaRest.DTO;
-using CaducaRest.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Text.Json;
@@ -17,17 +16,16 @@ public class LoginSteps
     public void GivenQueExisteUnUsarioConLaClave(string usuario)
     {
         login.Usuario = usuario;
-        login.Password = "DtfhkmTRQ8mNzgRY";
+        string carlos = Environment.GetEnvironmentVariable(usuario.ToUpper());
+        login.Password = carlos;
     }
 
     [Given(@"Tecleo los siguientes datos del (.*)")]
     public void DadoTecleoLosSiguientesDatosDelUsuario(string usuario)
     {
         login.Usuario = usuario;
-        if (usuario == "Maria")
-            login.Password = "8cYyY8paESGbzC5E";
-        else
-            login.Password = "zUvyvsRSCMek58eR";
+        string pass = Environment.GetEnvironmentVariable(usuario.ToUpper());
+        login.Password = pass;
     }
 
     [When(@"Yo ejecuto el servicio (.*)")]

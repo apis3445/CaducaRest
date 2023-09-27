@@ -19,9 +19,7 @@ variables:
   Tokens.Issuer: $(issuer)
   Tokens.Audience: $(issuer)
   Logging.LogLevel.Default: "Error"
-  MARIA: $(MARIA)
-  JUAN: $(JUAN)
-  CARLOS: $(CARLOS)
+
   
 steps:
 
@@ -65,24 +63,28 @@ steps:
     publishTestResults: true
     testRunTitle: 'Unit Test'
 
-# - task: DotNetCoreCLI@2
-#   displayName: Testing Integration Test
-#   inputs:
-#     command: 'test'
-#     projects: '**/CaducaRest.IntegrationTest/*.csproj'
-#     arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
-#     publishTestResults: true
-#     testRunTitle: 'Integration Test'
+- task: DotNetCoreCLI@2
+  displayName: Testing Integration Test
+  env:
+    MARIA: $(MARIA)
+    JUAN: $(JUAN)
+    CARLOS: $(CARLOS)
+  inputs:
+    command: 'test'
+    projects: '**/CaducaRest.IntegrationTest/*.csproj'
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    publishTestResults: true
+    testRunTitle: 'Integration Test'
 
-# - task: SpecFlowPlus@0
-#   displayName: Specflow plus
-#   condition: always()
-#   inputs:
-#     generatorSource: 'TestAssembly'
-#     testAssemblyFilePath: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net7.0\CaducaRest.IntegrationTest.dll'
-#     projectName: 'Integration'
-#     testExecutionJson: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net7.0\TestExecution.json'
-#     projectLanguage: 'es'
+- task: SpecFlowPlus@0
+  displayName: Specflow plus
+  condition: always()
+  inputs:
+    generatorSource: 'TestAssembly'
+    testAssemblyFilePath: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net7.0\CaducaRest.IntegrationTest.dll'
+    projectName: 'Integration'
+    testExecutionJson: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net7.0\TestExecution.json'
+    projectLanguage: 'es'
 
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish code coverage report'

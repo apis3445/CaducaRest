@@ -19,6 +19,7 @@ variables:
   Tokens.Issuer: $(issuer)
   Tokens.Audience: $(issuer)
   Logging.LogLevel.Default: "Error"
+  JUAN: ${env.JUAN}
 
   
 steps:
@@ -74,13 +75,9 @@ steps:
   inputs:
     command: 'test'
     projects: '**/CaducaRest.IntegrationTest/*.csproj'
-    arguments: '-e JUAN=$(JUAN) --configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     publishTestResults: true
     testRunTitle: 'Integration Test'
-  env:
-    MARIA: $(MARIA)
-    JUAN: $(JUAN)
-    CARLOS: $(CARLOS)
     
 - task: SpecFlowPlus@0
   displayName: Specflow plus

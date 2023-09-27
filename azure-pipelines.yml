@@ -19,7 +19,10 @@ variables:
   Tokens.Issuer: $(issuer)
   Tokens.Audience: $(issuer)
   Logging.LogLevel.Default: "Error"
-
+  MARIA: $(MARIA)
+  JUAN: $(JUAN)
+  CARLOS: $(CARLOS)
+  
 steps:
 
 - task: UseDotNet@2 

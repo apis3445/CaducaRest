@@ -22,7 +22,13 @@ variables:
 
   
 steps:
-
+- powershell: |
+      Write-Host "My first secret variable is $env:MARIA"
+      $env:MARIA -eq "foo"
+  env:
+    JUAN: $(JUAN)
+- bash: |
+    echo "My second secret variable: $JUAN"
 - task: UseDotNet@2 
   displayName: "Instalar .NET Core 7.0.x"
   inputs:
@@ -65,24 +71,17 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: Testing Integration Test
-  env:
-    MARIA: $(MARIA)
-    JUAN: $(JUAN)
-    CARLOS: $(CARLOS)
   inputs:
     command: 'test'
     projects: '**/CaducaRest.IntegrationTest/*.csproj'
     arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     publishTestResults: true
     testRunTitle: 'Integration Test'
-
-- powershell: |
-      Write-Host "My first secret variable is $env:MARIA"
-      $env:MARIA -eq "foo"
   env:
+    MARIA: $(MARIA)
     JUAN: $(JUAN)
-- bash: |
-    echo "My second secret variable: $JUAN"
+    CARLOS: $(CARLOS)
+    
 - task: SpecFlowPlus@0
   displayName: Specflow plus
   condition: always()

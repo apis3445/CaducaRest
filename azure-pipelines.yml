@@ -23,8 +23,8 @@ variables:
   
 steps:
 - powershell: |
-      Write-Host "My first secret variable is $env:MARIA"
-      $env:MARIA -eq "foo"
+      Write-Host "My first secret variable is ${env:MARIA}"
+      ${env:MARIA} -eq "foo"
   env:
     JUAN: $(JUAN)
 - bash: |

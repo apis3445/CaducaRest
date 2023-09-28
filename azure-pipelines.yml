@@ -41,7 +41,6 @@ steps:
     projects: |
       **/CaducaRest/CaducaRest.csproj
 
-
 - task: DotNetCoreCLI@2
   displayName: Testing Unit Test
   inputs:
@@ -104,7 +103,9 @@ steps:
 #  displayName: 'Generar Script'
 
 #- script: dotnet ef migrations bundle -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj --verbose --configuration --force
-#  displayName: 'Generar Bundle'- task: DotNetCoreCLI@2
+#  displayName: 'Generar Bundle'
+
+- task: DotNetCoreCLI@2
   displayName: "Publish Linux"
   inputs:
         command: 'publish'

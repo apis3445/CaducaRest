@@ -29,12 +29,6 @@ steps:
         performMultiLevelLookup: true
         packageType: sdk
 
-#- task: FileTransform@2
-  #displayName: "Transformar appsettings"
-  #inputs:
-    #folderPath: '$(build.SourcesDirectory)/CaducaRest/'
-    #jsonTargetFiles: '**/appsettings.json'
-
 - task: CmdLine@2
   displayName: "Instalar .NET Global"
   inputs:
@@ -47,11 +41,6 @@ steps:
     projects: |
       **/CaducaRest/CaducaRest.csproj
 
-#- script: dotnet ef migrations script -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o $(Build.ArtifactStagingDirectory)\Scripts\update_to_latest.sql
-#  displayName: 'Generar Script'
-
-#- script: dotnet ef migrations bundle -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj --verbose --configuration --force
-#  displayName: 'Generar Bundle'
 
 - task: DotNetCoreCLI@2
   displayName: Testing Unit Test
@@ -105,7 +94,17 @@ steps:
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/postman'
 
-- task: DotNetCoreCLI@2
+- task: FileTransform@2
+  displayName: "Transformar appsettings"
+  inputs:
+    folderPath: '$(build.SourcesDirectory)/CaducaRest/'
+    jsonTargetFiles: '**/appsettings.json'
+
+#- script: dotnet ef migrations script -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj -i -o $(Build.ArtifactStagingDirectory)\Scripts\update_to_latest.sql
+#  displayName: 'Generar Script'
+
+#- script: dotnet ef migrations bundle -p $(build.SourcesDirectory)\CaducaRest\CaducaRest.csproj --verbose --configuration --force
+#  displayName: 'Generar Bundle'- task: DotNetCoreCLI@2
   displayName: "Publish Linux"
   inputs:
         command: 'publish'

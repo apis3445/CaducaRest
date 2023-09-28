@@ -19,7 +19,6 @@ variables:
   Tokens.Issuer: $(issuer)
   Tokens.Audience: $(issuer)
   Logging.LogLevel.Default: "Error"
-  JUAN: $(JUAN)
 
 steps:
 
@@ -71,8 +70,6 @@ steps:
     arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     publishTestResults: true
     testRunTitle: 'Integration Test'
-  env:
-      MARIA: $(MARIA)
     
 - task: SpecFlowPlus@0
   displayName: Specflow plus

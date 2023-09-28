@@ -143,7 +143,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 16
- testRunner.Given(string.Format("Tecleo los siguientes datos del {0}", usuario), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+ testRunner.Given(string.Format("Tecleo los siguientes datos del usuario {0}", usuario), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 17
  testRunner.When("Yo ejecuto el servicio Usuarios/Login", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Cuando ");

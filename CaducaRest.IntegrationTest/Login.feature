@@ -13,7 +13,7 @@ Escenario: Login con un usuario
 	Entonces Obtengo el nombre Carlos Hernández
 
 Escenario: Login con usuarios en Tabla
-	Dado Tecleo los siguientes datos del <Usuario>
+	Dado Tecleo los siguientes datos del usuario <Usuario>
 	Cuando Yo ejecuto el servicio Usuarios/Login
 	Entonces Obtengo el nombre <Nombre>
 

@@ -20,12 +20,11 @@ public class LoginSteps
         login.Password = carlos;
     }
 
-    [Given(@"Tecleo los siguientes datos del (.*)")]
+    [Given(@"Tecleo los siguientes datos del usuario (.*)")]
     public void DadoTecleoLosSiguientesDatosDelUsuario(string usuario)
     {
         login.Usuario = usuario;
         string pass = Environment.GetEnvironmentVariable(usuario.ToUpper());
-        Console.WriteLine(pass);
         login.Password = pass;
     }
 

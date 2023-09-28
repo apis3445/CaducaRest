@@ -19,6 +19,9 @@ variables:
   Tokens.Issuer: $(issuer)
   Tokens.Audience: $(issuer)
   Logging.LogLevel.Default: "Error"
+  JUAN: $(JUAN)
+  MARIA: $(MARIA)
+  CARLOS: $(CARLOS)
 
 steps:
 

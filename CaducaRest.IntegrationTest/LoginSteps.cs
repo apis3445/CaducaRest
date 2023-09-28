@@ -25,6 +25,7 @@ public class LoginSteps
     {
         login.Usuario = usuario;
         string pass = Environment.GetEnvironmentVariable(usuario.ToUpper());
+        Console.WriteLine(pass);
         login.Password = pass;
     }
 

@@ -29,11 +29,11 @@ steps:
         performMultiLevelLookup: true
         packageType: sdk
 
-- task: FileTransform@2
-  displayName: "Transformar appsettings"
-  inputs:
-    folderPath: '$(build.SourcesDirectory)/CaducaRest/'
-    jsonTargetFiles: '**/appsettings.json'
+#- task: FileTransform@2
+  #displayName: "Transformar appsettings"
+  #inputs:
+    #folderPath: '$(build.SourcesDirectory)/CaducaRest/'
+    #jsonTargetFiles: '**/appsettings.json'
 
 - task: CmdLine@2
   displayName: "Instalar .NET Global"

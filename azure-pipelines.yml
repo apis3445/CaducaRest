@@ -19,17 +19,10 @@ variables:
   Tokens.Issuer: $(issuer)
   Tokens.Audience: $(issuer)
   Logging.LogLevel.Default: "Error"
-  JUAN: ${env.JUAN}
+  JUAN: $(JUAN)
 
-  
 steps:
-- powershell: |
-      Write-Host "My first secret variable is ${env:MARIA}"
-      ${env:MARIA} -eq "foo"
-  env:
-    MARIA: $(MARIA)
-- bash: |
-    echo "My second secret variable: $(JUAN)"
+
 - task: UseDotNet@2 
   displayName: "Instalar .NET Core 7.0.x"
   inputs:
@@ -78,6 +71,8 @@ steps:
     arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     publishTestResults: true
     testRunTitle: 'Integration Test'
+  env:
+      MARIA: $(MARIA)
     
 - task: SpecFlowPlus@0
   displayName: Specflow plus

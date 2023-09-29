@@ -58,6 +58,10 @@ steps:
     arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     publishTestResults: true
     testRunTitle: 'Integration Test'
+  env:
+    CARLOS: $(CARLOS)
+    JUAN: $(JUAN)
+    MARIA: $(MARIA)
     
 - task: SpecFlowPlus@0
   displayName: Specflow plus

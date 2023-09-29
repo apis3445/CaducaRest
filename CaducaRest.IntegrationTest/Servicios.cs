@@ -51,6 +51,7 @@ public class Servicios
         var response = await httpCliente.PostAsync("api/" + servicio, contenido);
         Console.Write("Post response:" + response);
         Console.Write("Post status:" + response.StatusCode);
+        Console.WriteLine("Post reason phrase" + response.ReasonPhrase);
         if (response.StatusCode == HttpStatusCode.OK)
             return await response.Content.ReadAsStringAsync();
         return string.Empty;

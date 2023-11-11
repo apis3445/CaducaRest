@@ -65,7 +65,8 @@ public class Tests : IDisposable
     public void TakeScreenShoot()
     {
         var screenImage = System.IO.Path.Combine(TestContext.CurrentContext.TestDirectory, Guid.NewGuid().ToString() + ".png");
-        ((ITakesScreenshot)_driver).GetScreenshot().SaveAsFile(screenImage, ScreenshotImageFormat.Png);
+        Screenshot screenshot = ((ITakesScreenshot)_driver).GetScreenshot();
+        screenshot.SaveAsFile(screenImage);
         TestContext.AddTestAttachment(screenImage);
     }
 

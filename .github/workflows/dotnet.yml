@@ -19,7 +19,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -40,7 +40,7 @@ jobs:
       run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
     - name: Generate living doc
       if: always()
-      run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net7.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net7.0/TestExecution.json --output ${{ github.workspace }}/TestResults/index.html
+      run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net8.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net8.0/TestExecution.json --output ${{ github.workspace }}/TestResults/index.html
     - uses: actions/upload-artifact@v3
       with:
         name: specflow

@@ -1,0 +1,9 @@
+{
+    "omnisharp.testRunSettings": {
+        "env": {
+            "MARIA": "Hello",
+            "JUAN": "Hello",
+            "CARLOS": "Hello"
+        }
+    }
+}

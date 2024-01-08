@@ -22,7 +22,7 @@ public class Tests : IDisposable
     public void TestGoogle()
     {
         _driver.Navigate().GoToUrl("https://www.google.com/?gl=us&hl=en&pws=0&gws_rd=cr");
-        Assert.AreEqual("Google Search", _driver.FindElement(By.Name("btnK")).GetAttribute("value"));
+        Assert.That("Google Search", Is.EqualTo(_driver.FindElement(By.Name("btnK")).GetAttribute("value")));
         TakeScreenShoot();
     }
 

@@ -85,6 +85,15 @@ steps:
       projects: |
         **/CaducaRest.PlayWright.UITest/*.csproj
 
+  - task: DotNetCoreCLI@2
+    displayName: "Build Selenium testing"
+    inputs:
+      command: "publish"
+      publishWebProjects: false
+      projects: "**/CaducaRest.UITest/*.csproj"
+      arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium"
+      zipAfterPublish: false
+      
   - task: CopyFiles@2
     displayName: Copy postman scripts
     inputs:
@@ -119,14 +128,6 @@ steps:
       publishWebProjects: true
       arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/win"
       zipAfterPublish: true
-  - task: DotNetCoreCLI@2
-    displayName: "Build Selenium testing"
-    inputs:
-      command: "publish"
-      publishWebProjects: false
-      projects: "**/CaducaRest.UITest/*.csproj"
-      arguments: "--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/selenium"
-      zipAfterPublish: false
 
   - task: CopyFiles@2
     displayName: Copy Playwright

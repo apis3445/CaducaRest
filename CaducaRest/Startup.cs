@@ -30,6 +30,7 @@ using Microsoft.OData.ModelBuilder;
 using Microsoft.AspNetCore.OData;
 using CaducaRest.GraphQL.HotChocolate;
 using HotChocolate;
+using Microsoft.Extensions.Hosting;
 
 namespace CaducaRest;
 
@@ -72,23 +73,23 @@ public class Startup
         services.AddControllers(options =>
         {
             options.EnableEndpointRouting = false;
-                //Agregamos una politica para indicar que nuestros servicios 
-                //requieren que los usuarios hayan iniciado sesión
-                var policy = new AuthorizationPolicyBuilder()
-                                .RequireAuthenticatedUser()
-                                .Build();
+            //Agregamos una politica para indicar que nuestros servicios 
+            //requieren que los usuarios hayan iniciado sesión
+            var policy = new AuthorizationPolicyBuilder()
+                            .RequireAuthenticatedUser()
+                            .Build();
             options.Filters.Add(new AuthorizeFilter(policy));
             options.Filters.Add(typeof(CustomExceptionFilter));
         }).AddJsonOptions(JsonOptions =>
                 JsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null)
           .AddDataAnnotationsLocalization(options =>
           {
-                  //Indicamos que el modelo tomara los mensajes de error del archivo SharedResource
-                  options.DataAnnotationLocalizerProvider = (type, factory) =>
-                  {
-                var assemblyName = new AssemblyName(typeof(SharedResource).GetTypeInfo().Assembly.FullName);
-                return factory.Create("SharedResource", assemblyName.Name);
-            };
+              //Indicamos que el modelo tomara los mensajes de error del archivo SharedResource
+              options.DataAnnotationLocalizerProvider = (type, factory) =>
+              {
+                  var assemblyName = new AssemblyName(typeof(SharedResource).GetTypeInfo().Assembly.FullName);
+                  return factory.Create("SharedResource", assemblyName.Name);
+              };
           });
         services.AddControllers().AddOData(opt =>
             {
@@ -122,11 +123,11 @@ public class Startup
                         ValidIssuer = Configuration["Tokens:Issuer"],
                         ValidateAudience = true,
                         ValidAudience = Configuration["Tokens:Audience"],
-                            //Se valida la llave de cifrado
-                            ValidateIssuerSigningKey = true,
+                        //Se valida la llave de cifrado
+                        ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
-                            //Se validara el tiempo de vida del token
-                            ValidateLifetime = true
+                        //Se validara el tiempo de vida del token
+                        ValidateLifetime = true
                     };
                 });
 
@@ -190,13 +191,13 @@ public class Startup
             var assemblyName = Assembly.GetEntryAssembly().GetName().Name;
             if (assemblyName != "testhost")
             {
-                    //Al nombre del assembly le agregamos la extensión xml
-                    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                    //Agregamos el Path, es importante utilizar el comando Path.Combine
-                    //ya que entre windows y linux cambian las rutas de los archivos
-                    //En windows es por ejemplo c:/Uusuarios con / y en linux es \usr
-                    // con \
-                    var xmlPath = System.IO.Path.Combine(AppContext.BaseDirectory, xmlFile);
+                //Al nombre del assembly le agregamos la extensión xml
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                //Agregamos el Path, es importante utilizar el comando Path.Combine
+                //ya que entre windows y linux cambian las rutas de los archivos
+                //En windows es por ejemplo c:/Uusuarios con / y en linux es \usr
+                // con \
+                var xmlPath = System.IO.Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             }
 
@@ -254,15 +255,15 @@ public class Startup
     /// <param name="logger"></param>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
     {
-        //if (env.IsDevelopment() || env.IsEnvironment("Testing"))
-        //{
-        app.UseDeveloperExceptionPage();
-        //}
-        //else
-        //{
-        //    app.UseExceptionHandler("/Error");
-        //    app.UseHsts();
-        //}
+        if (env.IsDevelopment() || env.IsEnvironment("Testing"))
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/Error");
+            app.UseHsts();
+        }
         var urlAceptadas = Configuration.GetSection("AllowedOrigins").Value.Split(",");
         app.UseCors(builder =>
           builder.WithOrigins(urlAceptadas)

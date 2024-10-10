@@ -45,7 +45,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
-    <PackageReference Include="System.Text.Json" Version="8.0.4" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="9.0.0" />
     <PackageReference Include="Microsoft.OData.Core" Version="8.0.2" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="13.9.14" />

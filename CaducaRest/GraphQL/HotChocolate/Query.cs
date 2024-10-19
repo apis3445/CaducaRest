@@ -71,15 +71,11 @@ public class QueryType : ObjectType<Query>
     /// <param name="descriptor"></param>
     protected override void Configure(IObjectTypeDescriptor<Query> descriptor)
     {
-        /*descriptor
-            .Field(c => c.GetCliente(default)).UseProjection()
-            .Type<ClienteType>();
-            */
         descriptor.Field("Cliente")
-        .UseDbContext<CaducaContext>()
         .Resolve((ctx) =>
         {
-            return ctx.DbContext<CaducaContext>().Cliente;
+            var dbContext = ctx.Service<CaducaContext>();
+            return dbContext.Cliente;
         });
     }
 }
@@ -125,10 +121,11 @@ public class CategoriaType : ObjectType<Categoria>
             .Field(f => f.Nombre)
             .Type<StringType>();
         descriptor
-            .Field(f => f.ClientesCategorias).UseDbContext<CaducaContext>()
+            .Field(f => f.ClientesCategorias)
             .Resolve((ctx) =>
             {
-                return ctx.DbContext<CaducaContext>().ClienteCategoria;
+                var dbContext = ctx.Service<CaducaContext>();
+                return dbContext.ClienteCategoria;
             });
     }
 }

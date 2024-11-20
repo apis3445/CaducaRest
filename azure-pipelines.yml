@@ -67,15 +67,14 @@ steps:
     condition: always()
     inputs:
       generatorSource: "TestAssembly"
-      testAssemblyFilePath: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net8.0\CaducaRest.IntegrationTest.dll'
+      testAssemblyFilePath: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net9.0\CaducaRest.IntegrationTest.dll'
       projectName: "Integration"
-      testExecutionJson: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net8.0\TestExecution.json'
+      testExecutionJson: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net9.0\TestExecution.json'
       projectLanguage: "es"
 
   - task: PublishCodeCoverageResults@2
     displayName: "Publish code coverage report"
     inputs:
-      codeCoverageTool: "Cobertura"
       summaryFileLocation: "$(Build.SourcesDirectory)/**/coverage.cobertura.xml"
 
   - task: DotNetCoreCLI@2
@@ -132,39 +131,39 @@ steps:
   - task: CopyFiles@2
     displayName: Copy Playwright
     inputs:
-      SourceFolder: "$(Pipeline.Workspace)/s/CaducaRest.PlayWright.UITest/bin/Debug/net8.0/"
+      SourceFolder: "$(Pipeline.Workspace)/s/CaducaRest.PlayWright.UITest/bin/Debug/net9.0/"
       Contents: "**"
       TargetFolder: "$(Build.ArtifactStagingDirectory)/playwright"
 
   - task: PublishBuildArtifacts@1
     displayName: "Upload Artifacts linux"
     inputs:
-      pathtoPublish: "$(Build.ArtifactStagingDirectory)/linux"
-      artifactName: "restLinux"
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)/linux"
+      ArtifactName: "restLinux"
 
   - task: PublishBuildArtifacts@1
     displayName: "Upload Artifacts win"
     inputs:
-      pathtoPublish: "$(Build.ArtifactStagingDirectory)/win"
-      artifactName: "restWin"
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)/win"
+      ArtifactName: "restWin"
 
   - task: PublishBuildArtifacts@1
     displayName: "Upload Artifacts postman"
     inputs:
-      pathtoPublish: "$(Build.ArtifactStagingDirectory)/postman"
-      artifactName: "postmanTesting"
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)/postman"
+      ArtifactName: "postmanTesting"
 
   - task: PublishBuildArtifacts@1
     displayName: "Upload Artifacts selenium"
     inputs:
-      pathtoPublish: "$(Build.ArtifactStagingDirectory)/selenium"
-      artifactName: "seleniumTesting"
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)/selenium"
+      ArtifactName: "seleniumTesting"
 
   - task: PublishBuildArtifacts@1
     displayName: "Upload Artifacts playwright"
     inputs:
-      pathtoPublish: "$(Build.ArtifactStagingDirectory)/playwright"
-      artifactName: "playwrightTesting"
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)/playwright"
+      ArtifactName: "playwrightTesting"
 # - task: PublishBuildArtifacts@1
 #   displayName: "Upload Artifacts SQL"
 #   inputs:

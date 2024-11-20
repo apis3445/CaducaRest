@@ -22,9 +22,9 @@ variables:
 
 steps:
   - task: UseDotNet@2
-    displayName: "Instalar .NET Core 8.0.x"
+    displayName: "Instalar .NET Core 9.0.x"
     inputs:
-      version: "8.0.x"
+      version: "9.0.x"
       performMultiLevelLookup: true
       packageType: sdk
 
@@ -72,7 +72,7 @@ steps:
       testExecutionJson: '$(Build.SourcesDirectory)\CaducaRest.IntegrationTest\bin\Release\net8.0\TestExecution.json'
       projectLanguage: "es"
 
-  - task: PublishCodeCoverageResults@1
+  - task: PublishCodeCoverageResults@2
     displayName: "Publish code coverage report"
     inputs:
       codeCoverageTool: "Cobertura"

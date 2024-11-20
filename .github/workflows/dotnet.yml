@@ -2,53 +2,52 @@ name: .NET
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env:
       MARIA: ${{secrets.MARIA}}
       JUAN: ${{secrets.JUAN}}
       CARLOS: ${{secrets.CARLOS}}
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Install Playwright CLI
-      run: dotnet tool install --global Microsoft.Playwright.CLI
-    - name: Install playwright
-      run: playwright install
-    - name: Install Lving Doc
-      run: dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
-    - name: Test
-      run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj --logger "html;logfilename=testResults.html" 
-    - uses: actions/upload-artifact@v3
-      with:
-        name: playwright
-        path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html  
-    - name: Test Integration
-      run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
-    - name: Generate living doc
-      if: always()
-      run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net8.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net8.0/TestExecution.json --output ${{ github.workspace }}/TestResults/index.html
-    - uses: actions/upload-artifact@v3
-      with:
-        name: specflow
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Install Playwright CLI
+        run: dotnet tool install --global Microsoft.Playwright.CLI
+      - name: Install playwright
+        run: playwright install
+      - name: Install Living Doc
+        run: dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
+      - name: Test
+        run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj --logger "html;logfilename=testResults.html"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: playwright
+          path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html
+      - name: Test Integration
+        run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
+      - name: Generate living doc
         if: always()
-        path: ${{ github.workspace }}/TestResults/index.html
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        if: always()
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ${{ github.workspace }}/TestResults/
+        run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net8.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net8.0/TestExecution.json --output ${{ github.workspace }}/TestResults/index.html
+      - uses: actions/upload-artifact@v3
+        with:
+          name: specflow
+          if: always()
+          path: ${{ github.workspace }}/TestResults/index.html
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          if: always()
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ github.workspace }}/TestResults/

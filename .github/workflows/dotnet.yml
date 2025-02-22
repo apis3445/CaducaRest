@@ -40,14 +40,14 @@ jobs:
       - name: Generate living doc
         if: always()
         run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net8.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net8.0/TestExecution.json --output ${{ github.workspace }}/TestResults/index.html
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: specflow
-          if: always()
           path: ${{ github.workspace }}/TestResults/index.html
       - name: Deploy
+        if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
-          if: always()
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ${{ github.workspace }}/TestResults/

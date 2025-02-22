@@ -14,7 +14,7 @@ jobs:
       JUAN: ${{secrets.JUAN}}
       CARLOS: ${{secrets.CARLOS}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -31,7 +31,7 @@ jobs:
         run: dotnet tool install --global SpecFlow.Plus.LivingDoc.CLI
       - name: Test
         run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.PlayWright.UITest/*.csproj --logger "html;logfilename=testResults.html"
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: playwright
           path: ${{ github.workspace }}/CaducaRest.PlayWright.UITest/TestResults/testResults.html

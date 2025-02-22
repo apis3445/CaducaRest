@@ -10,7 +10,7 @@ namespace CaducaRest.Core;
 /// </summary>
 public class IPGeoLocation : IPLocation
 {
-    private const string apiKey = "ddd67e98951b456f8e08c5a6d4bb4aa8";
+    private const string apiKey = "2d53d5d33f824cac835d209874083d47";
     private const string apiUrl = "https://api.ipgeolocation.io/ipgeo";
 
     /// <summary>

@@ -39,7 +39,7 @@ jobs:
         run: dotnet test ${GITHUB_WORKSPACE}/CaducaRest.IntegrationTest/CaducaRest.IntegrationTest.csproj
       - name: Generate living doc
         if: always()
-        run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net8.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net8.0/TestExecution.json --output ${{ github.workspace }}/TestResults/index.html
+        run: livingdoc test-assembly ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net9.0/CaducaRest.IntegrationTest.dll -t ${{ github.workspace }}/CaducaRest.IntegrationTest/bin/Debug/net9.0/TestExecution.json --output ${{ github.workspace }}/TestResults/index.html
       - uses: actions/upload-artifact@v4
         if: always()
         with:

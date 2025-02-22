@@ -25,6 +25,7 @@ public class LoginSteps
     {
         login.Usuario = usuario;
         string pass = Environment.GetEnvironmentVariable(usuario.ToUpper());
+        Console.Write("Pass:" + pass);
         login.Password = pass;
     }
 
@@ -49,7 +50,6 @@ public class LoginSteps
     [Then(@"Obtengo el nombre (.*)")]
     public void ThenObtengoElNombre(string nombreUsuario)
     {
-        Console.WriteLine("Token: " + token);
         Assert.AreEqual(nombreUsuario, token.Nombre, "El nombre del usuario no coincide");
     }
 }
